@@ -1,0 +1,21 @@
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	quic
+#open	2025-11-12-17-23-33
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	version	client_initial_dcid	client_scid	server_scid	server_name	client_protocol	history
+#types	time	string	addr	port	addr	port	string	string	string	string	string	string	string
+1762983682.263142	CdTXUw2D7TMjdb5Rwg	192.168.4.73	61087	64.233.180.102	443	1	1e17fa2e20d0589a	(empty)	fe17fa2e20d0589a	clients4.google.com	h3	IIISZiiiiishH
+1762983675.880430	CvFWIc1JiKzs1QM3ai	192.168.4.73	63690	142.251.179.95	443	1	134ff064460c9a38	(empty)	f34ff064460c9a38	optimizationguide-pa.googleapis.com	h3	IISZiiishH
+1762983675.875348	CNjlo84DDbB6i0DqTc	192.168.4.73	55088	192.178.155.105	443	1	2b73fa869eb6fca6	(empty)	eb73fa869eb6fca6	www.google.com	h3	IISiiiishhhIHHhH
+1762983669.586835	CCKbJ722ucK4hCw6a7	192.168.4.73	60950	172.253.62.138	443	1	51f5c16609ba051d	(empty)	f1f5c16609ba051d	www.google-analytics.com	h3	IISZiiishH
+1762983668.793577	C9mmgnFmMMEw91CVg	192.168.4.73	52198	172.64.146.98	443	1	e5406e6cfb3ac929	(empty)	01bb966ecaebef0a23b9cf6e66ebf61400430ec0	cdn.oaistatic.com	h3	IISZZiiishIH
+1762983677.235060	Cc99tl1ppeyiy2vYHa	192.168.4.73	51737	142.251.163.94	443	1	f71d9730964ebec6	(empty)	f71d9730964ebec6	ssl.gstatic.com	h3	IIISZZiiiiishH
+1762983668.725397	CDzQDzgSNAg0eYhx7	192.168.4.73	55859	104.18.36.169	443	1	1f35089079f27ff5	(empty)	01df231d11613d9feddebe1c2a6130c72712ad97	realtime.chatgpt.com	h3	IISZiiishIH
+1762983667.052563	C6r3h529bramovCMm4	192.168.4.73	50060	172.64.146.98	443	1	e62334b32cafcede	(empty)	01fc40ed2cec2debecf840ed17ec0e36be956fe2	cdn.oaistatic.com	h3	IISZiiishIH
+1762983667.004153	CpOnvMxigtQoSriP4	192.168.4.73	52927	172.253.122.95	443	1	a8c542fad5e1e582	(empty)	e8c542fad5e1e582	ogads-pa.clients6.google.com	h3	IISZiiishH
+1762983666.652656	CSb9PF3oOceFm5lZSf	192.168.4.73	57410	142.250.31.94	443	1	2645eaf3b2dd3c27	(empty)	e645eaf3b2dd3c27	beacons.gcp.gvt2.com	h3	IISZiiishH
+1762983667.365579	CmzALa1qv7HOwYkrh6	192.168.4.73	61043	172.253.122.100	443	1	ebeb111f2b8c3378	(empty)	ebeb111f2b8c3378	play.google.com	h3	IISZiiishH
+1762983667.374317	CVaS9D2uxK1P07wNe	192.168.4.73	56774	104.18.36.169	443	1	43a4a2812d573e2c	(empty)	0142b40e05cacb2b1440ed0ed8caccd3092e7026	realtime.chatgpt.com	h3	IISZiiishIH
+#close	2025-11-12-17-23-33
