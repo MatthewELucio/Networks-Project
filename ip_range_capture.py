@@ -3,9 +3,9 @@ import argparse
 ip_range_capture
 ================
 
-Capture packets matching an IPv4 or IPv6 CIDR range (optionally refined with an
-additional BPF filter) and write human-readable tcpdump output to a timestamped
-text file.
+Capture packets where either the source OR destination matches an IPv4/IPv6
+CIDR range (optionally refined with an additional BPF filter), and write
+human-readable tcpdump output to a timestamped text file.
 
 Core Workflow:
 1. Parse CLI arguments (CIDR, interface, output directory, timeout, snaplen, extra filter).
@@ -13,6 +13,8 @@ Core Workflow:
 3. Build an appropriate tcpdump command:
     - Uses 'host <addr>' if the network reduces to a single address.
     - Uses 'net <CIDR>' otherwise.
+    - Note: tcpdump 'host' and 'net' match either src OR dst by default
+      (effectively "src or dst host/net ...").
     - Adds an AND clause if --extra-filter is supplied.
 4. Stream tcpdump stdout into a line-buffered UTF-8 text file whose name encodes
     the start timestamp and CIDR (slashes replaced by underscores).
@@ -59,7 +61,7 @@ Extensibility Ideas:
 Notes:
 - Uses line-buffered writes for near-real-time file visibility.
 - Defaults (-nn -v -U) favor raw numeric addresses/ports, verbose decoding, and packet-by-packet flush.
-
+- Filtering is symmetric: matches when src OR dst is within the provided host/network.
 """
 # Example run:
 # python ip_range_capture.py 192.168.1.0/24 -i eth0 -t 60 --extra-filter "tcp port 443"
