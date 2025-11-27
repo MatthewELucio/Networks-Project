@@ -9,9 +9,8 @@ Usage: python3 parse_flowlets.py input.txt --threshold 0.1 --bidirectional --out
 import argparse
 import json
 import re
-import sys
+import ipaddress
 from collections import defaultdict
-from datetime import datetime, date
 from typing import Dict, List, Optional, Tuple, Any
 
 # Regexes
@@ -198,6 +197,8 @@ def build_summary(flows: Dict[Tuple, List[Dict[str, Any]]], threshold: float, bi
                 'end_ts': f['end_ts'],
                 'packets': f['packets'],
                 'bytes': f['bytes'],
+                'query_id': None,
+                'query_role': None,
             }
             flow_info['flowlets'].append(flowlet_summary)
 
@@ -206,11 +207,134 @@ def build_summary(flows: Dict[Tuple, List[Dict[str, Any]]], threshold: float, bi
     return out
 
 
+def is_private_ip(ip: Optional[str]) -> bool:
+    if not ip:
+        return False
+    try:
+        return ipaddress.ip_address(ip).is_private
+    except ValueError:
+        return False
+
+
+def infer_flow_direction(
+    flow_key: Tuple,
+    client_ip: Optional[str] = None,
+    server_ip: Optional[str] = None,
+) -> str:
+    src, sport, dst, dport, _ = flow_key
+
+    if client_ip:
+        if src == client_ip:
+            return 'client_to_server'
+        if dst == client_ip:
+            return 'server_to_client'
+    if server_ip:
+        if src == server_ip:
+            return 'server_to_client'
+        if dst == server_ip:
+            return 'client_to_server'
+
+    if is_private_ip(src) and not is_private_ip(dst):
+        return 'client_to_server'
+    if is_private_ip(dst) and not is_private_ip(src):
+        return 'server_to_client'
+
+    if dport == 443 and sport != 443:
+        return 'client_to_server'
+    if sport == 443 and dport != 443:
+        return 'server_to_client'
+
+    return 'unknown'
+
+
+def annotate_queries(
+    summary: Dict[str, Any],
+    client_ip: Optional[str] = None,
+    server_ip: Optional[str] = None,
+) -> None:
+    flows = summary.get('flows', [])
+    timeline = []
+    for flow in flows:
+        direction = infer_flow_direction(flow['flow_key'], client_ip=client_ip, server_ip=server_ip)
+        flow['direction'] = direction
+        for flowlet in flow['flowlets']:
+            flowlet['direction'] = direction
+            if direction in {'client_to_server', 'server_to_client'}:
+                timeline.append(
+                    {
+                        'direction': direction,
+                        'start': flowlet['start_ts'],
+                        'end': flowlet['end_ts'],
+                        'bytes': flowlet['bytes'],
+                        'flow_key': flow['flow_key'],
+                        'flowlet_id': flowlet['id'],
+                        'flowlet': flowlet,
+                    }
+                )
+
+    timeline.sort(key=lambda item: item['start'])
+    client_events = [ev for ev in timeline if ev['direction'] == 'client_to_server']
+    server_events = [ev for ev in timeline if ev['direction'] == 'server_to_client']
+
+    queries = []
+    for idx, upload_event in enumerate(client_events, start=1):
+        next_client_start = None
+        if idx < len(client_events):
+            next_client_start = client_events[idx]['start']
+
+        resp_candidates = [
+            ev
+            for ev in server_events
+            if ev['start'] >= upload_event['end'] and (next_client_start is None or ev['start'] < next_client_start)
+        ]
+
+        response_start = resp_candidates[0]['start'] if resp_candidates else None
+        response_end = max((ev['end'] for ev in resp_candidates), default=None)
+        response_bytes = sum(ev['bytes'] for ev in resp_candidates)
+
+        upload_event['flowlet']['query_id'] = idx
+        upload_event['flowlet']['query_role'] = 'upload'
+
+        response_flowlets = []
+        for resp_ev in resp_candidates:
+            resp_ev['flowlet']['query_id'] = idx
+            resp_ev['flowlet']['query_role'] = 'response'
+            response_flowlets.append(
+                {
+                    'flow_key': resp_ev['flow_key'],
+                    'flowlet_id': resp_ev['flowlet_id'],
+                    'start_ts': resp_ev['start'],
+                    'end_ts': resp_ev['end'],
+                    'bytes': resp_ev['bytes'],
+                }
+            )
+
+        queries.append(
+            {
+                'id': idx,
+                'upload_flow': upload_event['flow_key'],
+                'upload_flowlet_id': upload_event['flowlet_id'],
+                'upload_start_ts': upload_event['start'],
+                'upload_end_ts': upload_event['end'],
+                'upload_bytes': upload_event['bytes'],
+                'response_start_ts': response_start,
+                'response_end_ts': response_end,
+                'response_bytes': response_bytes,
+                'response_flowlets': response_flowlets,
+                'confidence': 'high' if resp_candidates else 'low',
+            }
+        )
+
+    summary['queries'] = queries
+
+
 def main(argv=None):
-    p = argparse.ArgumentParser(description='Parse tcpdump-style text into flows and flowlets')
+    p = argparse.ArgumentParser(description='Parse tcpdump-style text into flows, flowlets, and estimated LLM queries')
     p.add_argument('input', help='input capture text file')
     p.add_argument('--threshold', '-t', type=float, default=0.1, help='flowlet gap threshold in seconds (default: 0.1s)')
     p.add_argument('--bidirectional', '-b', action='store_true', help='treat flows as bidirectional (fold directions)')
+    p.add_argument('--client-ip', help='hint for which IP is the ChatGPT client (helps direction inference)')
+    p.add_argument('--server-ip', help='hint for which IP is the ChatGPT backend (LLM) server')
     p.add_argument('--output', '-o', help='write JSON summary to this file')
     p.add_argument('--sample', action='store_true', help='print a small human-readable sample summary')
     args = p.parse_args(argv)
@@ -218,6 +342,7 @@ def main(argv=None):
     packets = parse_capture_text(args.input)
     flows = group_packets_into_flows(packets, bidirectional=args.bidirectional)
     summary = build_summary(flows, threshold=args.threshold, bidirectional=args.bidirectional)
+    annotate_queries(summary, client_ip=args.client_ip, server_ip=args.server_ip)
 
     if args.output:
         with open(args.output, 'w', encoding='utf-8') as fh:
@@ -231,6 +356,20 @@ def main(argv=None):
         for f in flows_sorted[:10]:
             key = f['flow_key']
             print(f"Flow {key}: pkts={f['packets']}, bytes={f['bytes']}, flowlets={len(f['flowlets'])}, start={f['start_ts']}, end={f['end_ts']}")
+
+        queries = summary.get('queries', [])
+        print(f"Detected {len(queries)} probable LLM queries")
+        for q in queries[:10]:
+            upload_range = f"{q['upload_start_ts']:.6f}-{q['upload_end_ts']:.6f}" if q['upload_start_ts'] is not None else 'n/a'
+            response_range = (
+                f"{q['response_start_ts']:.6f}-{q['response_end_ts']:.6f}"
+                if q['response_start_ts'] is not None and q['response_end_ts'] is not None
+                else 'n/a'
+            )
+            print(
+                f"Query {q['id']}: upload {upload_range}s ({q['upload_bytes']} B) -> "
+                f"response {response_range}s ({q['response_bytes']} B) confidence={q['confidence']}"
+            )
 
 
 if __name__ == '__main__':
