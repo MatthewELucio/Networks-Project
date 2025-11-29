@@ -1,3 +1,2 @@
-*.txt
 *.pcap
 __pycache__/

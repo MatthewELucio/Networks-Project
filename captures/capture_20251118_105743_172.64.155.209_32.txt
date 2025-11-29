@@ -1,0 +1,644 @@
+tcpdump: listening on en0, link-type EN10MB (Ethernet), snapshot length 96 bytes
+10:57:50.601445 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 1727814583:1727815957, ack 2590525716, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 1374
+10:57:50.601447 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 1374:2748, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 1374
+10:57:50.601448 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 2748:4122, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 1374
+10:57:50.601450 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 4122:5496, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 1374
+10:57:50.601451 IP (tos 0x0, ttl 64, id 4, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 5496:6870, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 1374
+10:57:50.601457 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 174)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 6870:6992, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 122
+10:57:50.601485 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 91)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 6992:7031, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 39
+10:57:50.601493 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 491)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 7031:7470, ack 1, win 2757, options [nop,nop,TS val 1117289263 ecr 1369777364], length 439
+10:57:50.610116 IP (tos 0x0, ttl 54, id 14356, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5ab6 (correct), ack 1374, win 29, options [nop,nop,TS val 1369819229 ecr 1117289263], length 0
+10:57:50.610117 IP (tos 0x0, ttl 54, id 14357, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5557 (correct), ack 2748, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 0
+10:57:50.610118 IP (tos 0x0, ttl 54, id 14358, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x4a9b (correct), ack 5496, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 0
+10:57:50.610377 IP (tos 0x0, ttl 54, id 14359, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x58f6 (correct), ack 5496, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263,nop,nop,sack 1 {6870:6992}], length 0
+10:57:50.610378 IP (tos 0x0, ttl 54, id 14360, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x44c3 (correct), ack 6992, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 0
+10:57:50.611402 IP (tos 0x0, ttl 54, id 14361, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x449c (correct), ack 7031, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 0
+10:57:50.611403 IP (tos 0x0, ttl 54, id 14362, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x42e5 (correct), ack 7470, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 0
+10:57:50.612159 IP (tos 0x0, ttl 54, id 14363, offset 0, flags [DF], proto TCP (6), length 91)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 1:40, ack 7470, win 29, options [nop,nop,TS val 1369819230 ecr 1117289263], length 39
+10:57:50.612248 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x380c (correct), ack 40, win 2757, options [nop,nop,TS val 1117289273 ecr 1369819230], length 0
+10:57:50.939645 IP (tos 0x0, ttl 54, id 14364, offset 0, flags [DF], proto TCP (6), length 397)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 40:385, ack 7470, win 29, options [nop,nop,TS val 1369819459 ecr 1117289273], length 345
+10:57:50.939651 IP (tos 0x0, ttl 54, id 14365, offset 0, flags [DF], proto TCP (6), length 359)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 385:692, ack 7470, win 29, options [nop,nop,TS val 1369819459 ecr 1117289273], length 307
+10:57:50.939653 IP (tos 0x0, ttl 54, id 14366, offset 0, flags [DF], proto TCP (6), length 84)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 692:724, ack 7470, win 29, options [nop,nop,TS val 1369819459 ecr 1117289273], length 32
+10:57:50.939655 IP (tos 0x0, ttl 54, id 14367, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 724:755, ack 7470, win 29, options [nop,nop,TS val 1369819460 ecr 1117289273], length 31
+10:57:50.939656 IP (tos 0x0, ttl 54, id 14368, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 724:755, ack 7470, win 29, options [nop,nop,TS val 1369819487 ecr 1117289273], length 31
+10:57:50.939806 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x331e (correct), ack 755, win 2746, options [nop,nop,TS val 1117289601 ecr 1369819460], length 0
+10:57:50.939869 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 64)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x302d (correct), ack 755, win 2746, options [nop,nop,TS val 1117289601 ecr 1369819487,nop,nop,sack 1 {724:755}], length 0
+10:57:50.941347 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 87)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 7470:7505, ack 755, win 2757, options [nop,nop,TS val 1117289602 ecr 1369819487], length 35
+10:57:50.989320 IP (tos 0x0, ttl 54, id 14369, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x3d04 (correct), ack 7505, win 29, options [nop,nop,TS val 1369819607 ecr 1117289602], length 0
+10:57:51.233368 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 7505:8879, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233374 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 8879:10253, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233375 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 10253:11627, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233377 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 11627:13001, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233378 IP (tos 0x0, ttl 64, id 4, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 13001:14375, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233379 IP (tos 0x0, ttl 64, id 5, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 14375:15749, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233380 IP (tos 0x0, ttl 64, id 6, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 15749:17123, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233381 IP (tos 0x0, ttl 64, id 7, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 17123:18497, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233383 IP (tos 0x0, ttl 64, id 8, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 18497:19871, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 1374
+10:57:51.233411 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 123)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 19871:19942, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 71
+10:57:51.233440 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1000)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 19942:20890, ack 755, win 2757, options [nop,nop,TS val 1117289894 ecr 1369819607], length 948
+10:57:51.243479 IP (tos 0x0, ttl 54, id 14370, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x2ac6 (correct), ack 11627, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.243482 IP (tos 0x0, ttl 54, id 14371, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x2568 (correct), ack 13001, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.243484 IP (tos 0x0, ttl 54, id 14372, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x154e (correct), ack 17123, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.243485 IP (tos 0x0, ttl 54, id 14373, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x0ff0 (correct), ack 18497, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.247088 IP (tos 0x0, ttl 54, id 14374, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xb8eb (correct), ack 18497, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894,nop,nop,sack 1 {19871:19942}], length 0
+10:57:51.247089 IP (tos 0x0, ttl 54, id 14375, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x0a4b (correct), ack 19942, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.247090 IP (tos 0x0, ttl 54, id 14376, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x0697 (correct), ack 20890, win 29, options [nop,nop,TS val 1369819863 ecr 1117289894], length 0
+10:57:51.263404 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 20890:22264, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 1374
+10:57:51.263407 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 22264:23638, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 1374
+10:57:51.263407 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 23638:25012, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 1374
+10:57:51.263421 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1257)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 25012:26217, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 1205
+10:57:51.263438 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 26217:27591, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 1374
+10:57:51.263441 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 257)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 27591:27796, ack 755, win 2757, options [nop,nop,TS val 1117289925 ecr 1369819863], length 205
+10:57:51.269900 IP (tos 0x0, ttl 54, id 14377, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xf643 (correct), ack 25012, win 29, options [nop,nop,TS val 1369819889 ecr 1117289925], length 0
+10:57:51.269903 IP (tos 0x0, ttl 54, id 14378, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xf18e (correct), ack 26217, win 29, options [nop,nop,TS val 1369819889 ecr 1117289925], length 0
+10:57:51.269904 IP (tos 0x0, ttl 54, id 14379, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5db4 (correct), ack 26217, win 29, options [nop,nop,TS val 1369819889 ecr 1117289925,nop,nop,sack 1 {27591:27796}], length 0
+10:57:51.269905 IP (tos 0x0, ttl 54, id 14380, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xeb63 (correct), ack 27796, win 29, options [nop,nop,TS val 1369819889 ecr 1117289925], length 0
+10:57:51.347507 IP (tos 0x0, ttl 54, id 14381, offset 0, flags [DF], proto TCP (6), length 378)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 755:1081, ack 27796, win 29, options [nop,nop,TS val 1369819966 ecr 1117289925], length 326
+10:57:51.347512 IP (tos 0x0, ttl 54, id 14382, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 1081:1128, ack 27796, win 29, options [nop,nop,TS val 1369819966 ecr 1117289925], length 47
+10:57:51.347637 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xdeaa (correct), ack 1128, win 2752, options [nop,nop,TS val 1117290009 ecr 1369819966], length 0
+10:57:51.349003 IP (tos 0x0, ttl 54, id 14383, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 1128:1159, ack 27796, win 29, options [nop,nop,TS val 1369819966 ecr 1117289925], length 31
+10:57:51.349073 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xde86 (correct), ack 1159, win 2756, options [nop,nop,TS val 1117290010 ecr 1369819966], length 0
+10:57:52.502310 IP (tos 0x0, ttl 54, id 14384, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 1159:2533, ack 27796, win 29, options [nop,nop,TS val 1369821121 ecr 1117290010], length 1374
+10:57:52.502317 IP (tos 0x0, ttl 54, id 14385, offset 0, flags [DF], proto TCP (6), length 345)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 2533:2826, ack 27796, win 29, options [nop,nop,TS val 1369821121 ecr 1117290010], length 293
+10:57:52.502319 IP (tos 0x0, ttl 54, id 14386, offset 0, flags [DF], proto TCP (6), length 526)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 2826:3300, ack 27796, win 29, options [nop,nop,TS val 1369821122 ecr 1117290010], length 474
+10:57:52.502474 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xcd43 (correct), ack 3300, win 2724, options [nop,nop,TS val 1117291164 ecr 1369821122], length 0
+10:57:52.516147 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 27796:29170, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 1374
+10:57:52.516156 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 29170:30544, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 1374
+10:57:52.516159 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 30544:31918, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 1374
+10:57:52.516208 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 31918:33121, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 1203
+10:57:52.516289 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 33121:34495, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 1374
+10:57:52.516302 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 760)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 34495:35203, ack 3300, win 2757, options [nop,nop,TS val 1117291177 ecr 1369821122], length 708
+10:57:52.522624 IP (tos 0x0, ttl 54, id 14387, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xd24b (correct), ack 29170, win 29, options [nop,nop,TS val 1369821142 ecr 1117291177], length 0
+10:57:52.522627 IP (tos 0x0, ttl 54, id 14388, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc78f (correct), ack 31918, win 29, options [nop,nop,TS val 1369821142 ecr 1117291177], length 0
+10:57:52.522628 IP (tos 0x0, ttl 54, id 14389, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc2dc (correct), ack 33121, win 29, options [nop,nop,TS val 1369821142 ecr 1117291177], length 0
+10:57:52.522629 IP (tos 0x0, ttl 54, id 14390, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xbaba (correct), ack 35203, win 29, options [nop,nop,TS val 1369821142 ecr 1117291177], length 0
+10:57:52.579251 IP (tos 0x0, ttl 54, id 14391, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 3300:4674, ack 35203, win 29, options [nop,nop,TS val 1369821198 ecr 1117291177], length 1374
+10:57:52.579332 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xaa52 (correct), ack 4674, win 2736, options [nop,nop,TS val 1117291240 ecr 1369821198], length 0
+10:57:52.581351 IP (tos 0x0, ttl 54, id 14392, offset 0, flags [DF], proto TCP (6), length 591)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 4674:5213, ack 35203, win 29, options [nop,nop,TS val 1369821198 ecr 1117291177], length 539
+10:57:52.581408 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xa827 (correct), ack 5213, win 2749, options [nop,nop,TS val 1117291243 ecr 1369821198], length 0
+10:57:52.596156 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 35203:36577, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 1374
+10:57:52.596159 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 36577:37951, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 1374
+10:57:52.596160 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 37951:39325, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 1374
+10:57:52.596176 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 39325:40528, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 1203
+10:57:52.596192 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 40528:41902, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 1374
+10:57:52.596194 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 399)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 41902:42249, ack 5213, win 2757, options [nop,nop,TS val 1117291257 ecr 1369821198], length 347
+10:57:52.602494 IP (tos 0x0, ttl 54, id 14393, offset 0, flags [DF], proto TCP (6), length 365)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5213:5526, ack 35203, win 29, options [nop,nop,TS val 1369821220 ecr 1117291243], length 313
+10:57:52.602499 IP (tos 0x0, ttl 54, id 14394, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xa14e (correct), ack 39325, win 29, options [nop,nop,TS val 1369821222 ecr 1117291257], length 0
+10:57:52.602500 IP (tos 0x0, ttl 54, id 14395, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x9c9b (correct), ack 40528, win 29, options [nop,nop,TS val 1369821222 ecr 1117291257], length 0
+10:57:52.602593 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x8b39 (correct), ack 5526, win 2753, options [nop,nop,TS val 1117291264 ecr 1369821220], length 0
+10:57:52.602999 IP (tos 0x0, ttl 54, id 14396, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x9864 (correct), ack 40528, win 29, options [nop,nop,TS val 1369821222 ecr 1117291257,nop,nop,sack 1 {41902:42249}], length 0
+10:57:52.603000 IP (tos 0x0, ttl 54, id 14397, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x95e2 (correct), ack 42249, win 29, options [nop,nop,TS val 1369821222 ecr 1117291257], length 0
+10:57:52.647395 IP (tos 0x0, ttl 54, id 14398, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5526:5573, ack 42249, win 29, options [nop,nop,TS val 1369821266 ecr 1117291264], length 47
+10:57:52.647400 IP (tos 0x0, ttl 54, id 14399, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5573:5604, ack 42249, win 29, options [nop,nop,TS val 1369821266 ecr 1117291264], length 31
+10:57:52.647542 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x8a8d (correct), ack 5604, win 2756, options [nop,nop,TS val 1117291309 ecr 1369821266], length 0
+10:57:52.696641 IP (tos 0x0, ttl 54, id 14400, offset 0, flags [DF], proto TCP (6), length 348)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5604:5900, ack 42249, win 29, options [nop,nop,TS val 1369821316 ecr 1117291309], length 296
+10:57:52.696645 IP (tos 0x0, ttl 54, id 14401, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5900:5947, ack 42249, win 29, options [nop,nop,TS val 1369821316 ecr 1117291309], length 47
+10:57:52.696725 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x88d7 (correct), ack 5947, win 2752, options [nop,nop,TS val 1117291358 ecr 1369821316], length 0
+10:57:52.697937 IP (tos 0x0, ttl 54, id 14402, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5947:5978, ack 42249, win 29, options [nop,nop,TS val 1369821316 ecr 1117291309], length 31
+10:57:52.698017 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x88b3 (correct), ack 5978, win 2756, options [nop,nop,TS val 1117291359 ecr 1369821316], length 0
+10:57:52.778789 IP (tos 0x0, ttl 54, id 14403, offset 0, flags [DF], proto TCP (6), length 912)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 5978:6838, ack 42249, win 29, options [nop,nop,TS val 1369821397 ecr 1117291359], length 860
+10:57:52.778930 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x84c1 (correct), ack 6838, win 2744, options [nop,nop,TS val 1117291440 ecr 1369821397], length 0
+10:57:52.787968 IP (tos 0x0, ttl 54, id 14404, offset 0, flags [DF], proto TCP (6), length 594)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 6838:7380, ack 42249, win 29, options [nop,nop,TS val 1369821406 ecr 1117291440], length 542
+10:57:52.788059 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x828d (correct), ack 7380, win 2748, options [nop,nop,TS val 1117291449 ecr 1369821406], length 0
+10:57:52.795760 IP (tos 0x0, ttl 54, id 14405, offset 0, flags [DF], proto TCP (6), length 541)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 7380:7869, ack 42249, win 29, options [nop,nop,TS val 1369821414 ecr 1117291449], length 489
+10:57:52.795859 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x8093 (correct), ack 7869, win 2749, options [nop,nop,TS val 1117291457 ecr 1369821414], length 0
+10:57:52.987241 IP (tos 0x0, ttl 54, id 14406, offset 0, flags [DF], proto TCP (6), length 328)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 7869:8145, ack 42249, win 29, options [nop,nop,TS val 1369821605 ecr 1117291457], length 276
+10:57:52.987378 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x7dfd (correct), ack 8145, win 2753, options [nop,nop,TS val 1117291648 ecr 1369821605], length 0
+10:57:53.036480 IP (tos 0x0, ttl 54, id 14407, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 8145:9519, ack 42249, win 29, options [nop,nop,TS val 1369821656 ecr 1117291648], length 1374
+10:57:53.037847 IP (tos 0x0, ttl 54, id 14408, offset 0, flags [DF], proto TCP (6), length 394)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 9519:9861, ack 42249, win 29, options [nop,nop,TS val 1369821656 ecr 1117291648], length 342
+10:57:53.037920 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x76e4 (correct), ack 9861, win 2752, options [nop,nop,TS val 1117291699 ecr 1369821656], length 0
+10:57:53.231352 IP (tos 0x0, ttl 54, id 14409, offset 0, flags [DF], proto TCP (6), length 185)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 9861:9994, ack 42249, win 29, options [nop,nop,TS val 1369821849 ecr 1117291699], length 133
+10:57:53.231459 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x74d9 (correct), ack 9994, win 2755, options [nop,nop,TS val 1117291893 ecr 1369821849], length 0
+10:57:53.236282 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 42249:43623, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 1374
+10:57:53.236287 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 43623:44997, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 1374
+10:57:53.236289 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 44997:46371, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 1374
+10:57:53.236289 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 46371:47745, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 1374
+10:57:53.236317 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1283)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 47745:48976, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 1231
+10:57:53.236377 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 610)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 48976:49534, ack 9994, win 2757, options [nop,nop,TS val 1117291897 ecr 1369821849], length 558
+10:57:53.242880 IP (tos 0x0, ttl 54, id 14410, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x7a10 (correct), ack 43623, win 29, options [nop,nop,TS val 1369821862 ecr 1117291897], length 0
+10:57:53.242883 IP (tos 0x0, ttl 54, id 14411, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x69f6 (correct), ack 47745, win 29, options [nop,nop,TS val 1369821862 ecr 1117291897], length 0
+10:57:53.243691 IP (tos 0x0, ttl 54, id 14412, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x6527 (correct), ack 48976, win 29, options [nop,nop,TS val 1369821862 ecr 1117291897], length 0
+10:57:53.243693 IP (tos 0x0, ttl 54, id 14413, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x62f9 (correct), ack 49534, win 29, options [nop,nop,TS val 1369821862 ecr 1117291897], length 0
+10:57:53.267703 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 49534:50908, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267705 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 50908:52282, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267706 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 52282:53656, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267719 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 53656:54859, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1203
+10:57:53.267760 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 54859:56233, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267761 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 56233:57607, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267761 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 57607:58981, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267765 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 58981:60184, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1203
+10:57:53.267774 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 60184:61558, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267775 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 61558:62932, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267776 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 617)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 62932:63497, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 565
+10:57:53.267783 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 63497:64871, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1374
+10:57:53.267785 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1371)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 64871:66190, ack 9994, win 2757, options [nop,nop,TS val 1117291929 ecr 1369821862], length 1319
+10:57:53.270742 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 66190:67564, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 1374
+10:57:53.270743 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 67564:68938, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 1374
+10:57:53.270744 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 68938:70312, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 1374
+10:57:53.270750 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 70312:71515, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 1203
+10:57:53.270759 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 71515:72889, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 1374
+10:57:53.270761 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 196)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 72889:73033, ack 9994, win 2757, options [nop,nop,TS val 1117291932 ecr 1369821862], length 144
+10:57:53.273249 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 73033:74407, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 1374
+10:57:53.273251 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 74407:75781, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 1374
+10:57:53.273251 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 75781:77155, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 1374
+10:57:53.273259 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1255)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 77155:78358, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 1203
+10:57:53.273269 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 78358:79732, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 1374
+10:57:53.273272 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 150)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 79732:79830, ack 9994, win 2757, options [nop,nop,TS val 1117291934 ecr 1369821862], length 98
+10:57:53.273929 IP (tos 0x0, ttl 54, id 14414, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5d5c (correct), ack 50908, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.273933 IP (tos 0x0, ttl 54, id 14415, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x52a0 (correct), ack 53656, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276009 IP (tos 0x0, ttl 54, id 14416, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x4ded (correct), ack 54859, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276013 IP (tos 0x0, ttl 54, id 14417, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x3dd3 (correct), ack 58981, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276015 IP (tos 0x0, ttl 54, id 14418, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x3920 (correct), ack 60184, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276016 IP (tos 0x0, ttl 54, id 14419, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x33c2 (correct), ack 61558, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276017 IP (tos 0x0, ttl 54, id 14420, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x2e64 (correct), ack 62932, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276019 IP (tos 0x0, ttl 54, id 14421, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x2c2f (correct), ack 63497, win 29, options [nop,nop,TS val 1369821893 ecr 1117291929], length 0
+10:57:53.276020 IP (tos 0x0, ttl 54, id 14422, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x26cf (correct), ack 64871, win 29, options [nop,nop,TS val 1369821895 ecr 1117291929], length 0
+10:57:53.276021 IP (tos 0x0, ttl 54, id 14423, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x21a8 (correct), ack 66190, win 29, options [nop,nop,TS val 1369821895 ecr 1117291929], length 0
+10:57:53.276467 IP (tos 0x0, ttl 54, id 14424, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x118a (correct), ack 70312, win 29, options [nop,nop,TS val 1369821896 ecr 1117291932], length 0
+10:57:53.276469 IP (tos 0x0, ttl 54, id 14425, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x0cd7 (correct), ack 71515, win 29, options [nop,nop,TS val 1369821896 ecr 1117291932], length 0
+10:57:53.276753 IP (tos 0x0, ttl 54, id 14426, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x1754 (correct), ack 71515, win 29, options [nop,nop,TS val 1369821896 ecr 1117291932,nop,nop,sack 1 {72889:73033}], length 0
+10:57:53.276754 IP (tos 0x0, ttl 54, id 14427, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x06e9 (correct), ack 73033, win 29, options [nop,nop,TS val 1369821896 ecr 1117291932], length 0
+10:57:53.280512 IP (tos 0x0, ttl 54, id 14428, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc74a (correct), ack 78358, win 29, options [nop,nop,TS val 1369821900 ecr 1117291934,nop,nop,sack 1 {79732:79830}], length 0
+10:57:53.280515 IP (tos 0x0, ttl 54, id 14429, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xec55 (correct), ack 79830, win 29, options [nop,nop,TS val 1369821900 ecr 1117291934], length 0
+10:57:53.353331 IP (tos 0x0, ttl 54, id 14430, offset 0, flags [DF], proto TCP (6), length 382)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 9994:10324, ack 79830, win 29, options [nop,nop,TS val 1369821971 ecr 1117291934], length 330
+10:57:53.353523 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xdfcb (correct), ack 10324, win 2757, options [nop,nop,TS val 1117292015 ecr 1369821971], length 0
+10:57:53.357843 IP (tos 0x0, ttl 54, id 14431, offset 0, flags [DF], proto TCP (6), length 354)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10324:10626, ack 79830, win 29, options [nop,nop,TS val 1369821977 ecr 1117291934], length 302
+10:57:53.357846 IP (tos 0x0, ttl 54, id 14432, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10626:10673, ack 79830, win 29, options [nop,nop,TS val 1369821977 ecr 1117291934], length 47
+10:57:53.357936 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xde64 (correct), ack 10673, win 2757, options [nop,nop,TS val 1117292019 ecr 1369821977], length 0
+10:57:53.358323 IP (tos 0x0, ttl 54, id 14433, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10673:10704, ack 79830, win 29, options [nop,nop,TS val 1369821977 ecr 1117291934], length 31
+10:57:53.358376 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xde45 (correct), ack 10704, win 2757, options [nop,nop,TS val 1117292019 ecr 1369821977], length 0
+10:57:53.359645 IP (tos 0x0, ttl 54, id 14434, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10704:10751, ack 79830, win 29, options [nop,nop,TS val 1369821979 ecr 1117291934], length 47
+10:57:53.359647 IP (tos 0x0, ttl 54, id 14435, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10751:10782, ack 79830, win 29, options [nop,nop,TS val 1369821979 ecr 1117291934], length 31
+10:57:53.359708 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xddf3 (correct), ack 10782, win 2757, options [nop,nop,TS val 1117292021 ecr 1369821979], length 0
+10:57:53.367162 IP (tos 0x0, ttl 54, id 14436, offset 0, flags [DF], proto TCP (6), length 350)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 10782:11080, ack 79830, win 29, options [nop,nop,TS val 1369821985 ecr 1117292019], length 298
+10:57:53.367279 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xdcbc (correct), ack 11080, win 2757, options [nop,nop,TS val 1117292028 ecr 1369821985], length 0
+10:57:53.374773 IP (tos 0x0, ttl 54, id 14437, offset 0, flags [DF], proto TCP (6), length 355)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 11080:11383, ack 79830, win 29, options [nop,nop,TS val 1369821994 ecr 1117292028], length 303
+10:57:53.374778 IP (tos 0x0, ttl 54, id 14438, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 11383:11430, ack 79830, win 29, options [nop,nop,TS val 1369821994 ecr 1117292028], length 47
+10:57:53.374894 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xdb4d (correct), ack 11430, win 2757, options [nop,nop,TS val 1117292036 ecr 1369821994], length 0
+10:57:53.376166 IP (tos 0x0, ttl 54, id 14439, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 11430:11461, ack 79830, win 29, options [nop,nop,TS val 1369821994 ecr 1117292028], length 31
+10:57:53.376247 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xdb2d (correct), ack 11461, win 2757, options [nop,nop,TS val 1117292037 ecr 1369821994], length 0
+10:57:53.379687 IP (tos 0x0, ttl 54, id 14440, offset 0, flags [DF], proto TCP (6), length 638)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 11461:12047, ack 79830, win 29, options [nop,nop,TS val 1369821998 ecr 1117292028], length 586
+10:57:53.379690 IP (tos 0x0, ttl 54, id 14441, offset 0, flags [DF], proto TCP (6), length 103)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12047:12098, ack 79830, win 29, options [nop,nop,TS val 1369821998 ecr 1117292028], length 51
+10:57:53.379768 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xd8a8 (correct), ack 12098, win 2757, options [nop,nop,TS val 1117292041 ecr 1369821998], length 0
+10:57:53.381058 IP (tos 0x0, ttl 54, id 14442, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12098:12129, ack 79830, win 29, options [nop,nop,TS val 1369821998 ecr 1117292028], length 31
+10:57:53.381123 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xd888 (correct), ack 12129, win 2757, options [nop,nop,TS val 1117292042 ecr 1369821998], length 0
+10:57:53.393700 IP (tos 0x0, ttl 54, id 14443, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12129:12176, ack 79830, win 29, options [nop,nop,TS val 1369822012 ecr 1117292042], length 47
+10:57:53.393703 IP (tos 0x0, ttl 54, id 14444, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12176:12207, ack 79830, win 29, options [nop,nop,TS val 1369822013 ecr 1117292042], length 31
+10:57:53.393791 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xd81e (correct), ack 12207, win 2757, options [nop,nop,TS val 1117292055 ecr 1369822013], length 0
+10:57:54.215958 IP (tos 0x0, ttl 54, id 14445, offset 0, flags [DF], proto TCP (6), length 508)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12207:12663, ack 79830, win 29, options [nop,nop,TS val 1369822740 ecr 1117292055], length 456
+10:57:54.216149 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xd049 (correct), ack 12663, win 2757, options [nop,nop,TS val 1117292877 ecr 1369822740], length 0
+10:57:54.217767 IP (tos 0x0, ttl 54, id 14446, offset 0, flags [DF], proto TCP (6), length 97)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12663:12708, ack 79830, win 29, options [nop,nop,TS val 1369822743 ecr 1117292055], length 45
+10:57:54.217770 IP (tos 0x0, ttl 54, id 14447, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12708:12739, ack 79830, win 29, options [nop,nop,TS val 1369822752 ecr 1117292055], length 31
+10:57:54.217772 IP (tos 0x0, ttl 54, id 14448, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12708:12739, ack 79830, win 29, options [nop,nop,TS val 1369822773 ecr 1117292055], length 31
+10:57:54.217939 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 64)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x6f7a (correct), ack 12739, win 2756, options [nop,nop,TS val 1117292879 ecr 1369822752,nop,nop,sack 1 {12708:12739}], length 0
+10:57:54.234803 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 79830:81204, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 1374
+10:57:54.234810 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 81204:82578, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 1374
+10:57:54.234813 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 82578:83952, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 1374
+10:57:54.234814 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 83952:85326, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 1374
+10:57:54.234846 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1304)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 85326:86578, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 1252
+10:57:54.234915 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 698)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 86578:87224, ack 12739, win 2757, options [nop,nop,TS val 1117292896 ecr 1369822752], length 646
+10:57:54.238076 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 87224:88598, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 1374
+10:57:54.238078 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 88598:89972, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 1374
+10:57:54.238080 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 89972:91346, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 1374
+10:57:54.238091 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1256)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 91346:92550, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 1204
+10:57:54.238115 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 92550:93924, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 1374
+10:57:54.238122 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 248)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 93924:94120, ack 12739, win 2757, options [nop,nop,TS val 1117292899 ecr 1369822752], length 196
+10:57:54.242041 IP (tos 0x0, ttl 54, id 14449, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xd4bb (correct), ack 81204, win 29, options [nop,nop,TS val 1369822861 ecr 1117292896], length 0
+10:57:54.242045 IP (tos 0x0, ttl 54, id 14450, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc4a1 (correct), ack 85326, win 29, options [nop,nop,TS val 1369822861 ecr 1117292896], length 0
+10:57:54.242978 IP (tos 0x0, ttl 54, id 14451, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xbd37 (correct), ack 87224, win 29, options [nop,nop,TS val 1369822861 ecr 1117292896], length 0
+10:57:54.245466 IP (tos 0x0, ttl 54, id 14452, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xb7d2 (correct), ack 88598, win 29, options [nop,nop,TS val 1369822865 ecr 1117292899], length 0
+10:57:54.245468 IP (tos 0x0, ttl 54, id 14453, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xad16 (correct), ack 91346, win 29, options [nop,nop,TS val 1369822865 ecr 1117292899], length 0
+10:57:54.245471 IP (tos 0x0, ttl 54, id 14454, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xa862 (correct), ack 92550, win 29, options [nop,nop,TS val 1369822865 ecr 1117292899], length 0
+10:57:54.245472 IP (tos 0x0, ttl 54, id 14455, offset 0, flags [DF], proto TCP (6), length 64)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x0e55 (correct), ack 92550, win 29, options [nop,nop,TS val 1369822865 ecr 1117292899,nop,nop,sack 1 {93924:94120}], length 0
+10:57:54.246858 IP (tos 0x0, ttl 54, id 14456, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xa240 (correct), ack 94120, win 29, options [nop,nop,TS val 1369822865 ecr 1117292899], length 0
+10:57:54.320591 IP (tos 0x0, ttl 54, id 14457, offset 0, flags [DF], proto TCP (6), length 389)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 12739:13076, ack 94120, win 29, options [nop,nop,TS val 1369822939 ecr 1117292899], length 337
+10:57:54.320599 IP (tos 0x0, ttl 54, id 14458, offset 0, flags [DF], proto TCP (6), length 99)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 13076:13123, ack 94120, win 29, options [nop,nop,TS val 1369822939 ecr 1117292899], length 47
+10:57:54.320869 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x957b (correct), ack 13123, win 2757, options [nop,nop,TS val 1117292982 ecr 1369822939], length 0
+10:57:54.321086 IP (tos 0x0, ttl 54, id 14459, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 13123:13154, ack 94120, win 29, options [nop,nop,TS val 1369822939 ecr 1117292899], length 31
+10:57:54.321784 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x955b (correct), ack 13154, win 2757, options [nop,nop,TS val 1117292983 ecr 1369822939], length 0
+10:57:55.046531 IP (tos 0x0, ttl 54, id 14460, offset 0, flags [DF], proto TCP (6), length 635)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 13154:13737, ack 94120, win 29, options [nop,nop,TS val 1369823666 ecr 1117292983], length 583
+10:57:55.046535 IP (tos 0x0, ttl 54, id 14461, offset 0, flags [DF], proto TCP (6), length 85)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 13737:13770, ack 94120, win 29, options [nop,nop,TS val 1369823666 ecr 1117292983], length 33
+10:57:55.046713 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x8d47 (correct), ack 13770, win 2757, options [nop,nop,TS val 1117293708 ecr 1369823666], length 0
+10:57:55.085333 IP (tos 0x0, ttl 54, id 14462, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 13770:15144, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.085564 IP (tos 0x0, ttl 54, id 14463, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 15144:16518, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.085567 IP (tos 0x0, ttl 54, id 14464, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 16518:17892, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.085570 IP (tos 0x0, ttl 54, id 14465, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 17892:19266, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.085660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x77c1 (correct), ack 19266, win 2693, options [nop,nop,TS val 1117293747 ecr 1369823705], length 0
+10:57:55.085724 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x7781 (correct), ack 19266, win 2757, options [nop,nop,TS val 1117293747 ecr 1369823705], length 0
+10:57:55.087061 IP (tos 0x0, ttl 54, id 14466, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 19266:20640, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.087064 IP (tos 0x0, ttl 54, id 14467, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 20640:22014, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.087067 IP (tos 0x0, ttl 54, id 14468, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 22014:23388, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.087070 IP (tos 0x0, ttl 54, id 14469, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 23388:24762, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.087072 IP (tos 0x0, ttl 54, id 14470, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 24762:26136, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 1374
+10:57:55.087074 IP (tos 0x0, ttl 54, id 14471, offset 0, flags [DF], proto TCP (6), length 66)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], cksum 0x4f8c (correct), seq 26136:26150, ack 94120, win 29, options [nop,nop,TS val 1369823705 ecr 1117293708], length 14
+10:57:55.087119 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x5d07 (correct), ack 26150, win 2650, options [nop,nop,TS val 1117293748 ecr 1369823705], length 0
+10:57:55.087163 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x5c9c (correct), ack 26150, win 2757, options [nop,nop,TS val 1117293748 ecr 1369823705], length 0
+10:57:55.125543 IP (tos 0x0, ttl 54, id 14472, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 26150:27524, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.125548 IP (tos 0x0, ttl 54, id 14473, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 27524:28898, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.125654 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x51bb (correct), ack 28898, win 2715, options [nop,nop,TS val 1117293787 ecr 1369823745], length 0
+10:57:55.127340 IP (tos 0x0, ttl 54, id 14474, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 28898:30272, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127343 IP (tos 0x0, ttl 54, id 14475, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 30272:31646, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127346 IP (tos 0x0, ttl 54, id 14476, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 31646:33020, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127349 IP (tos 0x0, ttl 54, id 14477, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 33020:34394, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127352 IP (tos 0x0, ttl 54, id 14478, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 34394:35768, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127355 IP (tos 0x0, ttl 54, id 14479, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 35768:37142, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127358 IP (tos 0x0, ttl 54, id 14480, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 37142:38516, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127361 IP (tos 0x0, ttl 54, id 14481, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 38516:39890, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127364 IP (tos 0x0, ttl 54, id 14482, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 39890:41264, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127367 IP (tos 0x0, ttl 54, id 14483, offset 0, flags [DF], proto TCP (6), length 1344)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 41264:42556, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1292
+10:57:55.127369 IP (tos 0x0, ttl 54, id 14484, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 42556:43930, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127372 IP (tos 0x0, ttl 54, id 14485, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 43930:45304, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127374 IP (tos 0x0, ttl 54, id 14486, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 45304:46678, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127377 IP (tos 0x0, ttl 54, id 14487, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 46678:48052, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127379 IP (tos 0x0, ttl 54, id 14488, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 48052:49426, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127381 IP (tos 0x0, ttl 54, id 14489, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 49426:50800, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127384 IP (tos 0x0, ttl 54, id 14490, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 50800:52174, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127386 IP (tos 0x0, ttl 54, id 14491, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 52174:53548, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127388 IP (tos 0x0, ttl 54, id 14492, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 53548:54922, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127390 IP (tos 0x0, ttl 54, id 14493, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 54922:56296, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127392 IP (tos 0x0, ttl 54, id 14494, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 56296:57670, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127394 IP (tos 0x0, ttl 54, id 14495, offset 0, flags [DF], proto TCP (6), length 1344)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 57670:58962, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1292
+10:57:55.127396 IP (tos 0x0, ttl 54, id 14496, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 58962:60336, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127398 IP (tos 0x0, ttl 54, id 14497, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 60336:61710, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127400 IP (tos 0x0, ttl 54, id 14498, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 61710:63084, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127402 IP (tos 0x0, ttl 54, id 14499, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], seq 63084:64458, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 1374
+10:57:55.127404 IP (tos 0x0, ttl 54, id 14500, offset 0, flags [DF], proto TCP (6), length 501)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 64458:64907, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 449
+10:57:55.127406 IP (tos 0x0, ttl 54, id 14501, offset 0, flags [DF], proto TCP (6), length 83)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [P.], seq 64907:64938, ack 94120, win 29, options [nop,nop,TS val 1369823745 ecr 1117293748], length 31
+10:57:55.127508 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0x17c2 (correct), ack 43930, win 2522, options [nop,nop,TS val 1117293789 ecr 1369823745], length 0
+10:57:55.127537 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xddf3 (correct), ack 58962, win 2288, options [nop,nop,TS val 1117293789 ecr 1369823745], length 0
+10:57:55.127546 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xc6f8 (correct), ack 64938, win 2195, options [nop,nop,TS val 1117293789 ecr 1369823745], length 0
+10:57:55.127685 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], cksum 0xc4c6 (correct), ack 64938, win 2757, options [nop,nop,TS val 1117293789 ecr 1369823745], length 0
+10:57:55.154790 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 94120:95494, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154799 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 95494:96868, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154800 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 96868:98242, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154802 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 98242:99616, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154823 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1307)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 99616:100871, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1255
+10:57:55.154888 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 100871:102245, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154889 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 102245:103619, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154891 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 103619:104993, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154892 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 104993:106367, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154894 IP (tos 0x0, ttl 64, id 4, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 106367:107741, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154895 IP (tos 0x0, ttl 64, id 5, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 107741:109115, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154896 IP (tos 0x0, ttl 64, id 6, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 109115:110489, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154898 IP (tos 0x0, ttl 64, id 7, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 110489:111863, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154899 IP (tos 0x0, ttl 64, id 8, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 111863:113237, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154900 IP (tos 0x0, ttl 64, id 9, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 113237:114611, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154901 IP (tos 0x0, ttl 64, id 10, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 114611:115985, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154907 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1344)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [P.], seq 115985:117277, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1292
+10:57:55.154947 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 117277:118651, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154948 IP (tos 0x0, ttl 64, id 1, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 118651:120025, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154949 IP (tos 0x0, ttl 64, id 2, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 120025:121399, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154951 IP (tos 0x0, ttl 64, id 3, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 121399:122773, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154952 IP (tos 0x0, ttl 64, id 4, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 122773:124147, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154953 IP (tos 0x0, ttl 64, id 5, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 124147:125521, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154954 IP (tos 0x0, ttl 64, id 6, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 125521:126895, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154956 IP (tos 0x0, ttl 64, id 7, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 126895:128269, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154957 IP (tos 0x0, ttl 64, id 8, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 128269:129643, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154958 IP (tos 0x0, ttl 64, id 9, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 129643:131017, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.154960 IP (tos 0x0, ttl 64, id 10, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 131017:132391, ack 64938, win 2757, options [nop,nop,TS val 1117293816 ecr 1369823745], length 1374
+10:57:55.161298 IP (tos 0x0, ttl 54, id 14502, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc9d2 (correct), ack 95494, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.161344 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 132391:133765, ack 64938, win 2757, options [nop,nop,TS val 1117293822 ecr 1369823780], length 1374
+10:57:55.162881 IP (tos 0x0, ttl 54, id 14503, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xc474 (correct), ack 96868, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162883 IP (tos 0x0, ttl 54, id 14504, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xbf16 (correct), ack 98242, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162883 IP (tos 0x0, ttl 54, id 14505, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xb9b8 (correct), ack 99616, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162884 IP (tos 0x0, ttl 54, id 14506, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xb4d1 (correct), ack 100871, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162884 IP (tos 0x0, ttl 54, id 14507, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xaf73 (correct), ack 102245, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162885 IP (tos 0x0, ttl 54, id 14508, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xaa15 (correct), ack 103619, win 29, options [nop,nop,TS val 1369823780 ecr 1117293816], length 0
+10:57:55.162885 IP (tos 0x0, ttl 54, id 14509, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0xa4b6 (correct), ack 104993, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162886 IP (tos 0x0, ttl 54, id 14510, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x8f3e (correct), ack 110489, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162887 IP (tos 0x0, ttl 54, id 14511, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x89e0 (correct), ack 111863, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162887 IP (tos 0x0, ttl 54, id 14512, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x7f24 (correct), ack 114611, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162888 IP (tos 0x0, ttl 54, id 14513, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x79c6 (correct), ack 115985, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162888 IP (tos 0x0, ttl 54, id 14514, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x74ba (correct), ack 117277, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162889 IP (tos 0x0, ttl 54, id 14515, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x6f5c (correct), ack 118651, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162889 IP (tos 0x0, ttl 54, id 14516, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5f42 (correct), ack 122773, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162890 IP (tos 0x0, ttl 54, id 14517, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x5486 (correct), ack 125521, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162890 IP (tos 0x0, ttl 54, id 14518, offset 0, flags [DF], proto TCP (6), length 52)
+    172.64.155.209.443 > 172.25.176.249.61872: Flags [.], cksum 0x446c (correct), ack 129643, win 29, options [nop,nop,TS val 1369823781 ecr 1117293816], length 0
+10:57:55.162931 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 133765:135139, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162949 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 135139:136513, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162953 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 136513:137887, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162958 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 137887:139261, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162962 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 139261:140635, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162965 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
+    172.25.176.249.61872 > 172.64.155.209.443: Flags [.], seq 140635:142009, ack 64938, win 2757, options [nop,nop,TS val 1117293824 ecr 1369823780], length 1374
+10:57:55.162971 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1426)
