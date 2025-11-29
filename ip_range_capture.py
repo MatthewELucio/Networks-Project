@@ -116,7 +116,7 @@ def main():
     safe_name = str(network.with_prefixlen).replace("/", "_").replace(":", "-")
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    outfile = outdir / f"captures/capture_{timestamp}_{safe_name}.txt"
+    outfile = outdir / f"capture_{timestamp}_{safe_name}.txt"
     cmd = build_command(network, args.interface, args.snaplen, args.extra_filter)
     print(f"Executing: {' '.join(cmd)}")
     print(f"Writing to: {outfile}")
@@ -140,8 +140,11 @@ def main():
                 print("Stopping capture...")
                 proc.terminate()
             proc.wait()
-    except FileNotFoundError:
-        print("tcpdump not found. Install tcpdump first.", file=sys.stderr)
+    except FileNotFoundError as exc:
+        if exc.filename == cmd[0]:
+            print("tcpdump not found. Install tcpdump first.", file=sys.stderr)
+        else:
+            print(f"Failed to create output file {outfile}: {exc}", file=sys.stderr)
         sys.exit(1)
     print("Capture complete.")
 
