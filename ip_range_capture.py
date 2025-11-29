@@ -3,7 +3,7 @@ import argparse
 ip_range_capture
 ================
 
-Capture packets where either the source OR destination matches an IPv4/IPv6
+Capture packets where either the source and/or destination matches an IPv4/IPv6
 CIDR range (optionally refined with an additional BPF filter), and write
 human-readable tcpdump output to a timestamped text file.
 
@@ -26,7 +26,7 @@ Security / Permissions:
 - User is responsible for having appropriate privileges and complying with local policy.
 
 Files / Output:
-- Output file pattern: capture_<YYYYmmdd_HHMMSS>_<CIDR_with_slash_replaced>.txt
+- Output file pattern: captures/capture_<YYYYmmdd_HHMMSS>_<CIDR_with_slash_replaced>.txt
 - Stored in --outdir (created if missing).
 
 Arguments:
@@ -75,11 +75,13 @@ from pathlib import Path
 #!/usr/bin/env python3
 
 def build_command(network: ipaddress._BaseNetwork, interface: str | None, snaplen: int, extra: str | None):
+    is_ipv6 = isinstance(network, ipaddress.IPv6Network)
+    proto = "ip6" if is_ipv6 else "ip"
     # Use 'host' if single-address network, else 'net'
     if network.num_addresses == 1:
-        base_filter = f"host {network.network_address}"
+        base_filter = f"{proto} host {network.network_address.compressed if is_ipv6 else network.network_address}"
     else:
-        base_filter = f"net {network.with_prefixlen}"
+        base_filter = f"{proto} net {network.with_prefixlen}"
     if extra:
         base_filter = f"({base_filter}) and ({extra})"
     cmd = ["tcpdump", "-nn", "-v", "-U", "-s", str(snaplen), base_filter]
@@ -111,10 +113,10 @@ def main():
         print("Warning: tcpdump typically requires root privileges.", file=sys.stderr)
     network = validate_network(args.ip_range)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    safe_name = str(network.with_prefixlen).replace("/", "_")
+    safe_name = str(network.with_prefixlen).replace("/", "_").replace(":", "-")
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    outfile = outdir / f"capture_{timestamp}_{safe_name}.txt"
+    outfile = outdir / f"captures/capture_{timestamp}_{safe_name}.txt"
     cmd = build_command(network, args.interface, args.snaplen, args.extra_filter)
     print(f"Executing: {' '.join(cmd)}")
     print(f"Writing to: {outfile}")

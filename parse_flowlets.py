@@ -4,21 +4,64 @@
 Read a tcpdump-style text capture (the project's `capture_*.txt`) and
 produce flows (5-tuples) and flowlets split by an inter-packet-gap threshold.
 
-Usage: python3 parse_flowlets.py input.txt --threshold 0.1 --bidirectional --output out.json
+Usage: python3 parse_flowlets.py <capture.txt | captures_dir> --threshold 0.1 --bidirectional --output out.json
 """
 import argparse
 import json
 import re
 import ipaddress
+from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Optional, Tuple, Any
 
 # Regexes
-TS_LINE_RE = re.compile(r'^(?P<ts>\d{2}:\d{2}:\d{2}\.\d+)\s+IP.*proto\s+(?P<proto>\w+)', re.IGNORECASE)
-ADDR_LINE_RE = re.compile(
-    r'^\s*(?P<src>\d+\.\d+\.\d+\.\d+)(?:\.(?P<sport>\d+))?\s*>\s*(?P<dst>\d+\.\d+\.\d+\.\d+)(?:\.(?P<dport>\d+))?:\s*(?P<rest>.*)$'
-)
+TS_LINE_RE = re.compile(r'^(?P<ts>\d{2}:\d{2}:\d{2}\.\d+)\s+(?P<family>IP6|IP)\b', re.IGNORECASE)
+PROTO_HINT_RE = re.compile(r'(?:proto|next-header)\s+(?P<proto>[A-Za-z0-9_]+)', re.IGNORECASE)
 LENGTH_RE = re.compile(r'length\s+(?P<len>\d+)', re.IGNORECASE)
+
+
+def extract_proto(header_line: str) -> str:
+    match = PROTO_HINT_RE.search(header_line)
+    if match:
+        return match.group('proto').upper()
+    return 'UNKNOWN'
+
+
+def split_host_port(token: str) -> Tuple[Optional[str], Optional[int]]:
+    token = token.strip()
+    if not token:
+        return None, None
+    if '.' in token:
+        host_candidate, possible_port = token.rsplit('.', 1)
+        if possible_port.isdigit():
+            return host_candidate, int(possible_port)
+    return token, None
+
+
+def parse_address_line(line: str) -> Tuple[Optional[str], Optional[int], Optional[str], Optional[int], str]:
+    if '>' not in line:
+        return None, None, None, None, line
+    left, right = line.split('>', 1)
+    src_ip, src_port = split_host_port(left.strip())
+    right = right.strip()
+    if ':' in right:
+        dst_part, remainder = right.split(':', 1)
+    else:
+        dst_part, remainder = right, ''
+    dst_ip, dst_port = split_host_port(dst_part.strip())
+    return src_ip, src_port, dst_ip, dst_port, remainder
+
+
+def resolve_input_paths(target: str, glob_pattern: str) -> List[Path]:
+    path = Path(target)
+    if path.is_file():
+        return [path]
+    if path.is_dir():
+        candidates = sorted(path.glob(glob_pattern))
+        if not candidates:
+            raise FileNotFoundError(f'No files matched pattern {glob_pattern!r} in {path}')
+        return candidates
+    raise FileNotFoundError(f'Input path {target} does not exist')
 
 
 def ts_to_seconds(ts_str: str) -> float:
@@ -27,14 +70,14 @@ def ts_to_seconds(ts_str: str) -> float:
     return int(h) * 3600 + int(m) * 60 + float(s)
 
 
-def parse_capture_text(path: str) -> List[Dict[str, Any]]:
+def parse_capture_text(path: Path) -> List[Dict[str, Any]]:
     """Parse the capture text and return list of packet dicts.
 
     Each packet dict contains: ts (float seconds), proto, src_ip, src_port (int|None),
     dst_ip, dst_port (int|None), length (int|None), raw_lines (2-line tuple).
     """
     packets = []
-    with open(path, 'r', encoding='utf-8', errors='replace') as f:
+    with path.open('r', encoding='utf-8', errors='replace') as f:
         lines = [l.rstrip('\n') for l in f]
 
     i = 0
@@ -43,7 +86,7 @@ def parse_capture_text(path: str) -> List[Dict[str, Any]]:
         m = TS_LINE_RE.match(line)
         if m:
             ts_str = m.group('ts')
-            proto = m.group('proto').upper()
+            proto = extract_proto(line)
             ts = ts_to_seconds(ts_str)
             # look ahead for address line
             addr_line = None
@@ -53,21 +96,11 @@ def parse_capture_text(path: str) -> List[Dict[str, Any]]:
             src = dst = sport = dport = None
             length = None
             if addr_line:
-                ma = ADDR_LINE_RE.match(addr_line)
-                if ma:
-                    src = ma.group('src')
-                    dst = ma.group('dst')
-                    sport = ma.group('sport')
-                    dport = ma.group('dport')
-                    # try to get length from the addr line
-                    ml = LENGTH_RE.search(addr_line)
-                    if ml:
-                        length = int(ml.group('len'))
-                else:
-                    # fallback: try to find any length on the next line
-                    ml = LENGTH_RE.search(addr_line)
-                    if ml:
-                        length = int(ml.group('len'))
+                src, sport, dst, dport, remainder = parse_address_line(addr_line)
+                # try to get length from the addr line (including remainder portion)
+                length_match = LENGTH_RE.search(addr_line)
+                if length_match:
+                    length = int(length_match.group('len'))
 
             # also try length from the TS line if not found
             if length is None:
@@ -95,6 +128,17 @@ def parse_capture_text(path: str) -> List[Dict[str, Any]]:
             i += 1
 
     return packets
+
+
+def load_packets(input_path: str, glob_pattern: str) -> Tuple[List[Dict[str, Any]], List[Path]]:
+    paths = resolve_input_paths(input_path, glob_pattern)
+    packets: List[Dict[str, Any]] = []
+    for path in paths:
+        parsed = parse_capture_text(path)
+        for pkt in parsed:
+            pkt['source_file'] = str(path)
+        packets.extend(parsed)
+    return packets, paths
 
 
 def canonical_flow_key(pkt: Dict[str, Any], bidirectional: bool = False) -> Tuple:
@@ -330,19 +374,21 @@ def annotate_queries(
 
 def main(argv=None):
     p = argparse.ArgumentParser(description='Parse tcpdump-style text into flows, flowlets, and estimated LLM queries')
-    p.add_argument('input', help='input capture text file')
+    p.add_argument('input', help='capture text file or directory containing capture_*.txt files')
     p.add_argument('--threshold', '-t', type=float, default=0.1, help='flowlet gap threshold in seconds (default: 0.1s)')
     p.add_argument('--bidirectional', '-b', action='store_true', help='treat flows as bidirectional (fold directions)')
     p.add_argument('--client-ip', help='hint for which IP is the ChatGPT client (helps direction inference)')
     p.add_argument('--server-ip', help='hint for which IP is the ChatGPT backend (LLM) server')
+    p.add_argument('--pattern', default='capture*.txt', help='glob pattern when input is a directory (default: capture*.txt)')
     p.add_argument('--output', '-o', help='write JSON summary to this file')
     p.add_argument('--sample', action='store_true', help='print a small human-readable sample summary')
     args = p.parse_args(argv)
 
-    packets = parse_capture_text(args.input)
+    packets, input_files = load_packets(args.input, args.pattern)
     flows = group_packets_into_flows(packets, bidirectional=args.bidirectional)
     summary = build_summary(flows, threshold=args.threshold, bidirectional=args.bidirectional)
     annotate_queries(summary, client_ip=args.client_ip, server_ip=args.server_ip)
+    summary['source_files'] = [str(p) for p in input_files]
 
     if args.output:
         with open(args.output, 'w', encoding='utf-8') as fh:
@@ -350,7 +396,10 @@ def main(argv=None):
         print(f'Wrote JSON summary to {args.output}')
     if args.sample or not args.output:
         # print brief summary
-        print(f"Flows: {summary['flows_count']}, threshold={summary['threshold']}s, bidir={summary['bidirectional']}")
+        print(
+            f"Files: {len(input_files)}, packets={len(packets)}, flows={summary['flows_count']}, "
+            f"threshold={summary['threshold']}s, bidir={summary['bidirectional']}"
+        )
         # print top 10 flows by bytes
         flows_sorted = sorted(summary['flows'], key=lambda x: x['bytes'], reverse=True)
         for f in flows_sorted[:10]:
