@@ -1,0 +1,2547 @@
+tcpdump: data link type PKTAP
+tcpdump: WARNING: snaplen raised from 96 to 524288
+tcpdump: listening on pktap, link-type PKTAP (Apple DLT_PKTAP), snapshot length 524288 bytes
+17:48:18.489595 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.489647 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.489659 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 693)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.499828 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.502373 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.571887 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 733)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.574180 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.576302 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 708)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.584875 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.587383 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.884172 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 677)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.884176 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.884177 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 169)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.884178 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 677)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:18.884619 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:18.895444 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.352138 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 503)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.356552 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.363299 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 725)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.372592 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.375163 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.406601 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 94)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.409084 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.463131 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 704)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.463133 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.463134 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.465741 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.476353 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.486773 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.489297 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.513742 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 131)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.516358 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.559865 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 120)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.562196 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.600505 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 116)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.603062 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.624967 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 128)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.627543 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.653416 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 122)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.656078 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.701329 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 119)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.703403 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.743008 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 166)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.745524 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.795124 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.797682 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.839011 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 147)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.841599 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.865103 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 142)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.867645 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.925506 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 111)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:19.928084 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:19.998176 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 159)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.000786 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.032119 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 141)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.034683 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.213268 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 140)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.215399 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.382581 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 236)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.385030 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.482251 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 245)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.484747 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.484906 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 166)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.487387 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.542380 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 155)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.544916 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.829649 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829652 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 115)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829653 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 78)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829653 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829654 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 268)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829655 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:20.829868 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:20.840868 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:21.095138 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 675)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:21.106760 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:21.109554 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:21.167598 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 707)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:21.167602 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:21.167604 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 178)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:21.169794 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:21.180517 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:29.988456 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 723)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:29.992921 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:29.992977 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:29.992996 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 483)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.003605 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.006108 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.058937 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 723)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.061439 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.071012 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.076368 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 714)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.085633 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.088148 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.093774 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 669)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.093777 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 169)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.095905 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.104976 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.352824 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 675)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.352827 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 208)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.355206 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.364492 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.966368 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 503)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.968943 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:30.986298 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 113)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:30.988609 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.020462 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.023025 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.046639 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 117)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.049214 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.103118 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 103)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.105678 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.191604 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 134)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.194625 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.236057 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 122)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.238670 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.280076 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 142)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.282670 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.311367 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 119)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.313934 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.382214 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 122)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.384816 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.426162 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 160)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.428349 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.458585 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 137)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.461213 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.499079 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 145)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.501689 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.553665 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 150)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.556294 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.583650 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 142)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.586304 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.610280 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 154)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.612766 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.816020 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 145)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.818624 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:31.973611 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 229)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:31.976173 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:32.140857 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 231)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.143180 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:32.326192 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 243)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.328784 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:32.339856 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.531451 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 245)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.534044 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:32.721974 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.724489 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:32.925081 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 258)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:32.927671 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.078026 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 274)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.080621 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.256795 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 264)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.259333 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.400858 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 281)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.403315 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.608344 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 281)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.610913 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.775722 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 289)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.778303 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:33.936349 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 283)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:33.938939 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:34.091907 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 282)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:34.094246 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:34.287454 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 302)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:34.290098 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:34.529158 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 304)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:34.531764 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:34.688704 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 296)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:34.691291 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:34.886245 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 308)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:34.888999 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.061001 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 333)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.063242 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.241484 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 340)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.244051 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.421333 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 328)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.423898 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.576558 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 339)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.578926 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.788692 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 306)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.791277 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.952024 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 341)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:35.954644 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:35.963972 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.123401 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 336)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.125982 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:36.306384 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 339)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.308999 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:36.535115 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 357)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.537701 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:36.541799 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 343)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.544346 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:36.590506 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 295)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.593047 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:36.906570 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906574 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 114)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906574 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 77)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906575 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906575 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 266)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906575 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:36.906914 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:37.144594 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 685)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:37.153851 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:37.156376 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:37.225519 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 693)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:37.225522 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:37.225523 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 172)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:37.227637 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:37.238440 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.872551 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 731)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.875885 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.875907 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.875917 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 522)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.888180 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.890320 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.957608 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 692)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.957612 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.957613 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 185)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.960113 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.963789 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 712)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.966007 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.967764 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 725)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:44.970955 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.976457 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:44.978985 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:45.304414 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 698)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:45.304418 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:45.304419 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:45.304420 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 287)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:45.304421 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 698)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:45.304982 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:45.315822 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.634721 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 495)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.637614 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.677345 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 109)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.679896 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.720271 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 128)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.722830 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.752226 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.754815 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.810335 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 155)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.812925 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.861611 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 140)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.864205 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.888670 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.890963 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.938120 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 109)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.940673 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:46.977216 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:46.979803 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.032659 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 129)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.035235 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.091360 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.093929 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.122713 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 158)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.125264 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.151759 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 129)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.154265 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.186628 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 157)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.189156 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.215072 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 145)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.217666 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.235126 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 141)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.237706 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.387631 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 134)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.390267 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.555716 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 256)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.558211 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.730326 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 267)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.732903 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.901750 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 242)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:47.904370 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:47.917113 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.076087 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 238)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.078345 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:48.256837 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 264)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.259432 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:48.443191 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 259)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.445641 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:48.638513 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 285)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.640776 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:48.812454 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:48.815066 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.017008 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 261)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.019558 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.137004 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 263)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.139643 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.293553 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 249)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.296146 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.428364 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 271)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.430950 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.622648 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 367)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.624786 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.777529 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 319)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.780039 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:49.939861 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 328)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:49.942403 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.075897 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 387)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.078406 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.223062 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 343)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.225631 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.398127 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 388)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.400724 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.597782 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 423)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.600338 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.733139 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 419)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.735710 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:50.882143 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 460)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:50.884483 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:51.041605 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 444)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.044134 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:51.232770 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 480)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.235356 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:51.244482 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.382015 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 472)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.384661 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:51.493436 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 450)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.495616 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:51.508607 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 402)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:51.511081 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.052167 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 697)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.062365 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.064962 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.148581 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 706)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.148584 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.148586 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 177)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.150708 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.160223 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.272036 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.272038 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.272039 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 349)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.274600 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.677551 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 178)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.677554 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 112)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.677555 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 87)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.677556 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 80)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.677556 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 178)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.677863 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.685151 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 112)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.685317 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.813843 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 698)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.823690 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.826262 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.894921 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 671)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.894925 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 85)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.894926 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 193)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:48:52.897277 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:48:52.907696 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.466717 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 748)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.470141 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.470171 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.470182 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 556)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.481697 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.483773 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.484870 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.487353 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.556337 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 726)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.558279 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.558281 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.558482 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.559368 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 287)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.560445 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 748)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.568739 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.571168 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.857377 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 684)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.857380 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:01.859557 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:01.870971 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.428632 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 497)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.431112 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.438441 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 109)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.440993 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.496036 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 131)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.498664 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.541606 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 150)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.544210 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.601643 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 119)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.604288 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.651698 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 131)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.654286 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.709093 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 116)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.711682 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.749473 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 143)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.752036 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.794011 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.796546 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.847633 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 135)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.850219 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.874286 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.876856 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.905441 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 138)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.907980 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.934275 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 144)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.936808 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:03.958622 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 137)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:03.961208 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.014393 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 155)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.016971 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.072190 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 141)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.074750 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.227314 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 143)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.229904 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.414047 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 227)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.416630 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.554832 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 245)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.557422 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.741443 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 258)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:04.744022 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:04.755377 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.065968 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 171)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.066935 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 171)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.067070 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.141576 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 242)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.141812 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.302320 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 279)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.302570 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.685671 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 259)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.685675 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 259)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.685960 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.686040 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.764328 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 241)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.764609 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:05.929805 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 265)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:05.930069 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.080944 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.081219 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.216350 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 260)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.218953 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.385197 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 236)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.387794 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.579688 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 317)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.582160 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.758656 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 293)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.761242 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:06.921124 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 295)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:06.923714 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.119240 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 293)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.121824 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.276482 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 298)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.279062 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.524655 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 315)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.527263 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.676278 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 323)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.678514 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.823841 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 308)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.826402 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:07.901996 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.902001 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 180)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:07.904483 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.035224 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 498)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.037847 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 70)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.048207 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.336906 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 127)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.336908 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 111)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.336909 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 78)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.336910 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.336910 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 111)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.339221 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.548792 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 712)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.560249 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.562739 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.624496 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 707)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.624499 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.624500 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 312)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:08.626788 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:08.636643 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:23.736219 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 759)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:23.748308 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:23.750808 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:23.814480 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 706)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:23.814483 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:23.814484 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:23.816728 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:23.828133 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.476114 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.476175 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.476196 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 879)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.490941 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.493477 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.545346 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 735)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.547660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.548882 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 747)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.556492 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.558992 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.788295 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 686)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.788297 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.788297 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 174)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:29.790505 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:29.800768 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.667725 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 505)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.667729 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 94)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.667730 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 505)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.667731 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.668089 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.668171 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.718312 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 125)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.718482 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.771682 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 113)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.771778 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.819695 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 133)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.822229 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.859577 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 128)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.861918 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.891123 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 137)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.893691 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.949396 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 137)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.951980 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:30.992623 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 123)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:30.994828 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.028652 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 132)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.031198 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.071528 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 128)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.074037 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.123502 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 130)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.126078 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.167073 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 130)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.169693 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.221634 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 151)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.224110 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.274683 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 151)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.276984 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.302458 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 146)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.304929 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.350310 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 145)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.352840 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.692069 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692073 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 113)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692074 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 77)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692075 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692076 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 306)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692077 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.692375 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.697418 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 113)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.697523 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.896225 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 720)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.910543 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.913133 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.972085 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 708)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.972089 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.972089 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 282)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:31.974752 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:31.986989 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:35.860103 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 764)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:35.875943 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:35.878642 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:35.953808 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 718)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:35.953812 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:35.953813 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 293)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:35.956312 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:35.967616 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:36.167963 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:36.167989 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 316)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:36.177706 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:36.180263 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:36.294857 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 713)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:36.294860 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 73)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:36.294861 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 109)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:36.297205 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:36.308437 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.039148 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.039198 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.039212 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1039)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.053482 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.055851 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.212390 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 750)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.214865 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.217222 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 759)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.226455 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.228581 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.570689 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.570693 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 97)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.570694 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:43.571146 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:43.580990 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:49.248215 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 773)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:49.261004 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:49.263490 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:49.326789 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 721)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:49.326794 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:49.326795 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 208)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:49.329033 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:49.340481 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.508205 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.508208 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 637)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.510784 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.548305 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.550863 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.594000 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.596395 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.629151 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.631759 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.687972 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.690586 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.715222 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.717708 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.748710 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.751338 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.786316 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.788873 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.867228 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.869832 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.887247 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.889905 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.934349 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:56.937022 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:56.997870 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.000465 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.016640 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.019197 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.067611 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.070169 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.135423 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.137986 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.290131 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.292703 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.454933 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.457515 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.651792 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.654419 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.805643 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.808234 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.982072 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:57.984329 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:57.995772 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.102170 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.104757 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:58.292731 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.295328 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:58.444187 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.446408 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:58.567469 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.573244 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:58.622903 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 106)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.622906 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 117)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.622907 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 70)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:58.625467 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:59.133764 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 727)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:59.145555 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:59.147915 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:59.211095 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 707)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:59.212326 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 192)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:49:59.213398 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:49:59.223131 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:01.273526 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 771)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:01.284504 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:01.286930 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:01.343311 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 695)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:01.344298 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 240)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:01.345550 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:01.355984 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.019034 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 168)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.021459 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.024824 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.027394 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.059079 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.061650 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.086168 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.088742 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.114404 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.116949 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.144211 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.146783 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.178723 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.181241 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.208963 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.211498 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.259448 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.262039 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.294148 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.296717 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.353043 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.355629 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.394353 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.396927 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.443565 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.445896 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.486580 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.488801 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.532649 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.535248 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.662085 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.664478 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:07.860557 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:07.863158 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.023184 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.025763 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.178167 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.180589 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.300622 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.303220 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.318530 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.403082 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.403087 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 89)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.403088 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 72)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.405497 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.434751 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 121)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.437015 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.962580 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 731)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:08.977481 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:08.980082 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:09.049140 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 696)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:09.049144 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 85)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:09.049146 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 260)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:09.051416 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:09.063016 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.518373 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 133)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.518377 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 133)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.518744 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.524206 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.524407 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.545547 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 775)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.554634 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.557184 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.589341 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.591910 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.617659 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.620183 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.620666 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 692)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.620668 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 300)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.622794 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.632031 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.651569 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.653660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.681649 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.684168 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.710775 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.713304 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.752497 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.754767 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.781315 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.783829 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.814874 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.817419 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.838839 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.841355 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.876460 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.878674 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.904019 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.906594 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.942342 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.944908 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:15.984575 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:15.986997 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:16.143734 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:16.145958 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:16.327154 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:16.329717 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:16.489429 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:16.492012 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:16.688137 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:16.690743 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:16.869282 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:16.871478 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.008100 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.010484 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.173182 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.175833 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.332620 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.335232 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.487782 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.490410 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.500013 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.644134 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.646744 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.821224 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.823834 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:17.970705 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:17.973322 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.128073 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.130624 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.257922 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.260527 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.420333 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.422938 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.535281 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.537864 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.665387 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.667922 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.793273 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.795854 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:18.932636 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:18.935233 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.070869 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.073432 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.228586 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.231130 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.381617 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.384217 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.550940 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.553719 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.708494 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.711107 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:19.850082 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:19.852660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.009238 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.011728 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.183799 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.186402 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.375432 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.378019 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.531814 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.534391 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.544721 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.653902 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.656510 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.759365 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.761800 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:20.915364 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:20.917939 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.081592 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.084279 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.225848 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.228430 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.426091 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.428670 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.592529 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.594771 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.784580 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.787069 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:21.940159 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 124)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:21.942738 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.062040 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 303)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.064639 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.211865 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 269)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.214493 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.377388 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 315)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.379958 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.496609 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 315)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.499245 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.642662 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 294)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.645144 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.762119 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 276)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.764736 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:22.906949 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 251)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:22.909525 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.036100 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 269)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.038704 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.155920 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 239)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.158403 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.313167 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 294)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.315665 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.433068 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 300)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.435660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.446947 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.550071 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 236)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.552674 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.731244 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 285)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.733833 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:23.863014 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 322)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:23.865619 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.003117 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 305)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.005269 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.167366 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 319)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.169659 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.306527 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 347)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.309024 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.481218 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 333)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.483846 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.634688 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 374)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.637079 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.756089 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 325)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.758634 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:24.959725 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 340)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:24.962049 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.123073 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 375)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.125673 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.154030 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 344)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.157155 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.186504 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 255)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.188980 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.255269 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 292)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.257841 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.556403 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.556406 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 114)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.556406 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 77)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.556406 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.556407 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 305)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.558871 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.562976 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.563090 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.610338 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 776)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.621947 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.624480 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.669802 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 703)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.669806 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 84)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.669808 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 100)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.672121 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.682587 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.783922 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 729)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.795076 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.797644 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.870357 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 671)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.870360 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 73)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.871375 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.872471 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.872498 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 285)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:25.874920 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:25.883935 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:38.899369 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 775)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.904797 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.904837 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.904851 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 522)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.911101 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:38.913592 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.914507 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:38.916970 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.963027 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 702)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:38.963031 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 226)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:38.965557 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:38.976668 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.003509 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.005905 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 67)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:39.008450 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 761)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:39.016574 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.019143 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:39.286593 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.286597 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 83)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.286598 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 259)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:39.288865 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:39.299967 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.404915 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.404918 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 620)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.406689 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 128)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.407452 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.438545 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 152)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.441079 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.464974 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 138)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.467551 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.517166 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 149)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.519725 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.585214 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 161)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.587810 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.632353 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 133)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.634838 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.705665 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 171)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.708222 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.758445 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 179)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.761050 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.824141 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 179)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.826689 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.857420 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 138)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.859983 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.910945 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 133)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.913546 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:40.977207 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 157)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:40.979344 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.060853 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 156)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.063398 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.107078 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 174)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.109620 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.172786 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 165)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.175351 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.314416 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 178)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.316718 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.458373 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 260)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.460927 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.569045 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 209)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.571640 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.706718 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 235)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.709287 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.863666 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 255)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:41.865898 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:41.877494 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.113022 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.115255 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:42.311004 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 286)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.313595 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:42.478008 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 243)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.480568 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:42.668281 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 285)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.670458 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:42.804653 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 284)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.807212 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:42.942081 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 258)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:42.944616 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:43.117468 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 305)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.119992 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:43.579806 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.579809 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 848)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.579810 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.579811 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 465)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.580069 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:43.580113 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:43.783834 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 496)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.784116 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:43.895571 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 495)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:43.895804 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:44.086296 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 481)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.088902 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:44.259034 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 537)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.261196 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:44.703578 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 451)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.703582 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 520)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.706158 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:44.715994 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 451)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.716184 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:44.824858 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 499)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:44.825064 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.009412 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 512)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.009567 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.171826 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 550)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.172004 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.372205 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 515)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.374766 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.502196 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 505)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.504749 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 70)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.515673 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.639129 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 550)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.641738 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.779142 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.779147 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.779148 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 786)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.781682 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:45.939063 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.939065 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.939066 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 918)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:45.941563 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.097302 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.097306 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.097307 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 980)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.099868 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.266348 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.266352 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.266354 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1018)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.268933 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.326923 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.326927 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.326928 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1064)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.329312 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.400576 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.400578 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.400579 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1058)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.403049 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.461403 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.461407 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.461408 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1042)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.463933 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.599817 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.599821 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.599822 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1080)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.602305 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.862832 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 167)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.864961 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 115)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.864964 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 80)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.864965 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.865103 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:46.866060 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 191)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:46.867593 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:47.115001 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 730)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:47.124206 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:47.126727 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:47.216915 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 699)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:47.216919 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:47.216920 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 312)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:47.219200 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:47.230194 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.488080 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 777)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.492185 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.492208 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.492219 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 536)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.502058 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.504634 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.563862 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 699)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.563866 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 75)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.563867 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 188)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.565955 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.573892 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 689)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.576280 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.576787 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.577878 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 761)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.585259 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.587349 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.589870 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.913992 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 670)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.913996 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 74)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.913997 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 123)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.913998 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 670)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:57.914476 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:57.925808 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.347802 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.347806 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 621)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.347808 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 111)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.347809 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 154)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.350451 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.377539 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 141)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.380039 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.457694 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 163)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.460238 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.496526 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 137)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.499144 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.536633 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 157)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.539198 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.567662 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 152)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.570158 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.627698 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 172)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.630283 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.689467 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 163)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.692043 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.727438 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 155)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.730050 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.768049 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 150)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.770431 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.820401 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 174)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.822906 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.846633 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 154)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.849222 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.877648 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 163)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.880135 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:50:59.917170 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 162)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:50:59.919716 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.076755 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 160)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.079349 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.231584 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 270)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.234161 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.359338 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 231)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.361932 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.512209 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 268)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.514777 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.660624 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 192)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.662737 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.818515 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 294)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.821068 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 66)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:00.831540 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.955424 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 240)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:00.957952 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.137528 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 263)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.140115 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.269793 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 277)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.272367 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.408865 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 271)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.411413 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.567902 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 238)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.570470 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.606860 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 260)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.609358 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:01.661511 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 219)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:01.664082 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:02.010379 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.010382 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 110)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.010383 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 338)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.010384 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 126)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.010662 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:02.181102 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 731)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:02.194352 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.196889 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:02.266901 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 706)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.266904 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 84)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.266906 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:02.269174 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:02.280537 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.359488 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 779)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.363534 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1271)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.363584 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 1278)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.363603 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 528)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.373380 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.375895 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.427924 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 686)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.427927 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 131)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.430434 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.440315 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.448346 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 703)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.450832 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.460062 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 761)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.460654 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.469338 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.471624 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.725300 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 673)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.725303 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 209)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:12.727605 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:12.739365 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.093445 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.093448 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 621)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.093449 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 138)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.093450 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 1272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.093760 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.095946 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 138)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.096129 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.153092 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 160)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.153237 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.207786 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 147)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.207997 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.252358 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 139)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.254830 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.293532 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 147)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.296023 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.395283 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 151)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.397887 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.461955 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 157)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.464549 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.499269 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 183)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.501871 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.530837 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 149)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.533444 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.581746 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 140)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.584312 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.612790 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 156)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.615359 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.646729 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 166)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.649292 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.693850 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 168)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.696153 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.725952 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 152)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.728487 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.858360 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 142)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.860875 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:14.970468 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 316)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:14.972926 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.100918 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 261)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.103414 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.229907 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 268)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.232462 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.400003 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 296)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.402600 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.412033 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.730339 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 298)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.730343 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 299)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.732922 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.740275 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 298)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.740388 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.843187 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 260)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.843419 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:15.943847 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 263)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:15.944058 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.094492 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 212)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.094714 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 62)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.273963 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 297)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.276546 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.399072 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 300)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.401623 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.566295 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 315)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.568912 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.696558 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 349)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.699124 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:16.842967 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 272)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:16.845587 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.040317 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 329)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.042875 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.199271 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 343)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.201827 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 63)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.472008 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 346)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.472010 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 346)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.472286 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.590196 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 344)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.590360 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.769574 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 354)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.769798 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:17.903158 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 335)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:17.903391 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 64)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.032021 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 301)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.034582 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.232810 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 323)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.235419 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.365475 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 355)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.368113 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 65)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.701107 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 342)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.701112 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 342)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.701450 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 71)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.702998 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 342)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.703099 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 68)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.710344 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 53)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.752393 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 359)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.754809 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:18.956963 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 356)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:18.959441 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:19.078781 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 356)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:19.080894 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:19.137651 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 289)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:19.140056 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:19.188694 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 267)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:19.191075 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
+17:51:19.265747 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto UDP (17), length 318)
+    142.251.167.100.443 > 192.168.4.71.54642: quic, protected
+17:51:19.268159 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    192.168.4.71.54642 > 142.251.167.100.443: quic, protected
