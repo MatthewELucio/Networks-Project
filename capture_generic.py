@@ -19,6 +19,13 @@ Anthropic usage:
   --duration 300 \
   --outfile ~/Desktop/anthropic_filtered.pcap
 
+Gemini usage:
+  sudo python3 capture_chatgpt_network.py \
+  --interface en0 \
+  --provider gemini \
+  --duration 300 \
+  --outfile ~/Desktop/gemini_filtered.pcap
+
 
 Notes:
  - Requires: tcpdump and tshark available in PATH.
@@ -57,13 +64,23 @@ PROVIDER_PROFILES = {
             "openai.com",
             "cdn.openai.com",
         ],
-        "keyword": "chatgpt",  # what to look for in SNI/DNS
+        "keyword": "chatgpt",  # SNI/DNS substring
     },
     "anthropic": {
         "hosts": [
             "api.anthropic.com",
         ],
         "keyword": "anthropic",
+    },
+    "gemini": {
+        # Gemini / Google Generative Language API hosts
+        # Primary REST endpoint is generativelanguage.googleapis.com:contentReference[oaicite:0]{index=0}
+        "hosts": [
+            "generativelanguage.googleapis.com",
+            "api.google.ai",  # optional alt endpoint some tools use:contentReference[oaicite:1]{index=1}
+        ],
+        # We use a substring that will appear in DNS/SNI
+        "keyword": "generativelanguage",
     },
 }
 
@@ -149,7 +166,7 @@ def main():
     ap.add_argument("--duration", type=int, default=0, help="If >0 capture for this many seconds then stop.")
     ap.add_argument(
         "--provider",
-        choices=["openai", "anthropic"],
+        choices=["openai", "anthropic", "gemini"],
         default=None,
         help="LLM provider profile (controls default hosts + keyword).",
     )
