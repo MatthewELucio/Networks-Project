@@ -1,0 +1,22 @@
+Files: 5, packets=3167, flows=1562, threshold=0.1s, bidir=False
+Flow ('172.25.176.249', 63669, '172.64.155.209', 443, 'TCP'): pkts=326, bytes=174800, flowlets=127, start=48467.374135, end=48554.050051
+Flow ('172.25.176.249', 61872, '172.64.155.209', 443, 'TCP'): pkts=158, bytes=142009, flowlets=8, start=39470.601445, end=39475.162965
+Flow ('172.253.115.101', 443, '172.25.176.249', 60836, 'TCP'): pkts=264, bytes=137231, flowlets=2, start=32698.798605, end=32699.631078
+Flow ('172.64.155.209', 443, '172.25.176.249', 63669, 'TCP'): pkts=324, bytes=127644, flowlets=126, start=48467.381772, end=48554.05684
+Flow ('172.25.176.249', 60836, '172.253.115.101', 443, 'TCP'): pkts=214, bytes=92010, flowlets=2, start=32698.786481, end=32699.575993
+Flow ('172.64.155.209', 443, '172.25.176.249', 61872, 'TCP'): pkts=163, bytes=64999, flowlets=8, start=39470.610116, end=39475.16289
+Flow ('172.253.115.95', 443, '172.25.176.249', 60835, 'TCP'): pkts=28, bytes=23278, flowlets=2, start=32695.133549, end=32699.110248
+Flow ('172.25.176.249', 60841, '172.253.115.95', 443, 'TCP'): pkts=22, bytes=7145, flowlets=2, start=32699.102095, end=32699.331359
+Flow ('172.25.176.249', 63672, '172.64.155.209', 443, 'TCP'): pkts=27, bytes=6914, flowlets=6, start=48476.503787, end=48561.672516
+Flow ('172.25.176.249', 60835, '172.253.115.95', 443, 'TCP'): pkts=26, bytes=3977, flowlets=2, start=32695.12233, end=32699.094689
+Detected 147 probable LLM queries
+Query 1: upload 32695.122330-32695.162978s (3024 B) -> response n/as (0 B) confidence=low
+Query 2: upload 32698.786481-32698.951528s (11792 B) -> response n/as (0 B) confidence=low
+Query 3: upload 32699.064708-32699.575993s (80218 B) -> response n/as (0 B) confidence=low
+Query 4: upload 32699.065071-32699.094689s (953 B) -> response n/as (0 B) confidence=low
+Query 5: upload 32699.102095-32699.138406s (7106 B) -> response 32699.330645-32699.342310s (1176 B) confidence=high
+Query 6: upload 32699.330703-32699.331359s (39 B) -> response n/as (0 B) confidence=low
+Query 7: upload 39470.601445-39470.612248s (7470 B) -> response 39470.939645-39470.989320s (746 B) confidence=high
+Query 8: upload 39470.939806-39470.941347s (35 B) -> response n/as (0 B) confidence=low
+Query 9: upload 39471.233368-39471.349073s (20291 B) -> response 39472.502310-39472.795760s (6710 B) confidence=high
+Query 10: upload 39472.502474-39472.795859s (14453 B) -> response 39472.987241-39473.037847s (1992 B) confidence=high
