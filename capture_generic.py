@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-capture_chatgpt_network.py
+capture_generic.py
 
 Capture Wi-Fi (best-effort monitor/promiscuous) traffic for the network you're on,
 include dynamic resolution of ChatGPT/OpenAI hostnames (to capture by IP),
