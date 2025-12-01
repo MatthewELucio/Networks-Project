@@ -1,0 +1,38 @@
+[
+  {
+    "id": "evt_1",
+    "timestamp": "2025-12-01T21:00:00.000Z",
+    "userId": "alice",
+    "srcIp": "10.0.0.5",
+    "dstIp": "34.120.0.1",
+    "bytes": 2500,
+    "protocol": "TCP",
+    "llmUsage": true,
+    "llmProvider": "openai",
+    "llmModel": "gpt-4.1",
+    "llmConfidence": 0.93
+  },
+  {
+    "id": "evt_2",
+    "timestamp": "2025-12-01T21:00:10.000Z",
+    "userId": "bob",
+    "srcIp": "10.0.0.12",
+    "dstIp": "8.8.8.8",
+    "bytes": 600,
+    "protocol": "UDP",
+    "llmUsage": false
+  },
+  {
+    "id": "evt_3",
+    "timestamp": "2025-12-01T21:00:20.000Z",
+    "userId": "alice",
+    "srcIp": "10.0.0.5",
+    "dstIp": "34.120.0.1",
+    "bytes": 4200,
+    "protocol": "TCP",
+    "llmUsage": true,
+    "llmProvider": "anthropic",
+    "llmModel": "claude-3.5",
+    "llmConfidence": 0.88
+  }
+]
