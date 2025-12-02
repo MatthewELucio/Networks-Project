@@ -1,0 +1,564 @@
+tcpdump: listening on en0, link-type EN10MB (Ethernet), snapshot length 96 bytes
+18:33:52.694256 IP6 (flowlabel 0x361b5, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:33:52.696109 IP6 (flowlabel 0xea4f4, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:33:52.900013 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:33:53.718517 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:33:56.176301 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:33:56.380442 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:34:05.801407 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:34:12.882380 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:34:12.980281 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:34:17.937358 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:34:17.996089 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:34:18.034081 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:34:18.034215 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:34:36.112228 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:34:36.523812 IP6 (hlim 255, next-header UDP (17) payload length: 43) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:34:36.525579 IP6 (hlim 255, next-header UDP (17) payload length: 77) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [2q] [|domain]
+18:34:36.527257 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:34:36.726655 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:34:38.571900 IP6 (flowlabel 0x74902, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:34:38.571903 IP6 (flowlabel 0x811f1, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:34:38.573810 IP6 (flowlabel 0xbf2ea, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:34:38.573813 IP6 (flowlabel 0xe2f4b, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:34:38.730068 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:34:38.774663 IP6 (flowlabel 0xe0f2a, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:34:43.076330 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:35:04.865773 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:35:04.895820 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:35:09.921680 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:35:09.952669 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:35:09.952806 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:35:09.955032 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:35:16.050862 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:35:16.458682 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:35:19.399562 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:35:19.531186 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:35:35.914924 IP6 (flowlabel 0x91c3a, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:35:35.916611 IP6 (flowlabel 0x45f79, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:35:36.121463 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:35:36.939939 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:35:46.155070 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:35:46.241221 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:35:56.190386 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:35:56.395155 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:36:00.010350 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 230) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 GavinM-bM-^@M-^Ys MacBook Air. [|domain]
+18:36:01.010521 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 230) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 GavinM-bM-^@M-^Ys MacBook Air. [|domain]
+18:36:01.828972 IP6 (flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 20) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [.], cksum 0x5265 (correct), ack 3000655181, win 2048, length 0
+18:36:01.829215 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x917f (correct), ack 1, win 2048, options [nop,nop,TS val 1963936040 ecr 543533360], length 0
+18:36:03.011204 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 230) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 GavinM-bM-^@M-^Ys MacBook Air. [|domain]
+18:36:06.807768 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:36:06.807908 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:36:06.884493 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:36:06.951469 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:36:07.012150 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 230) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 GavinM-bM-^@M-^Ys MacBook Air. [|domain]
+18:36:12.574730 IP6 (hlim 255, next-header UDP (17) payload length: 83) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [3q] [|domain]
+18:36:12.780005 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:36:14.622847 IP6 (hlim 255, next-header UDP (17) payload length: 204) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 6/0/0 fuchsia-ac67-842a-055 [|domain]
+18:36:19.436825 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:36:27.013304 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fe80::7c61:2ec:7d8e:2744 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 32
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd15:4bff:29c8:1::/64, pref=medium, lifetime=1800s
+18:36:30.704861 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 763) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 1:732, ack 1, win 2048, options [nop,nop,TS val 544012515 ecr 1963936040], length 731
+18:36:30.705102 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0xce28 (correct), ack 732, win 2037, options [nop,nop,TS val 1963964916 ecr 544012515], length 0
+18:36:31.314190 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 112) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 112
+	hop limit 64, Flags [none], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms [|icmp6]
+18:36:32.544459 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 186) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [1a] [4q] [|domain]
+18:36:32.696008 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:32.747684 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:32.749968 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:36:32.752429 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:36:33.567260 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 200) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [2a] [4q] [|domain]
+18:36:33.570451 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:36:33.572180 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:36:34.592971 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:34.703530 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:36.229469 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:36:36.434195 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:36:36.639350 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 200) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [2a] [4q] [|domain]
+18:36:36.640923 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:36.643380 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:36:36.644254 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:36:36.844858 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:37.664488 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:36:37.666522 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:36:38.484463 IP6 (flowlabel 0xd0387, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:36:38.484465 IP6 (flowlabel 0xdcc76, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:36:38.486724 IP6 (flowlabel 0x1ad6f, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:36:38.486728 IP6 (flowlabel 0x3e9d0, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:36:38.488746 IP6 (flowlabel 0x3c9af, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:36:38.490882 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 736) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 732:1436, ack 1, win 2048, options [nop,nop,TS val 544020227 ecr 1963964916], length 704
+18:36:38.491030 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x8ede (correct), ack 1436, win 2037, options [nop,nop,TS val 1963972702 ecr 544020227], length 0
+18:36:38.582932 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:38.687064 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:40.575953 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:40.735074 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:42.684824 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:42.783158 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:44.711658 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:44.831185 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:45.650271 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:46.505992 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:46.674447 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:48.586455 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:48.722360 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:50.655066 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:50.770456 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:52.702659 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:52.818605 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:54.494393 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:54.661763 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:56.550220 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:36:56.709712 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:58.555689 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:36:58.609551 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:00.692463 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:00.805867 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:02.708106 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:02.853813 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:04.576531 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:04.697038 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:04.699565 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:37:06.576780 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:06.745152 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:08.658252 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:08.793185 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:10.639149 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:10.790915 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:12.479881 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:12.481235 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:12.644297 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:14.570835 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:14.732445 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:16.065412 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:37:16.473371 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:37:16.524420 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:16.678141 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:18.625778 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:18.791048 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:19.033424 IP6 (flowlabel 0xfd483, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:37:19.238662 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:37:20.262790 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:37:20.568512 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:20.671895 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:22.570955 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:22.719801 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:24.564951 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:24.695590 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:26.613085 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:26.756270 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:28.659853 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:28.887253 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:30.610063 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:30.709179 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:37:46.155455 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:37:46.245921 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:37:48.730955 IP6 (hlim 255, next-header UDP (17) payload length: 43) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:37:48.934643 IP6 (hlim 255, next-header UDP (17) payload length: 77) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [2q] [|domain]
+18:37:48.936321 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:37:50.777799 IP6 (hlim 255, next-header UDP (17) payload length: 54) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:37:56.102711 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:37:56.512279 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:37:56.717315 IP6 (hlim 255, next-header UDP (17) payload length: 54) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:37:56.718279 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:38:02.656486 IP6 (hlim 255, next-header UDP (17) payload length: 54) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:08.595774 IP6 (hlim 255, next-header UDP (17) payload length: 54) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:11.872359 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:17.914195 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:19.884546 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:38:19.972001 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:38:20.065278 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:38:23.753194 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:24.365782 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fe80::7c61:2ec:7d8e:2744 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 32
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd15:4bff:29c8:1::/64, pref=medium, lifetime=1800s
+18:38:24.939002 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:38:25.026787 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:38:25.026933 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:38:25.030824 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:38:29.895164 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:38:36.244111 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:38:38.499056 IP6 (flowlabel 0x87891, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:38:38.499059 IP6 (flowlabel 0x94180, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:38:38.500895 IP6 (flowlabel 0xd2279, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:38:38.500899 IP6 (flowlabel 0xf5eda, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:38:38.687936 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:38:38.701706 IP6 (flowlabel 0xf3eb9, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:39:05.121344 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:39:08.581066 IP6 (flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 20) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [.], cksum 0x4cca (correct), ack 1, win 2048, length 0
+18:39:08.581307 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x4488 (correct), ack 1436, win 2048, options [nop,nop,TS val 1964122791 ecr 544020227], length 0
+18:39:13.635752 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:39:13.637860 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:39:13.637965 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:39:13.642495 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:39:16.180794 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:39:16.385697 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:39:24.781522 IP6 (hlim 255, next-header UDP (17) payload length: 43) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:39:24.989501 IP6 (hlim 255, next-header UDP (17) payload length: 77) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [2q] [|domain]
+18:39:24.989994 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:39:30.572535 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:39:30.708359 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:39:33.161531 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 96) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0 [1a] [2q] PTR (QM)? _trel._udp.local. [|domain]
+18:39:33.366837 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:39:46.125753 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:39:46.174950 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:39:56.081656 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:39:56.490761 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:39:59.362243 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 762) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 1436:2166, ack 1, win 2048, options [nop,nop,TS val 544221178 ecr 1964122791], length 730
+18:39:59.362493 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x6a3c (correct), ack 2166, win 2037, options [nop,nop,TS val 1964173609 ecr 544221178], length 0
+18:40:00.176123 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 91) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [3q] [|domain]
+18:40:00.382122 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:40:00.383820 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:40:00.586084 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 111) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [1a] [|domain]
+18:40:00.791983 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 62) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:00.994803 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:01.099727 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:01.201832 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:01.203197 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:40:02.018808 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 62) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:02.223542 IP6 (flowlabel 0xb498d, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:02.429419 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:40:02.880694 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:03.042513 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:03.247957 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:40:04.271515 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 84) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [2q] [|domain]
+18:40:04.372270 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:40:04.372374 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:40:04.416549 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:40:04.422528 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:40:04.752842 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:04.885222 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:06.802164 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:06.933062 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:08.819991 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:08.980711 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:09.497208 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 735) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 2166:2869, ack 1, win 2048, options [nop,nop,TS val 544231260 ecr 1964173609], length 703
+18:40:09.497456 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x1881 (correct), ack 2869, win 2038, options [nop,nop,TS val 1964183746 ecr 544231260], length 0
+18:40:10.937645 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:11.028308 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:12.929302 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:13.075697 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:13.485826 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:14.782529 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:14.919024 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:16.809461 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:16.966848 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:18.870045 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:19.014724 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:20.755758 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:20.852812 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:22.832573 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:23.008133 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:24.851178 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:24.944793 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:26.782569 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:26.899231 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:28.853657 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:28.947057 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:30.871463 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:30.995060 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:32.929369 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:33.044032 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:34.748493 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:34.886827 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:36.114980 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:40:36.319487 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:40:36.730827 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:36.886925 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:38.369523 IP6 (flowlabel 0xe3316, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:38.369526 IP6 (flowlabel 0xefc05, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:38.371371 IP6 (flowlabel 0x2dcfe, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:38.371377 IP6 (flowlabel 0x5195f, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:38.522941 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:38.572393 IP6 (flowlabel 0x4f93e, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:40:38.982013 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:40.415530 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:40.913239 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:41.030421 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:42.875981 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:43.027068 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:44.718862 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:44.818647 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:46.766195 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:46.895916 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:48.814642 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:49.013249 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:50.862229 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:50.941630 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:52.743511 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:52.908280 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:54.752968 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:54.897597 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:56.800992 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:56.894545 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:40:58.848967 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:40:58.962518 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:41:01.102023 IP6 (hlim 255, next-header UDP (17) payload length: 43) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:41:01.102027 IP6 (hlim 255, next-header UDP (17) payload length: 77) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [2q] [|domain]
+18:41:01.107087 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:41:10.316366 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 96) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0 [1a] [2q] PTR (QM)? _trel._udp.local. [|domain]
+18:41:10.521971 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:41:16.052554 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:41:16.460215 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:41:23.423498 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fe80::7c61:2ec:7d8e:2744 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 32
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd15:4bff:29c8:1::/64, pref=medium, lifetime=1800s
+18:41:36.632948 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:41:39.295579 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 112) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 112
+	hop limit 64, Flags [none], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms [|icmp6]
+18:41:42.981812 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:41:43.596958 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:41:44.620490 IP6 (flowlabel 0xb498d, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:41:44.622143 IP6 (flowlabel 0x0064e, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:41:44.825792 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:41:45.645952 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:41:46.115047 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:41:46.248328 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:41:47.840770 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:41:47.906838 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:41:48.921172 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:41:52.895561 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:41:52.903535 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:41:52.962086 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:41:52.962229 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:41:54.860148 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:41:56.089096 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:41:56.295704 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:42:14.111776 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:42:34.290584 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 762) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 2869:3599, ack 1, win 2048, options [nop,nop,TS val 544376116 ecr 1964183746], length 730
+18:42:34.290803 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0xaa2e (correct), ack 3599, win 2037, options [nop,nop,TS val 1964328543 ecr 544376116], length 0
+18:42:36.230190 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:42:37.254185 IP6 (hlim 255, next-header UDP (17) payload length: 83) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [3q] [|domain]
+18:42:37.255953 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:42:37.871363 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 62) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.073317 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.074937 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 154) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [1a] [3q] [|domain]
+18:42:38.168399 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:38.486469 IP6 (flowlabel 0xe3316, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.486471 IP6 (flowlabel 0xefc05, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.488381 IP6 (flowlabel 0x2dcfe, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.488382 IP6 (flowlabel 0x5195f, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.688909 IP6 (flowlabel 0x4f93e, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:42:38.892767 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 186) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [1a] [4q] [|domain]
+18:42:39.099094 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:42:39.100838 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:42:39.279656 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:42:39.290988 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:42:39.307174 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:42:39.307298 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:42:39.919885 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:39.920692 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:42:39.923247 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:42:40.083904 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:41.966719 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 200) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [2a] [4q] [|domain]
+18:42:42.136300 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:42.169458 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:42.171882 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:42:42.174392 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:42:42.989866 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _googlecast._tcp.loca [|domain]
+18:42:42.991540 IP6 (hlim 255, next-header UDP (17) payload length: 531) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 2/0/8 _googlecast._tcp.loca [|domain]
+18:42:44.089391 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:44.217381 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:45.922063 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:46.060566 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:47.289728 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:42:47.987930 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:48.108575 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:49.979074 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:50.156623 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:50.975999 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 200) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [2a] [4q] [|domain]
+18:42:52.097852 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:52.204627 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:54.115932 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:54.252538 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:55.986322 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:56.095855 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:42:58.020372 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:42:58.144263 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:00.076857 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:00.191858 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:00.503780 IP6 (class 0x02, flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 735) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [P.], seq 3599:4302, ack 1, win 2048, options [nop,nop,TS val 544402297 ecr 1964328543], length 703
+18:43:00.504032 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0xdac3 (correct), ack 4302, win 2038, options [nop,nop,TS val 1964354756 ecr 544402297], length 0
+18:43:02.081720 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:02.239887 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:03.961476 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:04.083674 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:05.992545 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:06.131056 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:08.088712 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:08.179125 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:10.143116 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:10.227059 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:11.919199 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:12.070252 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:13.980559 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:14.117936 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:15.963927 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:16.171648 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:16.374418 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:43:16.375542 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:43:18.011473 IP6 (flowlabel 0x80100, hlim 255, next-header UDP (17) payload length: 47) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:18.013353 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:18.163709 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:20.060161 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:20.197437 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:22.006415 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:22.162730 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:23.950999 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:24.109178 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:24.153610 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fe80::7c61:2ec:7d8e:2744 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 32
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd15:4bff:29c8:1::/64, pref=medium, lifetime=1800s
+18:43:25.998787 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:26.113124 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:28.046825 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:28.136589 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:29.999411 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:30.094300 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:31.937966 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:32.088390 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:33.984375 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:34.163350 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:36.033948 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:43:36.126382 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:46.114610 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:43:46.208226 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:43:56.102471 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:43:56.511834 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:44:05.113695 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:44:13.510609 IP6 (hlim 255, next-header UDP (17) payload length: 83) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [3q] [|domain]
+18:44:13.512643 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:44:17.401722 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:44:23.443272 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:44:23.839612 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:44:23.846472 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:44:23.853420 IP6 (hlim 255, next-header UDP (17) payload length: 204) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 6/0/0 fuchsia-ac67-842a-055 [|domain]
+18:44:23.854671 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:44:25.184707 IP6 (flowlabel 0x5c0d3, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:25.188299 IP6 (flowlabel 0x10412, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:25.390305 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:44:26.208924 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:44:28.893952 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:44:28.902646 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:44:28.902760 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:44:28.906214 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:44:29.484962 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:44:35.219306 IP6 (hlim 255, next-header UDP (17) payload length: 48) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [|domain]
+18:44:36.243568 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:44:37.268835 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:44:38.498425 IP6 (flowlabel 0x3ed9b, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:38.498426 IP6 (flowlabel 0x4b68a, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:38.500274 IP6 (flowlabel 0x89783, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:38.500275 IP6 (flowlabel 0xad3e4, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:44:38.657189 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:44:38.701279 IP6 (flowlabel 0xab3c3, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:45:15.837671 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:45:15.843939 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:45:16.384500 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:45:20.892596 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:45:20.901827 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:45:20.901951 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:45:20.904081 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:45:26.829732 IP6 (flowlabel 0x10200, hlim 255, next-header UDP (17) payload length: 182) fe80::847:e5c2:cf2b:11da.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 iPad Mini._companion- [|domain]
+18:45:27.853840 IP6 (flowlabel 0x10200, hlim 255, next-header UDP (17) payload length: 182) fe80::847:e5c2:cf2b:11da.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 iPad Mini._companion- [|domain]
+18:45:29.901523 IP6 (flowlabel 0x10200, hlim 255, next-header UDP (17) payload length: 182) fe80::847:e5c2:cf2b:11da.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 iPad Mini._companion- [|domain]
+18:45:30.623644 IP6 (flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 20) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [.], cksum 0x4198 (correct), ack 1, win 2048, length 0
+18:45:30.623888 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x904f (correct), ack 4302, win 2048, options [nop,nop,TS val 1964504876 ecr 544402297], length 0
+18:45:33.793318 IP6 (flowlabel 0x10200, hlim 255, next-header UDP (17) payload length: 182) fe80::847:e5c2:cf2b:11da.5353 > ff02::fb.5353: 0*- [0q] 1/0/1 iPad Mini._companion- [|domain]
+18:45:36.048003 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:45:36.222619 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:45:38.912634 IP6 (hlim 255, next-header UDP (17) payload length: 42) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: [udp sum ok] 0 PTR (QM)? _trel._udp.local. (34)
+18:45:39.119547 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 191) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 5/0/0 _trel._udp.local. [|domain]
+18:45:46.113868 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:45:46.172069 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:45:56.117279 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:45:56.322280 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:46:00.826036 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 96) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0 [1a] [2q] PTR (QM)? _trel._udp.local. [|domain]
+18:46:01.032533 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:46:01.852626 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:46:19.465116 IP6 (flowlabel 0x5c0d3, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:19.465119 IP6 (flowlabel 0x10412, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:19.669231 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:46:20.488359 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:46:20.691745 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fe80::7c61:2ec:7d8e:2744 > ff02::1: [icmp6 sum ok] ICMP6, router advertisement, length 32
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd15:4bff:29c8:1::/64, pref=medium, lifetime=1800s
+18:46:20.838775 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:46:21.009330 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:46:25.893086 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:46:25.898945 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:46:26.062892 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:46:26.063029 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:46:36.051924 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:46:36.463596 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::de1e:d5ff:fece:c774 > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:46:38.511332 IP6 (flowlabel 0x3ed9b, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:38.511335 IP6 (flowlabel 0x4b68a, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:38.513231 IP6 (flowlabel 0x89783, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:38.513235 IP6 (flowlabel 0xad3e4, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:46:38.614684 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:46:38.714519 IP6 (flowlabel 0xab3c3, hlim 255, next-header UDP (17) payload length: 53) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:47:12.838327 IP6 (flowlabel 0xf0000, hlim 64, next-header UDP (17) payload length: 12) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.3722 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.3722: [udp sum ok] UDP, length 4
+18:47:12.846271 IP6 (hlim 64, next-header ICMPv6 (58) payload length: 60) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: ICMP6, destination unreachable, unreachable port [|icmp6]
+18:47:14.964198 IP6 (flowlabel 0x3d8c9, hlim 255, next-header ICMPv6 (58) payload length: 56) fe80::d2cb:ddff:fe76:6f2d > ff02::1: ICMP6, router advertisement, length 56
+	hop limit 0, Flags [ipv6 only], pref medium, router lifetime 0s, reachable time 0ms, retrans timer 0ms
+	  route info option (24), length 16 (2):  fd21:3459:5329:1::/64, pref=medium, lifetime=1800s [|icmp6]
+18:47:15.170856 IP6 (hlim 255, next-header UDP (17) payload length: 83) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0 [3q] [|domain]
+18:47:15.373857 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 141) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0*- [0q] 3/0/0 eero-7-02g4.local. [|domain]
+18:47:16.195083 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:47:17.892798 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:47:17.898898 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
+18:47:17.898900 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:47:17.898957 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:47:35.958012 IP6 (flowlabel 0x30100, hlim 255, next-header UDP (17) payload length: 53) fe80::c65:5fc5:7d6f:5e44.5353 > ff02::fb.5353: 0 [|domain]
+18:47:36.118652 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:47:39.028969 IP6 (flowlabel 0x2b300, hlim 255, next-header UDP (17) payload length: 96) fdb9:753d:943d:1::1.5353 > ff02::fb.5353: 0 [1a] [2q] PTR (QM)? _trel._udp.local. [|domain]
+18:47:39.234935 IP6 (hlim 255, next-header UDP (17) payload length: 302) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _trel._udp.local. (294)
+18:47:46.113929 IP6 (flowlabel 0x40d00, hlim 255, next-header UDP (17) payload length: 53) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0 [|domain]
+18:47:46.250131 IP6 (flowlabel 0xf0800, hlim 255, next-header UDP (17) payload length: 288) fe80::4d:17a2:50fa:7171.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 _spotify-connect._tcp. [|domain]
+18:47:56.231831 IP6 (hlim 1, next-header Options (0) payload length: 32) fe80::9a88:e0ff:fef2:3bcc > ff02::fb: HBH (rtalert: 0x0000) (padn) [icmp6 sum ok] ICMP6, multicast listener reportmax resp delay: 0 addr: ff02::fb
+18:48:00.711481 IP6 (flowlabel 0xa0700, hlim 64, next-header TCP (6) payload length: 20) fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500 > fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108: Flags [.], cksum 0x4198 (correct), ack 1, win 2048, length 0
+18:48:00.711683 IP6 (flowlabel 0x90e00, hlim 64, next-header TCP (6) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58.65108 > fdb9:753d:943d:1:1089:974a:6cee:e1cb.63500: Flags [.], cksum 0x4604 (correct), ack 4302, win 2048, options [nop,nop,TS val 1964654965 ecr 544402297], length 0
+18:48:01.763381 IP6 (flowlabel 0xb7b58, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:48:01.763386 IP6 (flowlabel 0x6be97, hlim 1, next-header UDP (17) payload length: 97) fe80::31c7:4705:c123:a675.5353 > ff02::fb.5353: 0 [|domain]
+18:48:01.967290 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:48:02.786456 IP6 (hlim 255, next-header UDP (17) payload length: 502) fe80::7c61:2ec:7d8e:2744.5353 > ff02::fb.5353: 0*- [0q] 1/0/8 Google-Nest-Hub-d7072 [|domain]
+18:48:05.766751 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:89a:9e37:aaf4:7e58
+	  source link-address option (1), length 8 (1): 7a:71:51:33:0a:ed
+18:48:05.766773 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has fdb9:753d:943d:1:1089:974a:6cee:e1cb
+	  source link-address option (1), length 8 (1): 26:65:05:8d:28:6e
+18:48:05.766855 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:89a:9e37:aaf4:7e58 > fdb9:753d:943d:1:1089:974a:6cee:e1cb: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:89a:9e37:aaf4:7e58, Flags [solicited]
+18:48:05.773107 IP6 (hlim 255, next-header ICMPv6 (58) payload length: 24) fdb9:753d:943d:1:1089:974a:6cee:e1cb > fdb9:753d:943d:1:89a:9e37:aaf4:7e58: [icmp6 sum ok] ICMP6, neighbor advertisement, length 24, tgt is fdb9:753d:943d:1:1089:974a:6cee:e1cb, Flags [solicited]
