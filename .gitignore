@@ -1,2 +1,4 @@
 *.pcap
 __pycache__/
+*flowlet_features.json
+*flowlet_dataset.json

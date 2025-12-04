@@ -229,7 +229,7 @@ def split_flowlets(
 def build_summary(
     flows: Dict[Tuple, List[Dict[str, Any]]], threshold: float, bidirectional: bool
 ) -> Dict[str, Any]:
-    out = {
+    out: Dict[str, Any] = {
         "flows_count": len(flows),
         "threshold": threshold,
         "bidirectional": bidirectional,
@@ -240,7 +240,7 @@ def build_summary(
         # packets should already be in chronological order
         pkts_sorted = sorted(pkts, key=lambda x: x["ts"])
         total_bytes = sum(p.get("length") or 0 for p in pkts_sorted)
-        flow_info = {
+        flow_info: Dict[str, Any] = {
             "flow_key": key,
             "packets": len(pkts_sorted),
             "bytes": total_bytes,
@@ -456,12 +456,199 @@ def export_to_traffic_json(
     return events
 
 
+def compute_packet_statistics(pkts: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Compute statistical features from packet-level data.
+    
+    Returns dict with:
+    - inter_packet_times: list of time gaps between consecutive packets
+    - inter_packet_time_mean: mean of inter-packet times
+    - inter_packet_time_std: std dev of inter-packet times
+    - packet_sizes: list of packet sizes (bytes)
+    - packet_size_mean: mean packet size
+    - packet_size_std: std dev of packet size
+    """
+    if not pkts:
+        return {
+            "inter_packet_times": [],
+            "inter_packet_time_mean": 0.0,
+            "inter_packet_time_std": 0.0,
+            "packet_sizes": [],
+            "packet_size_mean": 0.0,
+            "packet_size_std": 0.0,
+        }
+    
+    # Sort by timestamp
+    sorted_pkts = sorted(pkts, key=lambda p: p["ts"])
+    
+    # Compute inter-packet times
+    inter_packet_times = []
+    for i in range(1, len(sorted_pkts)):
+        gap = sorted_pkts[i]["ts"] - sorted_pkts[i-1]["ts"]
+        inter_packet_times.append(gap)
+    
+    # Compute packet sizes
+    packet_sizes = [p.get("length", 0) or 0 for p in sorted_pkts]
+    
+    # Calculate statistics
+    import statistics
+    
+    ipt_mean = statistics.mean(inter_packet_times) if inter_packet_times else 0.0
+    ipt_std = statistics.stdev(inter_packet_times) if len(inter_packet_times) > 1 else 0.0
+    
+    ps_mean = statistics.mean(packet_sizes) if packet_sizes else 0.0
+    ps_std = statistics.stdev(packet_sizes) if len(packet_sizes) > 1 else 0.0
+    
+    return {
+        "inter_packet_times": inter_packet_times,
+        "inter_packet_time_mean": ipt_mean,
+        "inter_packet_time_std": ipt_std,
+        "packet_sizes": packet_sizes,
+        "packet_size_mean": ps_mean,
+        "packet_size_std": ps_std,
+    }
+
+
+def extract_flowlet_features(
+    flows: Dict[Tuple, List[Dict[str, Any]]], 
+    threshold: float,
+    traffic_class: str,
+    source_file: str
+) -> List[Dict[str, Any]]:
+    """Extract detailed flowlet features including packet-level statistics.
+    
+    Returns list of flowlet feature dicts suitable for ML training.
+    """
+    flowlet_features = []
+    
+    for flow_key, pkts in flows.items():
+        src_ip, src_port, dst_ip, dst_port, proto = flow_key
+        
+        # Sort packets by timestamp
+        pkts_sorted = sorted(pkts, key=lambda x: x["ts"])
+        
+        # Split into flowlets
+        flowlets = split_flowlets(pkts_sorted, threshold=threshold)
+        
+        for idx, flowlet in enumerate(flowlets, start=1):
+            # Compute packet-level statistics
+            stats = compute_packet_statistics(flowlet["pkts"])
+            
+            # Build feature dict
+            feature = {
+                "flow_key": {
+                    "src_ip": src_ip,
+                    "src_port": src_port,
+                    "dst_ip": dst_ip,
+                    "dst_port": dst_port,
+                    "protocol": proto,
+                },
+                "flowlet_id": idx,
+                "traffic_class": traffic_class,
+                "source_file": source_file,
+                # Flowlet-level features
+                "start_ts": flowlet["start_ts"],
+                "end_ts": flowlet["end_ts"],
+                "duration": flowlet["end_ts"] - flowlet["start_ts"],
+                "packet_count": flowlet["packets"],
+                "total_bytes": flowlet["bytes"],
+                # Packet-level statistics
+                "inter_packet_time_mean": stats["inter_packet_time_mean"],
+                "inter_packet_time_std": stats["inter_packet_time_std"],
+                "packet_size_mean": stats["packet_size_mean"],
+                "packet_size_std": stats["packet_size_std"],
+                # Raw sequences for potential Markov modeling
+                "inter_packet_times": stats["inter_packet_times"],
+                "packet_sizes": stats["packet_sizes"],
+            }
+            
+            flowlet_features.append(feature)
+    
+    return flowlet_features
+
+
+def parse_captures_to_features(
+    captures_root: str,
+    file_pattern: str = "capture*.txt",
+    threshold: float = 0.1,
+    bidirectional: bool = False,
+    output_file: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Parse all captures and extract flowlet features for ML training.
+    
+    Args:
+        captures_root: Root directory containing capture subdirectories
+        file_pattern: Glob pattern for capture files
+        threshold: Flowlet gap threshold in seconds
+        bidirectional: Whether to treat flows as bidirectional
+        output_file: Optional path to save JSON output
+        
+    Returns:
+        List of flowlet feature dicts
+    """
+    from pathlib import Path
+    
+    all_features = []
+    captures_path = Path(captures_root)
+    
+    # Define traffic classes based on directory structure
+    traffic_class_map = {
+        "chatgpt_ipv4": "llm",
+        "chatgpt_ipv6": "llm",
+        "claude_ipv4": "llm",
+        "claude_ipv6": "llm",
+        "gemini_ipv4": "llm",
+        "gemini_ipv6": "llm",
+        "all_v6": "non_llm",
+    }
+    
+    # Process each subdirectory
+    for subdir in captures_path.iterdir():
+        if not subdir.is_dir():
+            continue
+            
+        traffic_class = traffic_class_map.get(subdir.name, "unknown")
+        if traffic_class == "unknown":
+            continue
+        
+        # Find all capture files in this subdirectory
+        capture_files = sorted(subdir.glob(file_pattern))
+        
+        for capture_file in capture_files:
+            print(f"Processing {capture_file}...")
+            
+            # Parse packets from this capture
+            packets = parse_capture_text(capture_file)
+            for pkt in packets:
+                pkt["source_file"] = str(capture_file)
+            
+            # Group into flows
+            flows = group_packets_into_flows(packets, bidirectional=bidirectional)
+            
+            # Extract features
+            features = extract_flowlet_features(
+                flows, 
+                threshold=threshold,
+                traffic_class=traffic_class,
+                source_file=str(capture_file)
+            )
+            
+            all_features.extend(features)
+    
+    # Save to file if requested
+    if output_file:
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(all_features, f, indent=2)
+        print(f"Saved {len(all_features)} flowlet features to {output_file}")
+    
+    return all_features
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(
         description="Parse tcpdump-style text into flows, flowlets, and estimated LLM queries"
     )
     p.add_argument(
-        "input", help="capture text file or directory containing capture_*.txt files"
+        "input", nargs="?", help="capture text file or directory containing capture_*.txt files"
     )
     p.add_argument(
         "--threshold",
@@ -502,7 +689,40 @@ def main(argv=None):
         action="store_true",
         help="print a small human-readable sample summary",
     )
+    p.add_argument(
+        "--extract-features",
+        action="store_true",
+        help="extract flowlet features for ML training (use with --captures-root)",
+    )
+    p.add_argument(
+        "--captures-root",
+        default="captures",
+        help="root directory containing capture subdirectories (for --extract-features)",
+    )
+    p.add_argument(
+        "--features-output",
+        help="output file for extracted features JSON (for --extract-features)",
+    )
     args = p.parse_args(argv)
+
+    # Handle feature extraction mode
+    if args.extract_features:
+        if not args.features_output:
+            print("Error: --features-output is required when using --extract-features")
+            return
+        features = parse_captures_to_features(
+            captures_root=args.captures_root,
+            file_pattern=args.pattern,
+            threshold=args.threshold,
+            bidirectional=args.bidirectional,
+            output_file=args.features_output,
+        )
+        print(f"Extracted {len(features)} flowlet features")
+        return
+
+    if not args.input:
+        print("Error: input argument is required when not using --extract-features")
+        return
 
     packets, input_files = load_packets(args.input, args.pattern)
     flows = group_packets_into_flows(packets, bidirectional=args.bidirectional)
