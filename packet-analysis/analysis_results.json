@@ -1,0 +1,321 @@
+{
+  "dataset_info": {
+    "total_flowlets": 77437,
+    "llm_flowlets": 5299,
+    "non_llm_flowlets": 72138,
+    "feature_names": [
+      "duration",
+      "packet_count",
+      "total_bytes",
+      "inter_packet_time_mean",
+      "inter_packet_time_std",
+      "packet_size_mean",
+      "packet_size_std"
+    ]
+  },
+  "correlation_analysis": {
+    "correlation_matrix": {
+      "duration": {
+        "duration": 1.0,
+        "packet_count": 0.848947292497348,
+        "total_bytes": 0.32246632818375587,
+        "inter_packet_time_mean": 0.29177229239529723,
+        "inter_packet_time_std": 0.42312134859410605,
+        "packet_size_mean": 0.01764866520984875,
+        "packet_size_std": 0.14117704478704027,
+        "is_llm": 0.1147123183836968
+      },
+      "packet_count": {
+        "duration": 0.8489472924973481,
+        "packet_count": 1.0,
+        "total_bytes": 0.6637306575967697,
+        "inter_packet_time_mean": 0.17816293270253336,
+        "inter_packet_time_std": 0.4263893120297251,
+        "packet_size_mean": 0.04725240615127631,
+        "packet_size_std": 0.39950618017133727,
+        "is_llm": 0.13920844978579291
+      },
+      "total_bytes": {
+        "duration": 0.32246632818375587,
+        "packet_count": 0.6637306575967697,
+        "total_bytes": 1.0,
+        "inter_packet_time_mean": 0.07685451597904654,
+        "inter_packet_time_std": 0.28704129797945294,
+        "packet_size_mean": 0.2841190320762117,
+        "packet_size_std": 0.6157473302871451,
+        "is_llm": 0.16496544483921366
+      },
+      "inter_packet_time_mean": {
+        "duration": 0.29177229239529723,
+        "packet_count": 0.1781629327025334,
+        "total_bytes": 0.07685451597904654,
+        "inter_packet_time_mean": 1.0,
+        "inter_packet_time_std": 0.3999606539115452,
+        "packet_size_mean": 0.018980559798484266,
+        "packet_size_std": 0.139063350421373,
+        "is_llm": 0.18109022851694345
+      },
+      "inter_packet_time_std": {
+        "duration": 0.42312134859410605,
+        "packet_count": 0.42638931202972513,
+        "total_bytes": 0.28704129797945294,
+        "inter_packet_time_mean": 0.3999606539115452,
+        "inter_packet_time_std": 1.0,
+        "packet_size_mean": 0.04176818366926001,
+        "packet_size_std": 0.4567002342255618,
+        "is_llm": 0.17935294453156822
+      },
+      "packet_size_mean": {
+        "duration": 0.01764866520984875,
+        "packet_count": 0.04725240615127631,
+        "total_bytes": 0.2841190320762117,
+        "inter_packet_time_mean": 0.018980559798484266,
+        "inter_packet_time_std": 0.04176818366926001,
+        "packet_size_mean": 0.9999999999999999,
+        "packet_size_std": 0.10534823704741818,
+        "is_llm": 0.2908051737574427
+      },
+      "packet_size_std": {
+        "duration": 0.14117704478704027,
+        "packet_count": 0.39950618017133727,
+        "total_bytes": 0.615747330287145,
+        "inter_packet_time_mean": 0.139063350421373,
+        "inter_packet_time_std": 0.4567002342255618,
+        "packet_size_mean": 0.10534823704741816,
+        "packet_size_std": 0.9999999999999999,
+        "is_llm": 0.18545568695309642
+      },
+      "is_llm": {
+        "duration": 0.1147123183836968,
+        "packet_count": 0.13920844978579291,
+        "total_bytes": 0.16496544483921366,
+        "inter_packet_time_mean": 0.18109022851694348,
+        "inter_packet_time_std": 0.17935294453156822,
+        "packet_size_mean": 0.2908051737574427,
+        "packet_size_std": 0.18545568695309644,
+        "is_llm": 1.0
+      }
+    },
+    "feature_names": [
+      "duration",
+      "packet_count",
+      "total_bytes",
+      "inter_packet_time_mean",
+      "inter_packet_time_std",
+      "packet_size_mean",
+      "packet_size_std",
+      "is_llm"
+    ],
+    "shape": [
+      8,
+      8
+    ]
+  },
+  "feature_importance": {
+    "random_forest": {
+      "duration": 0.025029392156434793,
+      "packet_count": 0.016015426130875803,
+      "total_bytes": 0.45285776407113554,
+      "inter_packet_time_mean": 0.016830327263265037,
+      "inter_packet_time_std": 0.0016092221321423574,
+      "packet_size_mean": 0.4800901718524497,
+      "packet_size_std": 0.00756769639369679
+    },
+    "xgboost": {
+      "duration": 0.11267883330583572,
+      "packet_count": 0.005961126647889614,
+      "total_bytes": 0.4214191138744354,
+      "inter_packet_time_mean": 0.004611349664628506,
+      "inter_packet_time_std": 0.008544061332941055,
+      "packet_size_mean": 0.4231438636779785,
+      "packet_size_std": 0.023641562089323997
+    }
+  },
+  "statistical_tests": {
+    "duration": {
+      "llm_mean": 0.019180527458017745,
+      "llm_std": 0.1603004035982171,
+      "llm_median": 0.0,
+      "non_llm_mean": 1.5318971972121098e-06,
+      "non_llm_std": 0.00033076082393296774,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 210036218.0,
+      "p_value": 0.0,
+      "cohens_d": 0.16920193141812623,
+      "significant": true
+    },
+    "packet_count": {
+      "llm_mean": 2.3932817512738254,
+      "llm_std": 9.56279985813218,
+      "llm_median": 1.0,
+      "non_llm_mean": 1.0004158695832988,
+      "non_llm_std": 0.022947662001491096,
+      "non_llm_median": 1.0,
+      "mann_whitney_u": 210070473.5,
+      "p_value": 0.0,
+      "cohens_d": 0.205986131484505,
+      "significant": true
+    },
+    "total_bytes": {
+      "llm_mean": 844.3232685412341,
+      "llm_std": 4568.366421029736,
+      "llm_median": 268.0,
+      "non_llm_mean": 41.018700268928995,
+      "non_llm_std": 213.16717676277818,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 293976575.5,
+      "p_value": 0.0,
+      "cohens_d": 0.2484059662613329,
+      "significant": true
+    },
+    "inter_packet_time_mean": {
+      "llm_mean": 0.0020735333148684336,
+      "llm_std": 0.010792107702098838,
+      "llm_median": 0.0,
+      "non_llm_mean": 1.5195574224620708e-06,
+      "non_llm_std": 0.0003307327061377605,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 210035741.0,
+      "p_value": 0.0,
+      "cohens_d": 0.27139229921566765,
+      "significant": true
+    },
+    "inter_packet_time_std": {
+      "llm_mean": 0.0008680221514348771,
+      "llm_std": 0.004595422108021068,
+      "llm_median": 0.0,
+      "non_llm_mean": 8.505177170789846e-09,
+      "non_llm_std": 1.9405216853802785e-06,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 202558476.0,
+      "p_value": 0.0,
+      "cohens_d": 0.26712596417954576,
+      "significant": true
+    },
+    "packet_size_mean": {
+      "llm_mean": 326.80030399538265,
+      "llm_std": 452.77179896225226,
+      "llm_median": 260.0,
+      "non_llm_mean": 41.01529937989224,
+      "non_llm_std": 213.16658904391835,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 293493432.0,
+      "p_value": 0.0,
+      "cohens_d": 0.8076079700485927,
+      "significant": true
+    },
+    "packet_size_std": {
+      "llm_mean": 16.577559178595422,
+      "llm_std": 84.75213594861985,
+      "llm_median": 0.0,
+      "non_llm_mean": 0.002279110904767947,
+      "non_llm_std": 0.4350421517345872,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 205155281.0,
+      "p_value": 0.0,
+      "cohens_d": 0.27657918935366965,
+      "significant": true
+    }
+  },
+  "summary": {
+    "most_correlated_features": [
+      [
+        "packet_size_mean",
+        0.2908051737574427
+      ],
+      [
+        "packet_size_std",
+        0.18545568695309642
+      ],
+      [
+        "inter_packet_time_mean",
+        0.18109022851694345
+      ],
+      [
+        "inter_packet_time_std",
+        0.17935294453156822
+      ],
+      [
+        "total_bytes",
+        0.16496544483921366
+      ],
+      [
+        "packet_count",
+        0.13920844978579291
+      ],
+      [
+        "duration",
+        0.1147123183836968
+      ]
+    ],
+    "most_important_features_rf": [
+      [
+        "packet_size_mean",
+        0.4800901718524497
+      ],
+      [
+        "total_bytes",
+        0.45285776407113554
+      ],
+      [
+        "duration",
+        0.025029392156434793
+      ],
+      [
+        "inter_packet_time_mean",
+        0.016830327263265037
+      ],
+      [
+        "packet_count",
+        0.016015426130875803
+      ],
+      [
+        "packet_size_std",
+        0.00756769639369679
+      ],
+      [
+        "inter_packet_time_std",
+        0.0016092221321423574
+      ]
+    ],
+    "most_important_features_xgb": [
+      [
+        "packet_size_mean",
+        0.4231438636779785
+      ],
+      [
+        "total_bytes",
+        0.4214191138744354
+      ],
+      [
+        "duration",
+        0.11267883330583572
+      ],
+      [
+        "packet_size_std",
+        0.023641562089323997
+      ],
+      [
+        "inter_packet_time_std",
+        0.008544061332941055
+      ],
+      [
+        "packet_count",
+        0.005961126647889614
+      ],
+      [
+        "inter_packet_time_mean",
+        0.004611349664628506
+      ]
+    ],
+    "significant_features": [
+      "duration",
+      "packet_count",
+      "total_bytes",
+      "inter_packet_time_mean",
+      "inter_packet_time_std",
+      "packet_size_mean",
+      "packet_size_std"
+    ]
+  }
+}
