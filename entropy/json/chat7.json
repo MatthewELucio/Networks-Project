@@ -1,0 +1,120 @@
+{
+  "data": {
+    "type": "input_message",
+    "input_message": {
+      "id": "64e6f1ba-9fbf-4b8d-b65c-ec1262296706",
+      "author": { "role": "user", "name": null, "metadata": {} },
+      "create_time": 1764874288.675,
+      "update_time": null,
+      "content": { "content_type": "text", "parts": ["penguin"] },
+      "status": "finished_successfully",
+      "end_turn": null,
+      "weight": 1.0,
+      "metadata": {
+        "selected_github_repos": [],
+        "selected_all_github_repos": false,
+        "serialization_metadata": { "custom_symbol_offsets": [] },
+        "request_id": "fd0b0575-bc56-4bd7-a3de-bbb4bb602dd3",
+        "message_source": null,
+        "turn_exchange_id": "ebdbb156-77b8-4bca-8260-78cdd4b0d4bc",
+        "useragent": {
+          "client_type": "web",
+          "is_mobile": false,
+          "is_mobile_app": false,
+          "is_desktop_app": false,
+          "is_native_app": false,
+          "is_native_app_apple": false,
+          "is_mobile_app_ios": false,
+          "is_desktop_app_macos": false,
+          "is_aura_app_macos": false,
+          "is_aura_web": false,
+          "is_sora_ios": false,
+          "is_agora_ios": false,
+          "is_agora_android": false,
+          "is_desktop_app_windows": false,
+          "is_electron_app": false,
+          "is_mobile_app_android": false,
+          "is_mobile_web": false,
+          "is_mobile_web_ios": false,
+          "is_mobile_web_android": false,
+          "is_ios": false,
+          "is_android": false,
+          "is_macos": false,
+          "is_windows": true,
+          "is_linux": false,
+          "is_chatgpt_client": false,
+          "is_sora_client": false,
+          "is_agora_client": false,
+          "is_browserbased_app": true,
+          "is_chatgpt_api": false,
+          "is_slack": false,
+          "is_chatkit_web": false,
+          "is_chatkit_synthetic": false,
+          "is_kakao_talk": false,
+          "app_version": null,
+          "build_number": null,
+          "user_agent": "mozilla/5.0 (windows nt 10.0; win64; x64; rv:145.0) gecko/20100101 firefox/145.0",
+          "app_environment": null,
+          "os_version": null,
+          "device_model": null,
+          "user_client_type": "desktop_web"
+        },
+        "paragen_stream_type": "default",
+        "parent_id": "062c7658-1d46-4732-9a51-e24a22e58441"
+      },
+      "recipient": "all",
+      "channel": null
+    },
+    "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce"
+  },
+  "data": {
+    "p": "",
+    "o": "add",
+    "v": {
+      "message": {
+        "id": "81b0a26c-0273-4951-9387-7b9c87e9676a",
+        "author": { "role": "assistant", "name": null, "metadata": {} },
+        "create_time": 1764874288.852694,
+        "update_time": 1764874289.035194,
+        "content": { "content_type": "text", "parts": [""] },
+        "status": "in_progress",
+        "end_turn": null,
+        "weight": 1.0,
+        "metadata": {
+          "citations": [],
+          "content_references": [],
+          "request_id": "fd0b0575-bc56-4bd7-a3de-bbb4bb602dd3",
+          "message_type": "next",
+          "model_slug": "gpt-5-1",
+          "default_model_slug": "auto",
+          "parent_id": "64e6f1ba-9fbf-4b8d-b65c-ec1262296706",
+          "turn_exchange_id": "ebdbb156-77b8-4bca-8260-78cdd4b0d4bc",
+          "model_switcher_deny": []
+        },
+        "recipient": "all",
+        "channel": "final"
+      },
+      "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce",
+      "error": null
+    },
+    "c": 0
+  },
+  "data": {
+    "type": "server_ste_metadata",
+    "metadata": {
+      "conduit_prewarmed": true,
+      "fast_convo": true,
+      "warmup_state": "warm",
+      "is_first_turn": false,
+      "model_slug": "gpt-5-1",
+      "did_auto_switch_to_reasoning": false,
+      "auto_switcher_race_winner": null,
+      "is_autoswitcher_enabled": true,
+      "is_search": null,
+      "did_prompt_contain_image": false,
+      "message_id": "81b0a26c-0273-4951-9387-7b9c87e9676a",
+      "request_id": "fd0b0575-bc56-4bd7-a3de-bbb4bb602dd3"
+    },
+    "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce"
+  }
+}

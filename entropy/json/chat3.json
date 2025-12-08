@@ -1,0 +1,9 @@
+{
+  "delta data": {
+    "v": [
+      { "p": "/message/create_time", "o": "replace", "v": 1764874283.281755 },
+      { "p": "/message/update_time", "o": "replace", "v": 1764874283.306619 },
+      { "p": "/message/content/parts/0", "o": "append", "v": "  \nWhat would" }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "data": {
+    "type": "message_marker",
+    "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce",
+    "message_id": "062c7658-1d46-4732-9a51-e24a22e58441",
+    "marker": "user_visible_token",
+    "event": "first"
+  },
+  "delta data": {
+    "o": "patch",
+    "v": [
+      { "p": "/message/create_time", "o": "replace", "v": 1764874283.191541 },
+      { "p": "/message/update_time", "o": "replace", "v": 1764874283.236544 },
+      {
+        "p": "/message/content/parts/0",
+        "o": "append",
+        "v": "Testing successful \ud83d\ude04"
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "delta data": {
+    "v": [
+      { "p": "/message/create_time", "o": "replace", "v": 1764874288.852694 },
+      { "p": "/message/update_time", "o": "replace", "v": 1764874289.837605 },
+      { "p": "/message/status", "o": "replace", "v": "finished_successfully" },
+      { "p": "/message/end_turn", "o": "replace", "v": true },
+      {
+        "p": "/message/metadata",
+        "o": "append",
+        "v": {
+          "is_complete": true,
+          "finish_details": { "type": "stop", "stop_tokens": [200002] },
+          "sonic_classification_result": {
+            "latency_ms": 100.9111418388784,
+            "simple_search_prob": 0.146002502864997,
+            "complex_search_prob": 0.0003245083815729204,
+            "no_search_prob": 0.8536729887534301,
+            "search_complexity_decision": "no_search",
+            "search_decision": false,
+            "simple_search_threshold": 0.0,
+            "complex_search_threshold": 0.4,
+            "no_search_threshold": 0.12,
+            "threshold_order": ["no_search", "complex", "simple"],
+            "classifier_config_name": "sonic_classifier_3cls_ev3",
+            "classifier_config": {
+              "model_name": "snc-pg-sw-3cls-ev3",
+              "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+              "force_disabled_rate": 0.0,
+              "force_enabled_rate": 0.0,
+              "num_messages": 20,
+              "only_user_messages": false,
+              "remove_memory": true,
+              "support_mm": true,
+              "n_ctx": 2048,
+              "max_action_length": 4,
+              "dynamic_set_max_message_size": false,
+              "max_message_tokens": 2000,
+              "append_base_config": false,
+              "no_search_token": "1",
+              "simple_search_token": "7",
+              "complex_search_token": "5",
+              "simple_search_threshold": 0.0,
+              "complex_search_threshold": 0.4,
+              "no_search_threshold": 0.12,
+              "prefetch_threshold": null,
+              "force_search_first_turn_threshold": 1e-5,
+              "threshold_order": ["no_search", "complex", "simple"],
+              "passthrough_tool_calls": null,
+              "timeout": 1.0
+            },
+            "decision_source": "classifier",
+            "passthrough_tool_names": []
+          }
+        }
+      }
+    ]
+  }
+}

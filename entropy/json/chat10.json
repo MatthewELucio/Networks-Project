@@ -1,0 +1,13 @@
+{
+  "delta data": {
+    "v": [
+      { "p": "/message/create_time", "o": "replace", "v": 1764874289.569018 },
+      { "p": "/message/update_time", "o": "replace", "v": 1764874289.594497 },
+      {
+        "p": "/message/content/parts/0",
+        "o": "append",
+        "v": ", flightless bird. Want a fun fact?"
+      }
+    ]
+  }
+}

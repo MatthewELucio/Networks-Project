@@ -1,0 +1,38 @@
+{
+  "action": "next",
+  "messages": [
+    {
+      "id": "64e6f1ba-9fbf-4b8d-b65c-ec1262296706",
+      "author": { "role": "user" },
+      "create_time": 1764874288.675,
+      "content": { "content_type": "text", "parts": ["penguin"] },
+      "metadata": {
+        "selected_github_repos": [],
+        "selected_all_github_repos": false,
+        "serialization_metadata": { "custom_symbol_offsets": [] }
+      }
+    }
+  ],
+  "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce",
+  "parent_message_id": "062c7658-1d46-4732-9a51-e24a22e58441",
+  "model": "auto",
+  "timezone_offset_min": 300,
+  "timezone": "America/New_York",
+  "conversation_mode": { "kind": "primary_assistant" },
+  "enable_message_followups": true,
+  "system_hints": [],
+  "supports_buffering": true,
+  "supported_encodings": ["v1"],
+  "client_contextual_info": {
+    "is_dark_mode": true,
+    "time_since_loaded": 668,
+    "page_height": 934,
+    "page_width": 1707,
+    "pixel_ratio": 1.5,
+    "screen_height": 1067,
+    "screen_width": 1707,
+    "app_name": "chatgpt.com"
+  },
+  "paragen_cot_summary_display_override": "allow",
+  "force_parallel_switch": "auto"
+}

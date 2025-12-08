@@ -1,0 +1,52 @@
+{
+  "delta data": {
+    "p": "",
+    "o": "add",
+    "v": {
+      "message": {
+        "id": "062c7658-1d46-4732-9a51-e24a22e58441",
+        "author": { "role": "assistant", "name": null, "metadata": {} },
+        "create_time": 1764874282.986717,
+        "update_time": 1764874283.169928,
+        "content": { "content_type": "text", "parts": [""] },
+        "status": "in_progress",
+        "end_turn": null,
+        "weight": 1.0,
+        "metadata": {
+          "citations": [],
+          "content_references": [],
+          "request_id": "3e4e7356-76ef-4087-ab5c-6e881ae87659",
+          "message_type": "next",
+          "model_slug": "gpt-5-1",
+          "default_model_slug": "auto",
+          "parent_id": "c9c3d00c-2014-4e68-b71a-0328e9f2ce42",
+          "turn_exchange_id": "cd494bba-dbee-4d0c-beb7-5ea91b7275eb",
+          "model_switcher_deny": []
+        },
+        "recipient": "all",
+        "channel": "final"
+      },
+      "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce",
+      "error": null
+    },
+    "c": 0
+  },
+  "data": {
+    "type": "server_ste_metadata",
+    "metadata": {
+      "conduit_prewarmed": true,
+      "fast_convo": true,
+      "warmup_state": "warm",
+      "is_first_turn": false,
+      "model_slug": "gpt-5-1",
+      "did_auto_switch_to_reasoning": false,
+      "auto_switcher_race_winner": null,
+      "is_autoswitcher_enabled": true,
+      "is_search": null,
+      "did_prompt_contain_image": false,
+      "message_id": "062c7658-1d46-4732-9a51-e24a22e58441",
+      "request_id": "3e4e7356-76ef-4087-ab5c-6e881ae87659"
+    },
+    "conversation_id": "6931d595-dc5c-8329-b2a6-6789942bdbce"
+  }
+}
