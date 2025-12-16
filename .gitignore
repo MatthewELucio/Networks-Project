@@ -1,7 +1,5 @@
 *.pcap
 __pycache__/
-*flowlet_features.json
-flow_dataset.json
 MODEL_SUMMARY.md
 
 # Front-end build artifacts and dev-only files
