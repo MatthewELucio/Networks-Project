@@ -142,7 +142,7 @@ def main():
                                     # 1. WRITE HEADER
                                     header_line = f"{ts} | {proto} | {src} -> {dst} | Len:{length} | {info}"
                                     f.write(header_line + "\n")
-                                    # print(header_line[:120])
+                                    print(header_line[:120])
 
                                     # 2. WRITE PAYLOAD (Strict Text Only)
                                     if data_hex:
@@ -155,8 +155,8 @@ def main():
                                             if is_readable_text(decoded):
                                                 body_out = f"    [PAYLOAD]:\n    {decoded}\n    {'-'*60}\n"
                                                 f.write(body_out)
-                                                # if any(c in decoded for c in "{<"):
-                                                #     print(f"    [Clean Text]: {decoded[:80]}...")
+                                                if any(c in decoded for c in "{<"):
+                                                    print(f"    [Clean Text]: {decoded[:80]}...")
                                             else:
                                                 # Optional: Log that we skipped a binary blob
                                                 # f.write("    [BINARY DATA SKIPPED]\n")
@@ -190,3 +190,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
