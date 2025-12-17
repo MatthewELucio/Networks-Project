@@ -24,6 +24,7 @@ from sklearn.metrics import (
     confusion_matrix,
     classification_report,
 )
+import joblib
 import xgboost as xgb
 
 
@@ -344,10 +345,13 @@ def train_and_evaluate_models(
     X_test: np.ndarray,
     y_train: np.ndarray,
     y_test: np.ndarray,
-) -> Dict[str, Any]:
-    """Train RF, SVM, and XGBoost models and evaluate them.
+) -> Tuple[Dict[str, Any], Dict[str, Any], StandardScaler]:
+    """Train RF, SVM, and XGBoost models, evaluate them, and return fitted models.
     
-    Returns dict with results for each model.
+    Returns:
+        results: Metrics for each model
+        trained_models: Dict of fitted estimators
+        scaler: Fitted StandardScaler (used for SVM)
     """
     results = {}
     
@@ -373,7 +377,7 @@ def train_and_evaluate_models(
     
     # SVM
     print("Training SVM...")
-    svm = SVC(kernel="rbf", random_state=42)
+    svm = SVC(kernel="rbf", random_state=42, probability=True)
     svm.fit(X_train_scaled, y_train)
     y_pred_svm = svm.predict(X_test_scaled)
     
@@ -406,7 +410,13 @@ def train_and_evaluate_models(
         "classification_report": classification_report(y_test, y_pred_xgb, target_names=["non_llm", "llm"], output_dict=True),
     }
     
-    return results
+    trained_models = {
+        "random_forest": rf,
+        "svm": svm,
+        "xgboost": xgb_model,
+    }
+    
+    return results, trained_models, scaler
 
 
 def main(argv=None):
@@ -425,6 +435,11 @@ def main(argv=None):
         type=float,
         default=0.2,
         help="fraction of data for testing (default: 0.2)",
+    )
+    p.add_argument(
+        "--model-weights",
+        default="flowlet_model_weights.pkl",
+        help="path to save trained model weights/artifacts (joblib format)",
     )
     args = p.parse_args(argv)
     
@@ -458,7 +473,9 @@ def main(argv=None):
     
     # Train and evaluate models
     print("\nTraining models...")
-    results = train_and_evaluate_models(X_train, X_test, y_train, y_test)
+    results, trained_models, scaler = train_and_evaluate_models(
+        X_train, X_test, y_train, y_test
+    )
     
     # Print results
     print("\n" + "=" * 60)
@@ -492,6 +509,25 @@ def main(argv=None):
         json.dump(output_data, f, indent=2)
     
     print(f"\nResults saved to {args.output}")
+    
+    # Persist trained artifacts for later inference
+    model_artifacts = {
+        "models": trained_models,
+        "scaler": scaler,
+        "markov_models": markov_models,
+        "block_mappings": block_mappings,
+        "feature_dim": int(X.shape[1]),
+        "labels": {"non_llm": 0, "llm": 1},
+        "training_metadata": {
+            "input_file": str(args.input),
+            "test_size": args.test_size,
+            "train_size": len(X_train),
+            "test_size_count": len(X_test),
+        },
+    }
+    
+    joblib.dump(model_artifacts, args.model_weights)
+    print(f"Model artifacts saved to {args.model_weights}")
 
 
 if __name__ == "__main__":

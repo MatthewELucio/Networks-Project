@@ -599,6 +599,7 @@ def parse_captures_to_features(
         "gemini_ipv4": "llm",
         "gemini_ipv6": "llm",
         "all_v6": "non_llm",
+        "all_v4": "non_llm",
     }
     
     # Process each subdirectory
