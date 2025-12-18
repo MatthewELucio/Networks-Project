@@ -37,6 +37,23 @@ app.add_middleware(
 # Track running captures
 _running_captures: Dict[int, subprocess.Popen] = {}
 
+# SSL keys config file
+SSL_CONFIG_FILE = Path("ssl_keys_config.json")
+
+
+def load_ssl_config() -> Dict[str, Any]:
+    """Load SSL keys configuration from file."""
+    if SSL_CONFIG_FILE.exists():
+        with SSL_CONFIG_FILE.open("r") as f:
+            return json.load(f)
+    return {"ssl_key_path": None}
+
+
+def save_ssl_config(config: Dict[str, Any]) -> None:
+    """Save SSL keys configuration to file."""
+    with SSL_CONFIG_FILE.open("w") as f:
+        json.dump(config, f, indent=2)
+
 
 # Pydantic models for request/response
 class CaptureCreate(BaseModel):
@@ -51,6 +68,7 @@ class CaptureStart(BaseModel):
     timeout: Optional[int] = None
     snaplen: int = 96
     extra_filter: Optional[str] = None
+    use_ssl_decrypt: bool = False  # Use decrypt script if True
 
 
 class CaptureResponse(BaseModel):
@@ -81,9 +99,14 @@ class FlowletResponse(BaseModel):
     total_bytes: int
     model_llm_prediction: Optional[str] = None
     model_llm_confidence: Optional[float] = None
+    ground_truth_llm: Optional[str] = None
 
     class Config:
         from_attributes = True
+
+
+class SSLKeysConfig(BaseModel):
+    ssl_key_path: Optional[str] = None
 
 
 # Initialize database on startup
@@ -198,9 +221,28 @@ def get_capture_flowlets_chart(capture_id: int, db: Session = Depends(get_db)):
 
 @app.post("/api/captures/start")
 def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks):
-    """Start a new packet capture."""
-    # Build command for ip_range_capture.py
-    cmd = ["python3", "ip_range_capture.py", capture_data.ip_range]
+    """Start a new packet capture. Uses decrypt script if use_ssl_decrypt is True."""
+    # Determine which script to use
+    if capture_data.use_ssl_decrypt:
+        ssl_config = load_ssl_config()
+        ssl_key_path = ssl_config.get("ssl_key_path")
+        if not ssl_key_path or not Path(ssl_key_path).exists():
+            raise HTTPException(
+                status_code=400,
+                detail="SSL key file not configured or not found. Please set SSL keys first."
+            )
+        
+        # Use decrypt script
+        cmd = ["python3", "ip_range_capture_tshark_decrypt_llm_only.py", capture_data.ip_range]
+        cmd.extend(["--sniff"])  # Enable filtering/decryption mode
+        cmd.extend(["-k", ssl_key_path])
+    else:
+        # Use regular capture script
+        cmd = ["python3", "ip_range_capture.py", capture_data.ip_range]
+        if capture_data.snaplen:
+            cmd.extend(["--snaplen", str(capture_data.snaplen)])
+        if capture_data.extra_filter:
+            cmd.extend(["--extra-filter", capture_data.extra_filter])
     
     if capture_data.interface:
         cmd.extend(["-i", capture_data.interface])
@@ -214,12 +256,6 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
     if capture_data.timeout:
         cmd.extend(["-t", str(capture_data.timeout)])
     
-    if capture_data.snaplen:
-        cmd.extend(["--snaplen", str(capture_data.snaplen)])
-    
-    if capture_data.extra_filter:
-        cmd.extend(["--extra-filter", capture_data.extra_filter])
-    
     # Start capture process
     try:
         proc = subprocess.Popen(
@@ -232,10 +268,13 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
         # Create capture record in database
         db = get_db_session()
         try:
+            notes = f"IP: {capture_data.ip_range}, Interface: {capture_data.interface or 'default'}"
+            if capture_data.use_ssl_decrypt:
+                notes += " [SSL Decrypted]"
             capture = Capture(
                 file_path="",  # Will be updated when capture completes
                 status="running",
-                notes=f"IP: {capture_data.ip_range}, Interface: {capture_data.interface or 'default'}"
+                notes=notes
             )
             db.add(capture)
             db.commit()
@@ -266,7 +305,11 @@ async def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
             # Find the output file (most recent in outdir)
             outdir_path = Path(outdir)
             if outdir_path.exists():
-                capture_files = sorted(outdir_path.glob("capture_*.txt"), key=lambda p: p.stat().st_mtime)
+                # Check for both regular and hybrid captures
+                capture_files = sorted(
+                    list(outdir_path.glob("capture_*.txt")) + list(outdir_path.glob("hybrid_capture_*.txt")),
+                    key=lambda p: p.stat().st_mtime
+                )
                 if capture_files:
                     capture.file_path = str(capture_files[-1])
             
@@ -380,6 +423,24 @@ def classify_capture(capture_id: int, background_tasks: BackgroundTasks, db: Ses
     background_tasks.add_task(run_classify, capture_id)
     
     return {"message": "Classification started in background"}
+
+
+@app.get("/api/ssl-keys")
+def get_ssl_keys():
+    """Get current SSL keys configuration."""
+    config = load_ssl_config()
+    return config
+
+
+@app.post("/api/ssl-keys")
+def set_ssl_keys(config: SSLKeysConfig):
+    """Set SSL keys configuration."""
+    ssl_key_path = config.ssl_key_path
+    if ssl_key_path and not Path(ssl_key_path).exists():
+        raise HTTPException(status_code=400, detail=f"SSL key file not found: {ssl_key_path}")
+    
+    save_ssl_config({"ssl_key_path": ssl_key_path})
+    return {"message": "SSL keys configuration saved", "ssl_key_path": ssl_key_path}
 
 
 async def run_classify(capture_id: int):

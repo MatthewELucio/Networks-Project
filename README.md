@@ -10,7 +10,45 @@ The 'captures' directory houses subdirectories that each contain corresponding p
 
 ### Front-end directory
 
-The front-end provides a web-based interface for managing packet captures and analyzing network traffic. To use it, first start the API server with `python api_server.py` (or `uvicorn api_server:app --reload`), then navigate to the `front-end` directory and run `npm install` followed by `npm run dev`. The interface displays a table of all captures with flow counts and LLM flow counts (after classification), allows you to start new captures via a popup dialog that configures `ip_range_capture.py` arguments (IP range, interface, timeout, etc.), and provides buttons to parse capture files and run classification. Clicking on any capture opens a detailed view showing a time-series chart of flow patterns (total bytes vs LLM bytes) that updates in real-time, enabling visual analysis of traffic patterns over the capture duration.
+The front-end provides a web-based interface for managing packet captures and analyzing network traffic. The system uses a SQLite database to store captures and flowlets, replacing the previous JSON-based approach.
+
+#### Setup and Running
+
+1. **Start the API server:**
+   ```bash
+   python api_server.py
+   # Or with auto-reload: uvicorn api_server:app --reload
+   ```
+   The API server runs on `http://localhost:8000` and manages the SQLite database (`networks_project.db`).
+
+2. **Start the front-end:**
+   ```bash
+   cd front-end
+   npm install
+   npm run dev
+   ```
+   The front-end runs on `http://localhost:5173` (Vite default port).
+
+#### Features
+
+- **Capture Management**: View all captures in a table with flow counts and LLM flow counts (after classification)
+- **Start Captures**: Click "Start Capture" to open a dialog for configuring capture parameters:
+  - IP range (CIDR notation)
+  - Network interface
+  - Output directory
+  - Timeout
+  - Snap length
+  - Extra filters
+  - **SSL Decryption**: Check "Use SSL Decryption" to decrypt TLS traffic (requires SSL keys configuration)
+- **SSL Keys Configuration**: Click "SSL Keys" button to configure the path to your SSLKEYLOGFILE for TLS decryption
+- **Parse Captures**: Click "Parse" button to extract flowlets from capture files and store them in the database
+- **Run Classification**: Click "Classify" button to run ML models on flowlets and generate predictions
+- **Capture Details**: Click on any capture to view:
+  - Time-series chart of flow patterns (total bytes vs LLM bytes)
+  - **Predicted vs Actual table**: Compare model predictions against ground truth from decrypted captures
+    - Shows ground truth LLM (from decrypted captures)
+    - Shows model prediction and confidence
+    - Indicates match/mismatch with visual indicators
 
 
 ### Packet-analysis directory
@@ -20,19 +58,60 @@ The packet-analysis directory contains machine learning models for classifying L
 #### Dependencies
 
 ```bash
-pip install numpy scikit-learn xgboost matplotlib seaborn scipy
+pip install -r requirements.txt
 ```
+
+This installs all required dependencies including:
+- Machine learning libraries (numpy, scikit-learn, xgboost, scipy)
+- Visualization tools (matplotlib, seaborn)
+- Web server (fastapi, uvicorn)
+- Database (sqlalchemy)
+- Model serialization (joblib)
 
 #### Step 1: Parse Captures into Flowlets
 
+**Option A: Using the Web Interface (Recommended)**
+1. Start the API server and front-end (see Front-end directory section)
+2. Click "Parse" button on any completed capture in the web interface
+3. Flowlets are automatically saved to the SQLite database
+
+**Option B: Using Command Line**
+
 ```bash
-python packet-analysis/parse_flowlets.py --extract-features --captures-root captures --features-output flowlet_features.json --threshold 0.1
+# Parse captures and save to database
+python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --db --db-path networks_project.db --threshold 0.1
+
+# Or save to JSON (legacy format)
+python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --output flowlet_features.json --threshold 0.1
 ```
 
 **Input**: Raw packet captures in `captures/` directory  
-**Output**: `flowlet_features.json` - Extracted flowlet features for ML training
+**Output**: 
+- Flowlets saved to SQLite database (`networks_project.db`) with foreign keys to captures
+- If using decrypted captures (with `LLM_IP` headers), ground truth LLM names are automatically extracted and stored in `ground_truth_llm` field
+- Optional: `flowlet_features.json` for legacy workflows
 
-#### Step 2: Train Classification Models
+#### Step 2: Run Classification
+
+**Option A: Using the Web Interface (Recommended)**
+1. After parsing a capture, click "Classify" button
+2. Classification runs in the background and updates flowlets with predictions
+3. View results in the capture detail view
+
+**Option B: Using Command Line**
+
+```bash
+# Classify flowlets from database
+python packet-analysis/classify.py --input networks_project.db --input-type sql --sql-query "SELECT * FROM flowlets WHERE capture_id = 1" --model-weights packet-analysis/flowlet_model_weights.pkl
+
+# Or classify from JSON (legacy)
+python packet-analysis/classify.py --input flowlet_features.json --model-weights packet-analysis/flowlet_model_weights.pkl --output classified_flowlets.json
+```
+
+**Input**: Flowlets from database or JSON file  
+**Output**: Flowlets updated with `model_llm_prediction` and `model_llm_confidence` fields
+
+#### Step 3: Train Classification Models
 
 ```bash
 # For ChatGPT detection
@@ -48,7 +127,7 @@ python packet-analysis/claude/flowlet_models_claude.py flowlet_features.json --o
 **Input**: `flowlet_features.json`  
 **Output**: `model_results.json` - Model performance metrics and confusion matrices
 
-#### Step 3: Generate Analysis Plots
+#### Step 4: Generate Analysis Plots
 
 ```bash
 # For ChatGPT analysis
@@ -67,16 +146,75 @@ python packet-analysis/claude/flowlet_analysis_claude.py flowlet_features.json -
 - `analysis_results.json` - Feature correlation and importance analysis
 - `analysis_plots/` - Visualization plots (heatmaps, distributions, importance charts)
 
-## ip_range_capture.py
+## Capture Scripts
 
-This script is the primary data-collection method that we used. Invoking ip_range_capture.py with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow that we used was:
+### ip_range_capture.py
+
+This script is the primary data-collection method. Invoking `ip_range_capture.py` with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow:
 
 1. Open Wireshark and an LLM browser interface
 2. Issue some long request to the LLM
 3. Observe Wireshark traffic to identify the IP address streaming the LLM's response to the device
    - This became easy with time, as LLM flows have a pretty identifiable pattern among the noise of our device connections.
-4. Invoke the python script with: _sudo python3 ip_range_capture.py <IP_ADDRESS>_
+4. Invoke the python script with: `sudo python3 ip_range_capture.py <IP_ADDRESS>`
 5. Issue queries to LLM
 6. Terminate packet collection with Ctrl+C when done issuing queries or the connection switches off of the specified IP address (when a FIN ACK appears in the Wireshark capture)
 
-Output captures were then moved to their corresponding directory, and the default naming convention of captures was _capture*<DATE>*<TIME>*<IP>*<ADDRESS_SIZE>.txt_ - we then manually added qualitative notes to the end of the file name.
+Output captures are saved with the naming convention: `capture_<DATE>_<TIME>_<IP>_<ADDRESS_SIZE>.txt`
+
+### ip_range_capture_tshark_decrypt_llm_only.py
+
+This script extends the basic capture functionality with TLS decryption capabilities. It uses tshark to decrypt TLS traffic when SSL keys are provided, and automatically identifies LLM traffic by detecting keywords in hostnames, SNI, DNS queries, and HTTP headers.
+
+**Features:**
+- Decrypts TLS traffic using SSLKEYLOGFILE
+- Automatically detects LLM traffic (ChatGPT, Claude, Gemini, etc.)
+- Outputs captures with `LLM_IP` headers indicating which IPs belong to which LLM
+- These headers are used as ground truth when parsing flowlets
+
+**Usage:**
+```bash
+python ip_range_capture_tshark_decrypt_llm_only.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
+```
+
+**Via Web Interface:**
+1. Configure SSL keys in the front-end (click "SSL Keys" button)
+2. Start a capture with "Use SSL Decryption" checked
+3. The script automatically uses the configured SSL keys
+
+**Output Format:**
+- Captures start with `LLM_IP <LLM_NAME> <IP_ADDRESS>` headers
+- These headers are parsed by `parse_flowlets_v2.py` to set `ground_truth_llm` field
+- Enables comparison of model predictions against actual LLM traffic
+
+## Database Schema
+
+The system uses SQLite with the following main tables:
+
+- **captures**: Stores capture file metadata
+  - `id`, `file_path`, `created_at`, `status`, `llm_ip_map`, `notes`
+  
+- **flowlets**: Stores extracted flowlet features
+  - `id`, `capture_id` (foreign key), flow key fields, timing, packet/byte counts, statistics
+  - `model_llm_prediction`: ML model prediction (set by `classify.py`)
+  - `model_llm_confidence`: Confidence score for prediction
+  - `ground_truth_llm`: Actual LLM from decrypted captures (set when parsing captures with `LLM_IP` headers)
+
+The database file (`networks_project.db`) is automatically created when the API server starts.
+
+## API Endpoints
+
+The API server provides the following endpoints:
+
+- `GET /api/captures` - List all captures with flow counts
+- `GET /api/captures/{id}` - Get capture details
+- `GET /api/captures/{id}/flowlets` - Get flowlets for a capture
+- `GET /api/captures/{id}/flowlets/chart` - Get chart data (time series)
+- `POST /api/captures/start` - Start a new capture
+- `POST /api/captures/{id}/stop` - Stop a running capture
+- `POST /api/captures/{id}/parse` - Parse a capture file
+- `POST /api/captures/{id}/classify` - Run classification on flowlets
+- `GET /api/ssl-keys` - Get SSL keys configuration
+- `POST /api/ssl-keys` - Set SSL keys configuration
+
+See the API server code (`api_server.py`) for detailed request/response formats.

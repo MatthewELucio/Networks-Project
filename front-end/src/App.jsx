@@ -134,6 +134,7 @@ function CaptureStartDialog({ isOpen, onClose, onStart }) {
     timeout: "",
     snaplen: "96",
     extra_filter: "",
+    use_ssl_decrypt: false,
   });
 
   if (!isOpen) return null;
@@ -224,6 +225,18 @@ function CaptureStartDialog({ isOpen, onClose, onStart }) {
               placeholder="e.g., tcp port 443"
             />
           </div>
+          <div className="form-group">
+            <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <input
+                type="checkbox"
+                checked={formData.use_ssl_decrypt}
+                onChange={(e) =>
+                  setFormData({ ...formData, use_ssl_decrypt: e.target.checked })
+                }
+              />
+              Use SSL Decryption (requires SSL keys to be configured)
+            </label>
+          </div>
           <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
             <button type="button" className="btn btn-secondary" onClick={onClose}>
               Cancel
@@ -238,24 +251,97 @@ function CaptureStartDialog({ isOpen, onClose, onStart }) {
   );
 }
 
+function SSLKeysDialog({ isOpen, onClose }) {
+  const [sslKeyPath, setSslKeyPath] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetch(`${API_BASE}/api/ssl-keys`)
+        .then((res) => res.json())
+        .then((data) => setSslKeyPath(data.ssl_key_path || ""))
+        .catch((err) => console.error("Failed to load SSL keys", err));
+    }
+  }, [isOpen]);
+
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/ssl-keys`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ssl_key_path: sslKeyPath || null }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      alert("SSL keys configuration saved");
+      onClose();
+    } catch (err) {
+      alert(`Failed to save SSL keys: ${err.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2>SSL Keys Configuration</h2>
+        <div className="form-group">
+          <label>SSL Key Log File Path</label>
+          <input
+            type="text"
+            value={sslKeyPath}
+            onChange={(e) => setSslKeyPath(e.target.value)}
+            placeholder="/path/to/sslkeylogfile.txt"
+            style={{ width: "100%" }}
+          />
+          <small style={{ color: "var(--muted)", fontSize: "0.8rem" }}>
+            Path to your SSLKEYLOGFILE (used for decrypting TLS traffic)
+          </small>
+        </div>
+        <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+          <button type="button" className="btn btn-secondary" onClick={onClose}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSave}
+            disabled={isLoading}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CaptureDetailView({ captureId, onClose }) {
   const [chartData, setChartData] = useState([]);
+  const [flowlets, setFlowlets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchChartData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const res = await fetch(
-          `${API_BASE}/api/captures/${captureId}/flowlets/chart`
-        );
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        setChartData(data);
+        const [chartRes, flowletsRes] = await Promise.all([
+          fetch(`${API_BASE}/api/captures/${captureId}/flowlets/chart`),
+          fetch(`${API_BASE}/api/captures/${captureId}/flowlets?limit=1000`),
+        ]);
+        if (!chartRes.ok) throw new Error(`HTTP ${chartRes.status}`);
+        if (!flowletsRes.ok) throw new Error(`HTTP ${flowletsRes.status}`);
+        const chartData = await chartRes.json();
+        const flowletsData = await flowletsRes.json();
+        setChartData(chartData);
+        setFlowlets(flowletsData);
       } catch (err) {
-        console.error("Failed to fetch chart data", err);
+        console.error("Failed to fetch data", err);
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -263,13 +349,16 @@ function CaptureDetailView({ captureId, onClose }) {
     };
 
     if (captureId) {
-      fetchChartData();
-      const interval = setInterval(fetchChartData, 5000);
+      fetchData();
+      const interval = setInterval(fetchData, 5000);
       return () => clearInterval(interval);
     }
   }, [captureId]);
 
   if (!captureId) return null;
+
+  const hasGroundTruth = flowlets.some((f) => f.ground_truth_llm);
+  const hasPredictions = flowlets.some((f) => f.model_llm_prediction);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -281,65 +370,123 @@ function CaptureDetailView({ captureId, onClose }) {
           </button>
         </div>
         {error && <div className="alert alert-error">{error}</div>}
-        {isLoading && <div>Loading chart data...</div>}
+        {isLoading && <div>Loading data...</div>}
         {!isLoading && chartData.length === 0 && (
           <div className="text-muted">No flowlet data available.</div>
         )}
         {!isLoading && chartData.length > 0 && (
-          <div style={{ height: "400px" }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="time"
-                  tickFormatter={(t) => {
-                    // Time is in seconds since midnight
-                    const hours = Math.floor(t / 3600);
-                    const minutes = Math.floor((t % 3600) / 60);
-                    const seconds = Math.floor(t % 60);
-                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                  }}
-                />
-                <YAxis
-                  tickFormatter={(value) => {
-                    if (value < 1024) return `${value} B`;
-                    if (value < 1024 * 1024) return `${(value / 1024).toFixed(1)} KB`;
-                    return `${(value / (1024 * 1024)).toFixed(1)} MB`;
-                  }}
-                />
-                <Tooltip
-                  labelFormatter={(ts) => {
-                    // Time is in seconds since midnight
-                    const hours = Math.floor(ts / 3600);
-                    const minutes = Math.floor((ts % 3600) / 60);
-                    const seconds = Math.floor(ts % 60);
-                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                  }}
-                  formatter={(value, name) => {
-                    if (value < 1024) return [`${value} B`, name];
-                    if (value < 1024 * 1024) return [`${(value / 1024).toFixed(1)} KB`, name];
-                    return [`${(value / (1024 * 1024)).toFixed(1)} MB`, name];
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="total_bytes"
-                  name="Total bytes"
-                  stroke="#8884d8"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="llm_bytes"
-                  name="LLM bytes"
-                  stroke="#82ca9d"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <>
+            <div style={{ height: "400px", marginBottom: "20px" }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="time"
+                    tickFormatter={(t) => {
+                      const hours = Math.floor(t / 3600);
+                      const minutes = Math.floor((t % 3600) / 60);
+                      const seconds = Math.floor(t % 60);
+                      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }}
+                  />
+                  <YAxis
+                    tickFormatter={(value) => {
+                      if (value < 1024) return `${value} B`;
+                      if (value < 1024 * 1024) return `${(value / 1024).toFixed(1)} KB`;
+                      return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+                    }}
+                  />
+                  <Tooltip
+                    labelFormatter={(ts) => {
+                      const hours = Math.floor(ts / 3600);
+                      const minutes = Math.floor((ts % 3600) / 60);
+                      const seconds = Math.floor(ts % 60);
+                      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }}
+                    formatter={(value, name) => {
+                      if (value < 1024) return [`${value} B`, name];
+                      if (value < 1024 * 1024) return [`${(value / 1024).toFixed(1)} KB`, name];
+                      return [`${(value / (1024 * 1024)).toFixed(1)} MB`, name];
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="total_bytes"
+                    name="Total bytes"
+                    stroke="#8884d8"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="llm_bytes"
+                    name="LLM bytes"
+                    stroke="#82ca9d"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            {(hasGroundTruth || hasPredictions) && (
+              <div style={{ marginTop: "20px" }}>
+                <h3>Predicted vs Actual (Sample Flowlets)</h3>
+                <div className="table-wrapper" style={{ maxHeight: "300px", overflowY: "auto" }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Flowlet ID</th>
+                        <th>Ground Truth</th>
+                        <th>Predicted</th>
+                        <th>Confidence</th>
+                        <th>Match</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {flowlets
+                        .filter((f) => f.ground_truth_llm || f.model_llm_prediction)
+                        .slice(0, 50)
+                        .map((flowlet) => {
+                          // Determine if prediction matches ground truth
+                          let match = null;
+                          if (flowlet.ground_truth_llm && flowlet.model_llm_prediction) {
+                            const gt = flowlet.ground_truth_llm.toLowerCase();
+                            const pred = flowlet.model_llm_prediction.toLowerCase();
+                            // Match if they're the same, or if ground truth is an LLM and prediction is non_llm (mismatch)
+                            match = gt === pred;
+                          }
+                          return (
+                            <tr key={flowlet.id}>
+                              <td>{flowlet.flowlet_id}</td>
+                              <td>{flowlet.ground_truth_llm || "-"}</td>
+                              <td>{flowlet.model_llm_prediction || "-"}</td>
+                              <td>
+                                {flowlet.model_llm_confidence
+                                  ? `${(flowlet.model_llm_confidence * 100).toFixed(0)}%`
+                                  : "-"}
+                              </td>
+                              <td>
+                                {match !== null ? (
+                                  <span
+                                    className={`status-badge ${
+                                      match ? "status-completed" : "status-failed"
+                                    }`}
+                                  >
+                                    {match ? "✓" : "✗"}
+                                  </span>
+                                ) : (
+                                  "-"
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -349,6 +496,7 @@ function CaptureDetailView({ captureId, onClose }) {
 export default function App() {
   const { captures, isLoading, error, refetch } = useCaptures();
   const [showStartDialog, setShowStartDialog] = useState(false);
+  const [showSSLDialog, setShowSSLDialog] = useState(false);
   const [selectedCaptureId, setSelectedCaptureId] = useState(null);
   const [runningCaptures, setRunningCaptures] = useState(new Set());
 
@@ -429,12 +577,20 @@ export default function App() {
       <div className="card">
         <div className="card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h2>Captures</h2>
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowStartDialog(true)}
-          >
-            Start Capture
-          </button>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setShowSSLDialog(true)}
+            >
+              SSL Keys
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowStartDialog(true)}
+            >
+              Start Capture
+            </button>
+          </div>
         </div>
         <CaptureTable
           captures={captures}
@@ -448,6 +604,11 @@ export default function App() {
         isOpen={showStartDialog}
         onClose={() => setShowStartDialog(false)}
         onStart={handleStartCapture}
+      />
+
+      <SSLKeysDialog
+        isOpen={showSSLDialog}
+        onClose={() => setShowSSLDialog(false)}
       />
 
       {selectedCaptureId && (

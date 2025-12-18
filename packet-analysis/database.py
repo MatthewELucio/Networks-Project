@@ -95,6 +95,9 @@ class Flowlet(Base):
     model_llm_prediction = Column(String, nullable=True)  # 'ChatGPT', 'non_llm', etc.
     model_llm_confidence = Column(Float, nullable=True)
     
+    # Ground truth from decrypted captures (set when parsing decrypted captures)
+    ground_truth_llm = Column(String, nullable=True)  # 'ChatGPT', 'Claude', 'Gemini', etc. or None
+    
     # Relationships
     capture = relationship("Capture", back_populates="flowlets")
 
@@ -126,6 +129,7 @@ class Flowlet(Base):
             "packet_sizes": json.loads(self.packet_sizes) if self.packet_sizes else [],
             "model_llm_prediction": self.model_llm_prediction,
             "model_llm_confidence": self.model_llm_confidence,
+            "ground_truth_llm": self.ground_truth_llm,
         }
 
 
