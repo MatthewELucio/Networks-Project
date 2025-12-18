@@ -10,6 +10,9 @@ The 'captures' directory houses subdirectories that each contain corresponding p
 
 ### Front-end directory
 
+The front-end provides a web-based interface for managing packet captures and analyzing network traffic. To use it, first start the API server with `python api_server.py` (or `uvicorn api_server:app --reload`), then navigate to the `front-end` directory and run `npm install` followed by `npm run dev`. The interface displays a table of all captures with flow counts and LLM flow counts (after classification), allows you to start new captures via a popup dialog that configures `ip_range_capture.py` arguments (IP range, interface, timeout, etc.), and provides buttons to parse capture files and run classification. Clicking on any capture opens a detailed view showing a time-series chart of flow patterns (total bytes vs LLM bytes) that updates in real-time, enabling visual analysis of traffic patterns over the capture duration.
+
+
 ### Packet-analysis directory
 
 The packet-analysis directory contains machine learning models for classifying LLM vs non-LLM network traffic. Follow these steps to analyze packet captures:
