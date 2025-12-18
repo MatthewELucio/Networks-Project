@@ -21,6 +21,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from database import init_database, get_db, Capture, Flowlet
+
 # Regexes reused from the full parser
 TS_LINE_RE = re.compile(r"^(?P<ts>\d{2}:\d{2}:\d{2}\.\d+)\s+(?P<family>IP6|IP)\b", re.IGNORECASE)
 PROTO_HINT_RE = re.compile(r"(?:proto|next-header)\s+(?P<proto>[A-Za-z0-9_]+)", re.IGNORECASE)
@@ -313,14 +315,17 @@ def process_capture_file(
     threshold: float,
     bidirectional: bool,
     llm_ip_map: Dict[str, str],
-) -> List[Dict[str, Any]]:
-    """Parse one capture file and return its flowlet feature dicts."""
+    db_session=None,
+    capture_id: Optional[int] = None,
+) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
+    """Parse one capture file and return its flowlet feature dicts and LLM IP map."""
     with capture_path.open("r", encoding="utf-8", errors="replace") as f:
         lines = [l.rstrip("\n") for l in f]
 
     header_llm_map, start_idx = parse_llm_header(lines)
+    file_llm_map = dict(llm_ip_map)
     for ip, llm_name in header_llm_map.items():
-        llm_ip_map[ip] = llm_name
+        file_llm_map[ip] = llm_name
 
     packets = parse_capture_text(
         capture_path, start_idx=start_idx, preloaded_lines=lines
@@ -331,9 +336,37 @@ def process_capture_file(
         flows,
         threshold=threshold,
         source_file=str(capture_path),
-        llm_ip_map=llm_ip_map,
+        llm_ip_map=file_llm_map,
     )
-    return features
+    
+    # Save to database if session provided
+    if db_session and capture_id:
+        for feature in features:
+            flowlet = Flowlet(
+                capture_id=capture_id,
+                src_ip=feature["flow_key"]["src_ip"],
+                src_port=feature["flow_key"]["src_port"],
+                dst_ip=feature["flow_key"]["dst_ip"],
+                dst_port=feature["flow_key"]["dst_port"],
+                protocol=feature["flow_key"]["protocol"],
+                flowlet_id=feature["flowlet_id"],
+                traffic_class=feature["traffic_class"],
+                llm_name=feature["llm_name"],
+                start_ts=feature["start_ts"],
+                end_ts=feature["end_ts"],
+                duration=feature["duration"],
+                packet_count=feature["packet_count"],
+                total_bytes=feature["total_bytes"],
+                inter_packet_time_mean=feature["inter_packet_time_mean"],
+                inter_packet_time_std=feature["inter_packet_time_std"],
+                packet_size_mean=feature["packet_size_mean"],
+                packet_size_std=feature["packet_size_std"],
+                inter_packet_times=json.dumps(feature["inter_packet_times"]),
+                packet_sizes=json.dumps(feature["packet_sizes"]),
+            )
+            db_session.add(flowlet)
+    
+    return features, file_llm_map
 
 
 def parse_directory(
@@ -341,10 +374,20 @@ def parse_directory(
     pattern: str,
     threshold: float,
     bidirectional: bool,
+    use_db: bool = False,
+    db_path: str = "networks_project.db",
 ) -> List[Dict[str, Any]]:
-    """Process all capture files in a directory and return combined flowlets."""
+    """Process all capture files in a directory and return combined flowlets.
+    
+    If use_db is True, saves to database instead of returning features.
+    """
     llm_ip_map: Dict[str, str] = {}
     all_features: List[Dict[str, Any]] = []
+    
+    db_session = None
+    if use_db:
+        init_database(db_path)
+        db_session = get_db()
 
     files = sorted(input_dir.glob(pattern))
     if not files:
@@ -352,13 +395,50 @@ def parse_directory(
 
     for capture_file in files:
         print(f"Processing {capture_file} ...")
-        features = process_capture_file(
+        
+        capture_id = None
+        if use_db and db_session:
+            # Check if capture already exists
+            existing = db_session.query(Capture).filter_by(file_path=str(capture_file)).first()
+            if existing:
+                print(f"  Capture already exists in database (ID: {existing.id}), skipping...")
+                continue
+            
+            # Create capture record
+            capture = Capture(
+                file_path=str(capture_file),
+                status="completed",
+            )
+            db_session.add(capture)
+            db_session.flush()  # Get the ID
+            capture_id = capture.id
+        
+        features, file_llm_map = process_capture_file(
             capture_file,
             threshold=threshold,
             bidirectional=bidirectional,
             llm_ip_map=llm_ip_map,
+            db_session=db_session,
+            capture_id=capture_id,
         )
+        
+        # Update LLM IP map
+        llm_ip_map.update(file_llm_map)
+        
+        # Update capture's LLM IP map if using database
+        if use_db and db_session and capture_id:
+            capture = db_session.query(Capture).get(capture_id)
+            if capture:
+                capture.llm_ip_map = json.dumps(llm_ip_map)
+        
         all_features.extend(features)
+        
+        if use_db and db_session:
+            db_session.commit()
+            print(f"  Saved {len(features)} flowlets to database")
+
+    if use_db and db_session:
+        db_session.close()
 
     return all_features
 
@@ -392,7 +472,17 @@ def parse_args(argv=None):
         "--output",
         "-o",
         default="flowlets_combined.json",
-        help="Path to write combined flowlet feature JSON.",
+        help="Path to write combined flowlet feature JSON (ignored if --db is used).",
+    )
+    parser.add_argument(
+        "--db",
+        action="store_true",
+        help="Save to SQLite database instead of JSON file.",
+    )
+    parser.add_argument(
+        "--db-path",
+        default="networks_project.db",
+        help="Path to SQLite database file (default: networks_project.db).",
     )
     return parser.parse_args(argv)
 
@@ -408,17 +498,25 @@ def main(argv=None):
         pattern=args.pattern,
         threshold=args.threshold,
         bidirectional=args.bidirectional,
+        use_db=args.db,
+        db_path=args.db_path,
     )
 
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as f:
-        json.dump(all_features, f, indent=2)
+    if args.db:
+        llm_flowlets = sum(1 for f in all_features if f["traffic_class"] == "llm")
+        print(
+            f"Processed {len(all_features)} flowlets ({llm_flowlets} tagged as LLM) and saved to database {args.db_path}"
+        )
+    else:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_path.open("w", encoding="utf-8") as f:
+            json.dump(all_features, f, indent=2)
 
-    llm_flowlets = sum(1 for f in all_features if f["traffic_class"] == "llm")
-    print(
-        f"Saved {len(all_features)} flowlets ({llm_flowlets} tagged as LLM) to {output_path}"
-    )
+        llm_flowlets = sum(1 for f in all_features if f["traffic_class"] == "llm")
+        print(
+            f"Saved {len(all_features)} flowlets ({llm_flowlets} tagged as LLM) to {output_path}"
+        )
 
 
 if __name__ == "__main__":

@@ -30,11 +30,22 @@ def load_flowlets_from_json(path: Path) -> List[Dict[str, Any]]:
         return json.load(f)
 
 
-def load_flowlets_from_sql(_: str, __: str | None = None) -> List[Dict[str, Any]]:
-    """Placeholder to allow easy future swap to SQL."""
-    raise NotImplementedError(
-        "SQL input is not wired yet; plug your DB client here when ready."
-    )
+def load_flowlets_from_sql(db_path: str, capture_id: str | None = None) -> List[Dict[str, Any]]:
+    """Load flowlet records from SQLite database."""
+    from database import init_database, get_db_session, Flowlet
+    
+    init_database(db_path)
+    db = get_db_session()
+    
+    try:
+        query = db.query(Flowlet)
+        if capture_id:
+            query = query.filter_by(capture_id=int(capture_id))
+        
+        flowlets = query.all()
+        return [flowlet.to_dict() for flowlet in flowlets]
+    finally:
+        db.close()
 
 
 def load_flowlets(input_path: Path, source_type: str, sql_query: str | None) -> List[Dict[str, Any]]:

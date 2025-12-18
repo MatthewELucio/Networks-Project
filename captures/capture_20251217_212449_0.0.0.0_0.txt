@@ -1,0 +1,556 @@
+tcpdump: listening on en0, link-type EN10MB (Ethernet), snapshot length 96 bytes
+21:24:49.378354 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 707)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [P.], seq 681857317:681857972, ack 240027760, win 2048, options [nop,nop,TS val 3851779625 ecr 40288121], length 655
+21:24:49.378577 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 83)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [P.], seq 655:686, ack 1, win 2048, options [nop,nop,TS val 3851779625 ecr 40288121], length 31
+21:24:49.420786 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:49.421047 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:49.421120 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:49.421224 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:49.421298 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:49.421327 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:49.421357 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:49.421386 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:49.421399 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:49.421413 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:49.421431 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:49.438278 IP (tos 0x0, ttl 52, id 34962, offset 0, flags [DF], proto TCP (6), length 52)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [.], cksum 0xf3a1 (correct), ack 686, win 599, options [nop,nop,TS val 40292271 ecr 3851779625], length 0
+21:24:49.453787 IP (tos 0x0, ttl 52, id 34963, offset 0, flags [DF], proto TCP (6), length 133)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [P.], seq 1:82, ack 686, win 599, options [nop,nop,TS val 40292285 ecr 3851779625], length 81
+21:24:49.453913 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [.], cksum 0xed4f (correct), ack 82, win 2047, options [nop,nop,TS val 3851779700 ecr 40292285], length 0
+21:24:49.460448 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:49.461765 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:49.461767 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:49.461768 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:49.461769 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:49.462732 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:49.462734 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:49.465055 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:49.465056 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:49.465057 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:49.465059 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:49.656388 IP (tos 0x0, ttl 47, id 18096, offset 0, flags [DF], proto TCP (6), length 455)
+    17.57.144.12.5223 > 192.168.1.144.61686: Flags [P.], seq 3219567862:3219568265, ack 2059650601, win 6509, options [nop,nop,TS val 10311728 ecr 836395371], length 403
+21:24:49.656939 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.61686 > 17.57.144.12.5223: Flags [.], cksum 0x564c (correct), ack 403, win 4690, options [nop,nop,TS val 836395838 ecr 10311728], length 0
+21:24:49.660248 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 84)
+    192.168.1.144.61686 > 17.57.144.12.5223: Flags [P.], seq 1:33, ack 403, win 4696, options [nop,nop,TS val 836395841 ecr 10311728], length 32
+21:24:49.690454 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 76)
+    192.168.1.144.65325 > 140.82.113.21.443: Flags [FP.], cksum 0x9c67 (correct), seq 2100290159:2100290183, ack 1025208441, win 2048, options [nop,nop,TS val 1530853362 ecr 1714943683], length 24
+21:24:49.700321 IP (tos 0x0, ttl 64, id 55556, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [.], cksum 0x5c95 (correct), ack 82, win 2048, length 0
+21:24:49.707875 IP (tos 0x0, ttl 52, id 34964, offset 0, flags [DF], proto TCP (6), length 52)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [.], cksum 0xf1f7 (correct), ack 686, win 599, options [nop,nop,TS val 40292541 ecr 3851779700], length 0
+21:24:49.714791 IP (tos 0x0, ttl 47, id 18097, offset 0, flags [DF], proto TCP (6), length 52)
+    17.57.144.12.5223 > 192.168.1.144.61686: Flags [.], cksum 0x4ed4 (correct), ack 33, win 6509, options [nop,nop,TS val 10311786 ecr 836395841], length 0
+21:24:50.006167 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 91)
+    192.168.1.144.65308 > 35.71.162.24.443: Flags [P.], seq 102852721:102852760, ack 78591858, win 2048, options [nop,nop,TS val 123627562 ecr 377903633], length 39
+21:24:50.012566 IP (tos 0x0, ttl 240, id 14072, offset 0, flags [DF], proto TCP (6), length 91)
+    35.71.162.24.443 > 192.168.1.144.65308: Flags [P.], seq 1:40, ack 39, win 326, options [nop,nop,TS val 377913459 ecr 123627562], length 39
+21:24:50.012695 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.65308 > 35.71.162.24.443: Flags [.], cksum 0x34c3 (correct), ack 40, win 2048, options [nop,nop,TS val 123627569 ecr 377913459], length 0
+21:24:50.070970 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 511)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [P.], seq 686:1145, ack 82, win 2048, options [nop,nop,TS val 3851780317 ecr 40292541], length 459
+21:24:50.071049 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 83)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [P.], seq 1145:1176, ack 82, win 2048, options [nop,nop,TS val 3851780317 ecr 40292541], length 31
+21:24:50.073926 IP (tos 0x0, ttl 64, id 27167, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.65308 > 35.71.162.24.443: Flags [.], cksum 0x7464 (correct), ack 40, win 2048, length 0
+21:24:50.102382 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:50.102385 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:50.102467 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:50.102521 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:50.102549 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:50.104605 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:50.104608 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:50.104682 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:50.104715 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:50.104752 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:50.104782 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:50.135062 IP (tos 0x0, ttl 64, id 511, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.65308 > 35.71.162.24.443: Flags [.], cksum 0x7464 (correct), ack 40, win 2048, length 0
+21:24:50.151332 IP (tos 0x0, ttl 240, id 14073, offset 0, flags [DF], proto TCP (6), length 52)
+    35.71.162.24.443 > 192.168.1.144.65308: Flags [.], cksum 0x3af5 (correct), ack 39, win 326, options [nop,nop,TS val 377913595 ecr 123627569], length 0
+21:24:50.151334 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:50.151336 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:50.151337 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:50.151338 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:50.151339 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:50.151341 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:50.151342 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:50.151343 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:50.153536 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:50.153538 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:50.153539 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:50.153540 IP (tos 0x0, ttl 52, id 34965, offset 0, flags [DF], proto TCP (6), length 52)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [.], cksum 0xebe8 (correct), ack 1176, win 599, options [nop,nop,TS val 40292985 ecr 3851780317], length 0
+21:24:50.171650 IP (tos 0x0, ttl 52, id 34966, offset 0, flags [DF], proto TCP (6), length 133)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [P.], seq 82:163, ack 1176, win 599, options [nop,nop,TS val 40293004 ecr 3851780317], length 81
+21:24:50.171800 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [.], cksum 0xe577 (correct), ack 163, win 2047, options [nop,nop,TS val 3851780418 ecr 40293004], length 0
+21:24:50.229430 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 57)
+    192.168.1.144.54431 > 35.186.224.24.443: quic, protected
+21:24:50.262576 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 55)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:50.348621 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 91)
+    192.168.1.144.65197 > 99.83.165.34.443: Flags [P.], seq 2530230294:2530230333, ack 2500673243, win 2048, options [nop,nop,TS val 1821691483 ecr 370031825], length 39
+21:24:50.359161 IP (tos 0x0, ttl 241, id 34117, offset 0, flags [DF], proto TCP (6), length 91)
+    99.83.165.34.443 > 192.168.1.144.65197: Flags [P.], seq 1:40, ack 39, win 2016, options [nop,nop,TS val 370041770 ecr 1821691483], length 39
+21:24:50.359422 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.65197 > 99.83.165.34.443: Flags [.], cksum 0x43d5 (correct), ack 40, win 2048, options [nop,nop,TS val 1821691494 ecr 370041770], length 0
+21:24:50.420723 IP (tos 0x0, ttl 64, id 49447, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.65197 > 99.83.165.34.443: Flags [.], cksum 0x31a1 (correct), ack 40, win 2048, length 0
+21:24:50.464655 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:50.464821 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:50.464905 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:50.465150 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:50.465174 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:50.465213 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:50.465258 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:50.465298 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:50.465309 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:50.465342 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:50.465387 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:50.481181 IP (tos 0x0, ttl 64, id 29435, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.65197 > 99.83.165.34.443: Flags [.], cksum 0x31a1 (correct), ack 40, win 2048, length 0
+21:24:50.483879 IP (tos 0x0, ttl 241, id 34118, offset 0, flags [DF], proto TCP (6), length 52)
+    99.83.165.34.443 > 192.168.1.144.65197: Flags [.], cksum 0x4378 (correct), ack 39, win 2016, options [nop,nop,TS val 370041895 ecr 1821691494], length 0
+21:24:50.503412 IP (tos 0x0, ttl 64, id 19479, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.63798 > 104.18.18.125.443: Flags [.], cksum 0x5a5a (correct), ack 163, win 2048, length 0
+21:24:50.507448 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:50.509280 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:50.509284 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:50.511957 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:50.511960 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:50.511962 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:50.511964 IP (tos 0x0, ttl 52, id 34967, offset 0, flags [DF], proto TCP (6), length 52)
+    104.18.18.125.443 > 192.168.1.144.63798: Flags [.], cksum 0xe9cb (correct), ack 1176, win 599, options [nop,nop,TS val 40293344 ecr 3851780418], length 0
+21:24:50.511966 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:50.511967 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:50.511970 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:50.511971 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:50.511972 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:51.092994 IP (tos 0x0, ttl 117, id 55112, offset 0, flags [none], proto TCP (6), length 326)
+    34.120.52.64.443 > 192.168.1.144.63868: Flags [P.], seq 4110328858:4110329132, ack 3708161130, win 996, options [nop,nop,TS val 2556240922 ecr 1330494305], length 274
+21:24:51.093283 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63868 > 34.120.52.64.443: Flags [.], cksum 0xea9f (correct), ack 274, win 2044, options [nop,nop,TS val 1330503831 ecr 2556240922], length 0
+21:24:51.153940 IP (tos 0x0, ttl 64, id 28753, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.63868 > 34.120.52.64.443: Flags [.], cksum 0x1011 (correct), ack 274, win 2048, length 0
+21:24:51.154223 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:51.154273 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:51.154302 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:51.154330 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:51.154379 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:51.154406 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:51.154547 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:51.154582 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:51.154610 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:51.154636 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:51.154662 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:51.197331 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:51.197333 IP (tos 0x0, ttl 117, id 55113, offset 0, flags [none], proto TCP (6), length 52)
+    34.120.52.64.443 > 192.168.1.144.63868: Flags [.], cksum 0xede1 (correct), ack 1, win 996, options [nop,nop,TS val 2556241136 ecr 1330503831], length 0
+21:24:51.197584 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:51.197585 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:51.198038 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:51.198039 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:51.198425 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:51.199029 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:51.199030 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:51.199495 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:51.200018 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:51.200019 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:51.279042 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 57)
+    192.168.1.144.54431 > 35.186.224.24.443: quic, protected
+21:24:51.311900 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 55)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:51.509288 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:51.509540 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:51.509575 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:51.514436 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:51.514465 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:51.514476 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:51.514615 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:51.514826 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:51.514862 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:51.514893 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:51.514920 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:51.556162 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:51.556165 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:51.557994 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:51.557996 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:51.557997 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:51.557998 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:51.561156 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:51.561158 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:51.561159 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:51.561161 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:51.561162 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:51.607674 IP (tos 0x0, ttl 47, id 18098, offset 0, flags [DF], proto TCP (6), length 1500)
+    17.57.144.12.5223 > 192.168.1.144.61686: Flags [.], seq 403:1851, ack 33, win 6509, options [nop,nop,TS val 10313679 ecr 836395841], length 1448
+21:24:51.607675 IP (tos 0x0, ttl 47, id 18099, offset 0, flags [DF], proto TCP (6), length 453)
+    17.57.144.12.5223 > 192.168.1.144.61686: Flags [P.], seq 1851:2252, ack 33, win 6509, options [nop,nop,TS val 10313679 ecr 836395841], length 401
+21:24:51.607904 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.61686 > 17.57.144.12.5223: Flags [.], cksum 0x3fcb (correct), ack 2252, win 4668, options [nop,nop,TS val 836397789 ecr 10313679], length 0
+21:24:51.609980 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 84)
+    192.168.1.144.61686 > 17.57.144.12.5223: Flags [P.], seq 33:65, ack 2252, win 4696, options [nop,nop,TS val 836397791 ecr 10313679], length 32
+21:24:51.622489 IP (tos 0x0, ttl 47, id 18100, offset 0, flags [DF], proto TCP (6), length 52)
+    17.57.144.12.5223 > 192.168.1.144.61686: Flags [.], cksum 0x3869 (correct), ack 65, win 6509, options [nop,nop,TS val 10313694 ecr 836397791], length 0
+21:24:51.766428 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 95)
+    192.168.1.144.64998 > 35.186.224.38.443: Flags [P.], seq 2807619243:2807619286, ack 3193295078, win 2048, options [nop,nop,TS val 3910597859 ecr 1371423174], length 43
+21:24:51.778862 IP (tos 0x0, ttl 117, id 37656, offset 0, flags [none], proto TCP (6), length 52)
+    35.186.224.38.443 > 192.168.1.144.64998: Flags [.], cksum 0xce65 (correct), ack 43, win 1039, options [nop,nop,TS val 1371443560 ecr 3910597859], length 0
+21:24:51.810850 IP (tos 0x0, ttl 64, id 32597, offset 0, flags [none], proto UDP (17), length 81)
+    192.168.1.144.60817 > 192.168.1.137.58394: UDP, length 53
+21:24:51.813610 IP (tos 0x0, ttl 117, id 37657, offset 0, flags [none], proto TCP (6), length 92)
+    35.186.224.38.443 > 192.168.1.144.64998: Flags [P.], seq 1:41, ack 43, win 1039, options [nop,nop,TS val 1371443595 ecr 3910597859], length 40
+21:24:51.813755 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.64998 > 35.186.224.38.443: Flags [.], cksum 0xc9fa (correct), ack 41, win 2048, options [nop,nop,TS val 3910597906 ecr 1371443595], length 0
+21:24:51.816162 IP (tos 0x0, ttl 64, id 58373, offset 0, flags [none], proto UDP (17), length 81)
+    192.168.1.137.58394 > 192.168.1.144.60817: UDP, length 53
+21:24:51.893670 IP (tos 0x0, ttl 64, id 29869, offset 0, flags [none], proto TCP (6), length 40)
+    192.168.1.144.64998 > 35.186.224.38.443: Flags [.], cksum 0xcc86 (correct), ack 41, win 2048, length 0
+21:24:51.901285 IP (tos 0x0, ttl 117, id 37658, offset 0, flags [none], proto TCP (6), length 52)
+    35.186.224.38.443 > 192.168.1.144.64998: Flags [.], cksum 0xcd94 (correct), ack 43, win 1039, options [nop,nop,TS val 1371443682 ecr 3910597906], length 0
+21:24:51.911815 IP (tos 0x0, ttl 255, id 13726, offset 0, flags [none], proto UDP (17), length 328)
+    0.0.0.0.68 > 255.255.255.255.67: BOOTP/DHCP, Request from a2:ec:5a:33:bc:27, length 300, xid 0xa741be5f, Flags [none]
+	  Client-Ethernet-Address a2:ec:5a:33:bc:27 [|bootp]
+21:24:52.205311 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:52.205514 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:52.205565 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:52.205618 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:52.205664 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:52.205694 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:52.205697 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:52.205726 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:52.205753 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:52.205780 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:52.205807 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 69)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:52.246251 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:52.246253 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:52.247238 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:52.247239 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:52.249842 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:52.249844 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:52.249845 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:52.249846 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:52.249847 IP (tos 0x0, ttl 47, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:52.249848 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:52.249849 IP (tos 0x0, ttl 46, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:52.289401 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 123)
+    192.168.1.144.63837 > 192.168.1.212.52463: Flags [P.], seq 619547721:619547792, ack 929107443, win 3202, options [nop,nop,TS val 2022465932 ecr 2587857920], length 71
+21:24:52.323715 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 57)
+    192.168.1.144.54431 > 35.186.224.24.443: quic, protected
+21:24:52.326890 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.212.52463 > 192.168.1.144.63837: Flags [.], cksum 0xe8f1 (correct), ack 71, win 3518, options [nop,nop,TS val 2587871712 ecr 2022465932], length 0
+21:24:52.357556 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:52.360008 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 123)
+    192.168.1.144.63837 > 192.168.1.212.52463: Flags [P.], seq 71:142, ack 1, win 3202, options [nop,nop,TS val 2022466002 ecr 2587871712], length 71
+21:24:52.365390 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.212.52463 > 192.168.1.144.63837: Flags [.], cksum 0xe839 (correct), ack 142, win 3518, options [nop,nop,TS val 2587871755 ecr 2022466002], length 0
+21:24:52.400448 IP (tos 0x0, ttl 242, id 60116, offset 0, flags [DF], proto TCP (6), length 78)
+    140.82.113.25.443 > 192.168.1.144.65121: Flags [P.], cksum 0x9eac (correct), seq 1363939795:1363939821, ack 1738001237, win 76, options [nop,nop,TS val 2723048467 ecr 2835572124], length 26
+21:24:52.400534 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.65121 > 140.82.113.25.443: Flags [.], cksum 0x1186 (correct), ack 26, win 2048, options [nop,nop,TS val 2835632105 ecr 2723048467], length 0
+21:24:52.400650 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 82)
+    192.168.1.144.65121 > 140.82.113.25.443: Flags [P.], cksum 0x8c70 (correct), seq 1:31, ack 26, win 2048, options [nop,nop,TS val 2835632105 ecr 2723048467], length 30
+21:24:52.408299 IP (tos 0x0, ttl 242, id 60117, offset 0, flags [DF], proto TCP (6), length 52)
+    140.82.113.25.443 > 192.168.1.144.65121: Flags [.], cksum 0x1913 (correct), ack 31, win 76, options [nop,nop,TS val 2723048476 ecr 2835632105], length 0
+21:24:52.458622 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 72)
+    192.168.1.144.60405 > 192.168.1.1.53: 46457+ Type65? configuration.ls.apple.com. (44)
+21:24:52.458673 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 72)
+    192.168.1.144.56091 > 192.168.1.1.53: 37455+ A? configuration.ls.apple.com. (44)
+21:24:52.493947 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 59)
+    192.168.1.144.54431 > 35.186.224.24.443: quic, protected
+21:24:52.556995 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:52.556999 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:52.558195 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:52.558288 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:52.558313 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:52.558719 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:52.560995 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:52.561050 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:52.561090 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:52.561118 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:52.561152 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:52.616909 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:52.617530 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:52.617877 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:52.618335 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:52.618660 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:52.618687 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:52.618734 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:52.618758 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:52.618780 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:52.618801 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:52.619307 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:52.730332 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.49988 > 17.250.96.99.443: quic, protected
+21:24:52.730857 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.60195 > 17.250.96.99.443: quic, protected
+21:24:52.732171 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.62677 > 17.250.96.99.443: quic, protected
+21:24:52.732226 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53553 > 17.250.96.99.443: quic, protected
+21:24:52.732449 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.65336 > 17.250.96.99.443: quic, protected
+21:24:52.733348 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56474 > 17.250.96.99.443: quic, protected
+21:24:52.733388 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.53667 > 17.250.96.99.443: quic, protected
+21:24:52.735923 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.56346 > 17.250.96.99.443: quic, protected
+21:24:52.737716 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54910 > 17.250.96.99.443: quic, protected
+21:24:52.740445 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.54025 > 17.250.96.99.443: quic, protected
+21:24:52.746048 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 58)
+    192.168.1.144.55279 > 17.250.96.99.443: quic, protected
+21:24:52.767032 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 51)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:52.767035 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 51)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:52.767036 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 776)
+    192.168.1.212.52463 > 192.168.1.144.63837: Flags [P.], seq 1:725, ack 142, win 3519, options [nop,nop,TS val 2587872038 ecr 2022466002], length 724
+21:24:52.767157 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63837 > 192.168.1.212.52463: Flags [.], cksum 0xe3fa (correct), ack 725, win 3191, options [nop,nop,TS val 2022466409 ecr 2587872038], length 0
+21:24:52.771948 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 54)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:52.771950 IP (tos 0x0, ttl 54, id 0, offset 0, flags [DF], proto UDP (17), length 49)
+    35.186.224.24.443 > 192.168.1.144.54431: quic, protected
+21:24:52.771950 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:52.771951 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:52.771953 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:52.772136 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:52.772137 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:52.775728 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:52.775729 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:52.775730 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:52.775731 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:52.775732 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:52.775733 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:52.775734 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 221)
+    192.168.1.1.53 > 192.168.1.144.60405: 46457 2/1/0 configuration.ls.apple.com. [|domain]
+21:24:52.775735 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 199)
+    192.168.1.1.53 > 192.168.1.144.56091: 37455 4/0/0 configuration.ls.apple.com. [|domain]
+21:24:52.795715 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 76)
+    192.168.1.144.56731 > 192.168.1.1.53: 61327+ Type65? configuration.ls.v.aaplimg.com. (48)
+21:24:52.798638 IP (tos 0x0, ttl 117, id 55114, offset 0, flags [none], proto TCP (6), length 304)
+    34.120.52.64.443 > 192.168.1.144.63868: Flags [P.], seq 274:526, ack 1, win 996, options [nop,nop,TS val 2556242735 ecr 1330503831], length 252
+21:24:52.798640 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.49988: quic, protected
+21:24:52.798642 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.53553: quic, protected
+21:24:52.798643 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.60195: quic, protected
+21:24:52.798792 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63868 > 34.120.52.64.443: Flags [.], cksum 0xdbe3 (correct), ack 526, win 2045, options [nop,nop,TS val 1330505537 ecr 2556242735], length 0
+21:24:52.799922 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56474: quic, protected
+21:24:52.799923 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.65336: quic, protected
+21:24:52.799925 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.55279: quic, protected
+21:24:52.801128 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54910: quic, protected
+21:24:52.801130 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.62677: quic, protected
+21:24:52.802185 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 61)
+    17.250.96.99.443 > 192.168.1.144.53667: quic, protected
+21:24:52.802192 IP (tos 0x0, ttl 37, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.56346: quic, protected
+21:24:52.802193 IP (tos 0x0, ttl 38, id 0, offset 0, flags [DF], proto UDP (17), length 60)
+    17.250.96.99.443 > 192.168.1.144.54025: quic, protected
+21:24:52.803432 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 64)
+    192.168.1.144.63047 > 17.253.21.132.443: Flags [SEW], cksum 0x5c6b (correct), seq 1113300883, win 65535, options [mss 1460,nop,wscale 6,nop,nop,TS val 1691464020 ecr 0,sackOK,eol], length 0
+21:24:52.804185 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto UDP (17), length 136)
+    192.168.1.1.53 > 192.168.1.144.56731: 61327 0/1/0 (108)
+21:24:52.810762 IP (tos 0x0, ttl 53, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [S.E], cksum 0xc125 (correct), seq 1165341547, ack 1113300884, win 64980, options [mss 1456,sackOK,TS val 2407409286 ecr 1691464020,nop,wscale 9], length 0
+21:24:52.811656 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63047 > 17.253.21.132.443: Flags [.], cksum 0xe5f6 (correct), ack 1, win 2054, options [nop,nop,TS val 1691464028 ecr 2407409286], length 0
+21:24:52.811685 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 1496)
+    192.168.1.144.63047 > 17.253.21.132.443: Flags [.], seq 1:1445, ack 1, win 2054, options [nop,nop,TS val 1691464029 ecr 2407409286], length 1444
+21:24:52.811757 IP (tos 0x2,ECT(0), ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 157)
+    192.168.1.144.63047 > 17.253.21.132.443: Flags [P.], seq 1445:1550, ack 1, win 2054, options [nop,nop,TS val 1691464029 ecr 2407409286], length 105
+21:24:52.818275 IP (tos 0x0, ttl 53, id 65103, offset 0, flags [DF], proto TCP (6), length 52)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [.], cksum 0xe7cc (correct), ack 1445, win 131, options [nop,nop,TS val 2407409294 ecr 1691464029], length 0
+21:24:52.820577 IP (tos 0x0, ttl 53, id 65104, offset 0, flags [DF], proto TCP (6), length 52)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [.], cksum 0xe762 (correct), ack 1550, win 131, options [nop,nop,TS val 2407409295 ecr 1691464029], length 0
+21:24:52.820592 IP (tos 0x0, ttl 53, id 65105, offset 0, flags [DF], proto TCP (6), length 1496)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [.], seq 1:1445, ack 1550, win 131, options [nop,nop,TS val 2407409295 ecr 1691464029], length 1444
+21:24:52.820594 IP (tos 0x0, ttl 53, id 65106, offset 0, flags [DF], proto TCP (6), length 1496)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [.], seq 1445:2889, ack 1550, win 131, options [nop,nop,TS val 2407409295 ecr 1691464029], length 1444
+21:24:52.820595 IP (tos 0x0, ttl 53, id 65107, offset 0, flags [DF], proto TCP (6), length 1496)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [P.], seq 2889:4333, ack 1550, win 131, options [nop,nop,TS val 2407409295 ecr 1691464029], length 1444
+21:24:52.820596 IP (tos 0x0, ttl 53, id 65108, offset 0, flags [DF], proto TCP (6), length 1054)
+    17.253.21.132.443 > 192.168.1.144.63047: Flags [P.], seq 4333:5335, ack 1550, win 131, options [nop,nop,TS val 2407409295 ecr 1691464029], length 1002
+21:24:52.829265 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.1.144.63047 > 17.253.21.132.443: Flags [.], cksum 0xcb53 (correct), ack 5335, win 1971, options [nop,nop,TS val 1691464038 ecr 2407409295], length 0
