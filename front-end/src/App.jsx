@@ -79,7 +79,7 @@ function CaptureTable({ captures, onCaptureClick, onParse, onClassify }) {
                   }}
                   style={{ color: "#007bff", cursor: "pointer" }}
                 >
-                  {capture.file_path.split("/").pop() || "-"}
+                  {capture.file_path ? capture.file_path.split("/").pop() : "-"}
                 </a>
               </td>
               <td>{formatDate(capture.created_at)}</td>

@@ -32,7 +32,7 @@ class Capture(Base):
     __tablename__ = "captures"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    file_path = Column(String, unique=True, nullable=False, index=True)
+    file_path = Column(String, unique=True, nullable=True, index=True)  # Nullable to allow captures in progress
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     status = Column(String, default="completed")  # 'running', 'completed', 'failed'
     llm_ip_map = Column(Text)  # JSON string of {ip: llm_name} mappings

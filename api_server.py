@@ -73,7 +73,7 @@ class CaptureStart(BaseModel):
 
 class CaptureResponse(BaseModel):
     id: int
-    file_path: str
+    file_path: Optional[str]  # Can be None for captures in progress
     created_at: str
     status: str
     llm_ip_map: Dict[str, str]
@@ -272,7 +272,7 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
             if capture_data.use_ssl_decrypt:
                 notes += " [SSL Decrypted]"
             capture = Capture(
-                file_path="",  # Will be updated when capture completes
+                file_path=None,  # Will be updated when capture completes
                 status="running",
                 notes=notes
             )
