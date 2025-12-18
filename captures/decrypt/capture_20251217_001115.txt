@@ -1,0 +1,172 @@
+# No LLM traffic detected.
+
+Capturing on 'Wi-Fi' IP (tos 0x0, ttl , id , offset 0, flags [], proto Proto (), length )
+    . > .: Flags [.], cksum , , , , length 
+00:11:18.238775 IP (tos 0x00, ttl 128, id 0xd512, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.59993 > 142.251.179.155.443: Flags [.], cksum 0x079f, seq 1, ack 1, win 252, length 1
+00:11:18.250195 IP (tos 0x00, ttl 117, id 0x4ac3, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.179.155.443 > 192.168.4.68.59993: Flags [.], cksum 0x9ec1, seq 1, ack 2, win 1045, length 0
+00:11:18.623327 IP (tos 0x00, ttl 128, id 0x83fa, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.63114 > 142.251.163.113.443: Flags [.], cksum 0xf774, seq 1, ack 1, win 252, length 1
+00:11:18.637103 IP (tos 0x00, ttl 117, id 0xbed1, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.163.113.443 > 192.168.4.68.63114: Flags [.], cksum 0xa74f, seq 1, ack 2, win 1045, length 0
+00:11:19.160650 IP (tos 0x00, ttl 128, id 0x91d0, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.50335 > 192.178.218.84.443: Flags [.], cksum 0x600f, seq 1, ack 1, win 253, length 1
+00:11:19.172187 IP (tos 0x00, ttl 116, id 0x2614, offset 0, flags [0x00], proto TCP (6), length 52)
+    192.178.218.84.443 > 192.168.4.68.50335: Flags [.], cksum 0xb072, seq 1, ack 2, win 1023, length 0
+00:11:19.397453 IP (tos 0x00, ttl 128, id 0x10e5, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.51974 > 192.178.218.136.443: Flags [.], cksum 0x6043, seq 1, ack 1, win 255, length 1
+00:11:19.409152 IP (tos 0x00, ttl 116, id 0x147b, offset 0, flags [0x00], proto TCP (6), length 52)
+    192.178.218.136.443 > 192.168.4.68.51974: Flags [.], cksum 0x10aa, seq 1, ack 2, win 1040, length 0
+00:11:19.596806 IP (tos 0x00, ttl 128, id 0x95af, offset 0, flags [0x02], proto TCP (6), length 99)
+    192.168.4.68.51090 > 52.112.95.48.443: Flags [.], cksum 0x58e2, seq 1, ack 1, win 255, length 59
+00:11:19.603162 IP (tos 0x00, ttl 128, id 0x895e, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.53269 > 172.253.139.119.443: Flags [.], cksum 0xfd7c, seq 1, ack 1, win 252, length 1
+00:11:19.610160 IP (tos 0x00, ttl 116, id 0x94b1, offset 0, flags [0x00], proto TCP (6), length 52)
+    172.253.139.119.443 > 192.168.4.68.53269: Flags [.], cksum 0x56cf, seq 1, ack 2, win 1045, length 0
+00:11:19.613761 IP (tos 0x00, ttl 108, id 0x9728, offset 0, flags [0x02], proto TCP (6), length 88)
+    52.112.95.48.443 > 192.168.4.68.51090: Flags [.], cksum 0xa032, seq 1, ack 60, win 16381, length 48
+00:11:19.667560 IP (tos 0x00, ttl 128, id 0x95b0, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51090 > 52.112.95.48.443: Flags [.], cksum 0x58a7, seq 60, ack 49, win 255, length 0
+00:11:19.824769 IP (tos 0x00, ttl 128, id 0x4fd3, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.58375 > 172.253.63.155.443: Flags [.], cksum 0xb1a0, seq 1, ack 1, win 252, length 1
+00:11:19.824932 IP (tos 0x00, ttl 128, id 0xd586, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.54829 > 142.251.111.149.443: Flags [.], cksum 0xc398, seq 1, ack 1, win 251, length 1
+00:11:19.836465 IP (tos 0x00, ttl 116, id 0xff61, offset 0, flags [0x00], proto TCP (6), length 52)
+    172.253.63.155.443 > 192.168.4.68.58375: Flags [.], cksum 0x5b17, seq 1, ack 2, win 1045, length 0
+00:11:19.836465 IP (tos 0x00, ttl 116, id 0xcc38, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.111.149.443 > 192.168.4.68.54829: Flags [.], cksum 0xa09e, seq 1, ack 2, win 1042, length 0
+00:11:19.897472 IP (tos 0x00, ttl 128, id 0xf8bc, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.59242 > 142.251.111.101.443: Flags [.], cksum 0xc368, seq 1, ack 1, win 254, length 1
+00:11:19.904840 IP (tos 0x00, ttl 116, id 0x471d, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.111.101.443 > 192.168.4.68.59242: Flags [.], cksum 0x4a3d, seq 1, ack 2, win 1045, length 0
+00:11:20.067048 IP (tos 0x00, ttl 128, id 0x3f7a, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.50240 > 172.253.63.94.443: Flags [.], cksum 0xb163, seq 1, ack 1, win 250, length 1
+00:11:20.077741 IP (tos 0x00, ttl 116, id 0x1c26, offset 0, flags [0x00], proto TCP (6), length 52)
+    172.253.63.94.443 > 192.168.4.68.50240: Flags [.], cksum 0x2dcb, seq 1, ack 2, win 1043, length 0
+00:11:20.269694 IP (tos 0x00, ttl 116, id 0x4adf, offset 0, flags [0x00], proto TCP (6), length 113)
+    172.253.62.94.443 > 192.168.4.68.53836: Flags [.], cksum 0xe3e0, seq 1, ack 1, win 1044, length 73
+00:11:20.270391 IP (tos 0x00, ttl 128, id 0x6664, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.53836 > 172.253.62.94.443: Flags [.], cksum 0xb062, seq 1, ack 74, win 253, length 0
+00:11:20.277990 IP (tos 0x00, ttl 116, id 0x4ae0, offset 0, flags [0x00], proto TCP (6), length 40)
+    172.253.62.94.443 > 192.168.4.68.53836: Flags [.], cksum 0x4c81, seq 74, ack 2, win 1044, length 0
+00:11:20.278247 IP (tos 0x00, ttl 128, id 0x6665, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.53836 > 172.253.62.94.443: Flags [.], cksum 0xb062, seq 2, ack 75, win 253, length 0
+00:11:20.370692 IP (tos 0x00, ttl 128, id 0x410c, offset 0, flags [0x02], proto TCP (6), length 150)
+    192.168.4.68.53103 > 192.168.4.43.8009: Flags [.], cksum 0x8a48, seq 1, ack 1, win 254, length 110
+00:11:20.376841 IP (tos 0x00, ttl 64, id 0x49a4, offset 0, flags [0x00], proto TCP (6), length 40)
+    192.168.4.43.8009 > 192.168.4.68.53103: Flags [.], cksum 0xdf20, seq 1, ack 111, win 4095, length 0
+00:11:20.379837 IP (tos 0x00, ttl 64, id 0xf149, offset 0, flags [0x00], proto TCP (6), length 150)
+    192.168.4.43.8009 > 192.168.4.68.53103: Flags [.], cksum 0xc909, seq 1, ack 111, win 4096, length 110
+00:11:20.427058 IP (tos 0x00, ttl 128, id 0x410d, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.53103 > 192.168.4.43.8009: Flags [.], cksum 0x89da, seq 111, ack 111, win 254, length 0
+00:11:20.467021 IP (tos 0x00, ttl 255, id 0x9a67, offset 0, flags [0x00], proto Proto (17), length 73)
+    192.168.4.45. > 224.0.0.251.: Flags [.], cksum , , , , length 
+00:11:20.467021 IP (tos 0x00, ttl 255, id 0xab78, offset 0, flags [0x00], proto Proto (17), length 153)
+    192.168.4.45. > 239.255.255.250.: Flags [.], cksum , , , , length 
+00:11:21.854630 IP (tos 0x00, ttl 128, id 0x3f7b, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.51740 > 172.253.63.94.443: Flags [.], cksum 0xb163, seq 1, ack 1, win 255, length 1
+00:11:21.867187 IP (tos 0x00, ttl 117, id 0x9ada, offset 0, flags [0x00], proto TCP (6), length 52)
+    172.253.63.94.443 > 192.168.4.68.51740: Flags [.], cksum 0xd79b, seq 1, ack 2, win 1027, length 0
+00:11:22.193798 IP (tos 0x00, ttl 128, id 0xbe84, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.63436 > 142.251.179.95.443: Flags [.], cksum 0x0763, seq 1, ack 1, win 253, length 1
+00:11:22.206254 IP (tos 0x00, ttl 116, id 0x8579, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.179.95.443 > 192.168.4.68.63436: Flags [.], cksum 0x7656, seq 1, ack 2, win 1034, length 0
+00:11:22.284784 IP (tos 0x00, ttl 128, id 0xf8bd, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.50157 > 142.251.111.101.443: Flags [.], cksum 0xc368, seq 1, ack 1, win 254, length 1
+00:11:22.293232 IP (tos 0x00, ttl 116, id 0x4670, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.111.101.443 > 192.168.4.68.50157: Flags [.], cksum 0x8a0c, seq 1, ack 2, win 829, length 0
+00:11:22.315999 IP (tos 0x00, ttl 1, id 0xdf89, offset 0, flags [0x00], proto Proto (17), length 199)
+    192.168.4.47. > 239.255.255.250.: Flags [.], cksum , , , , length 
+00:11:22.472373 IP (tos 0x00, ttl 128, id 0x5449, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.62313 > 216.239.32.181.443: Flags [.], cksum 0xbeac, seq 1, ack 1, win 255, length 1
+00:11:22.485770 IP (tos 0x00, ttl 117, id 0x7f2c, offset 0, flags [0x00], proto TCP (6), length 52)
+    216.239.32.181.443 > 192.168.4.68.62313: Flags [.], cksum 0x67ca, seq 1, ack 2, win 1026, length 0
+00:11:22.516435 IP (tos 0x00, ttl 255, id 0x9143, offset 0, flags [0x00], proto Proto (17), length 73)
+    192.168.4.45. > 224.0.0.251.: Flags [.], cksum , , , , length 
+00:11:22.516435 IP (tos 0x00, ttl 255, id 0x2684, offset 0, flags [0x00], proto Proto (17), length 113)
+    192.168.4.48. > 224.0.0.251.: Flags [.], cksum , , , , length 
+00:11:22.583470 IP (tos 0x00, ttl 128, id 0x29cd, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.57751 > 142.251.16.93.443: Flags [.], cksum 0x6460, seq 1, ack 1, win 254, length 1
+00:11:22.590791 IP (tos 0x00, ttl 116, id 0x468b, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.251.16.93.443 > 192.168.4.68.57751: Flags [.], cksum 0x3b7f, seq 1, ack 2, win 989, length 0
+00:11:22.614751 IP (tos 0x00, ttl 128, id 0x4c9d, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.59270 > 64.233.180.101.443: Flags [.], cksum 0xba56, seq 1, ack 1, win 255, length 1
+00:11:22.624066 IP (tos 0x00, ttl 117, id 0xdce9, offset 0, flags [0x00], proto TCP (6), length 52)
+    64.233.180.101.443 > 192.168.4.68.59270: Flags [.], cksum 0x5a03, seq 1, ack 2, win 1045, length 0
+00:11:22.646607 IP (tos 0x00, ttl 128, id 0xc5b4, offset 0, flags [0x02], proto TCP (6), length 41)
+    192.168.4.68.49914 > 142.250.31.103.443: Flags [.], cksum 0x7369, seq 1, ack 1, win 1019, length 1
+00:11:22.656021 IP (tos 0x00, ttl 117, id 0x01ae, offset 0, flags [0x00], proto TCP (6), length 52)
+    142.250.31.103.443 > 192.168.4.68.49914: Flags [.], cksum 0xe5aa, seq 1, ack 2, win 861, length 0
+00:11:22.716659 IP (tos 0x00, ttl 255, id 0x1bf1, offset 0, flags [0x00], proto Proto (17), length 153)
+    192.168.4.45. > 239.255.255.250.: Flags [.], cksum , , , , length 
+00:11:22.716659 IP (tos 0x00, ttl 255, id 0xa5bf, offset 0, flags [0x00], proto Proto (17), length 306)
+    192.168.4.47. > 224.0.0.251.: Flags [.], cksum , , , , length 
+00:11:24.564446 IP (tos 0x00, ttl 255, id 0x4cde, offset 0, flags [0x00], proto Proto (17), length 153)
+    192.168.4.45. > 239.255.255.250.: Flags [.], cksum , , , , length 
+00:11:25.105103 IP (tos 0x00, ttl 128, id 0xf5a3, offset 0, flags [0x02], proto TCP (6), length 52)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe56e, seq 0, ack 0, win 65535, length 0
+00:11:25.118794 IP (tos 0x00, ttl 117, id 0x0000, offset 0, flags [0x02], proto TCP (6), length 52)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x5049, seq 0, ack 1, win 65535, length 0
+00:11:25.119086 IP (tos 0x00, ttl 128, id 0xf5a4, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe562, seq 1, ack 1, win 255, length 0
+00:11:25.120034 IP (tos 0x00, ttl 128, id 0xf5a5, offset 0, flags [0x02], proto TCP (6), length 1452)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xeae6, seq 1, ack 1, win 255, length 1412
+00:11:25.120034 IP (tos 0x00, ttl 128, id 0xf5a6, offset 0, flags [0x02], proto TCP (6), length 833)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe87b, seq 1413, ack 1, win 255, length 793
+00:11:25.133519 IP (tos 0x00, ttl 117, id 0x663c, offset 0, flags [0x00], proto TCP (6), length 40)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x8750, seq 1, ack 1413, win 1048, length 0
+00:11:25.133519 IP (tos 0x00, ttl 117, id 0x663d, offset 0, flags [0x00], proto TCP (6), length 40)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x843a, seq 1, ack 2206, win 1045, length 0
+00:11:25.133519 IP (tos 0x00, ttl 117, id 0x663e, offset 0, flags [0x00], proto TCP (6), length 1452)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x5771, seq 1, ack 2206, win 1045, length 1412
+00:11:25.133519 IP (tos 0x00, ttl 117, id 0x663f, offset 0, flags [0x00], proto TCP (6), length 92)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0xdd2b, seq 1413, ack 2206, win 1045, length 52
+00:11:25.134044 IP (tos 0x00, ttl 128, id 0xf5a7, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe562, seq 2206, ack 1465, win 255, length 0
+00:11:25.134701 IP (tos 0x00, ttl 128, id 0xf5a8, offset 0, flags [0x02], proto TCP (6), length 114)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe5ac, seq 2206, ack 1465, win 255, length 74
+00:11:25.135288 IP (tos 0x00, ttl 128, id 0xf5a9, offset 0, flags [0x02], proto TCP (6), length 132)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe5be, seq 2280, ack 1465, win 255, length 92
+00:11:25.135695 IP (tos 0x00, ttl 128, id 0xf5aa, offset 0, flags [0x02], proto TCP (6), length 698)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe7f4, seq 2372, ack 1465, win 255, length 658
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6640, offset 0, flags [0x00], proto TCP (6), length 986)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x188b, seq 1465, ack 2372, win 1045, length 946
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6641, offset 0, flags [0x00], proto TCP (6), length 71)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x63b9, seq 2411, ack 2372, win 1045, length 31
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6642, offset 0, flags [0x00], proto TCP (6), length 565)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x3552, seq 2442, ack 3030, win 1043, length 525
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6643, offset 0, flags [0x00], proto TCP (6), length 114)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x7432, seq 2967, ack 3030, win 1043, length 74
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6644, offset 0, flags [0x00], proto TCP (6), length 71)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0xe0e2, seq 3041, ack 3030, win 1043, length 31
+00:11:25.143775 IP (tos 0x00, ttl 117, id 0x6645, offset 0, flags [0x00], proto TCP (6), length 79)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x1c16, seq 3072, ack 3030, win 1043, length 39
+00:11:25.144240 IP (tos 0x00, ttl 128, id 0xf5ab, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe562, seq 3030, ack 2442, win 252, length 0
+00:11:25.144385 IP (tos 0x00, ttl 128, id 0xf5ac, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe562, seq 3030, ack 3041, win 255, length 0
+00:11:25.144482 IP (tos 0x00, ttl 128, id 0xf5ad, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe562, seq 3030, ack 3111, win 255, length 0
+00:11:25.145261 IP (tos 0x00, ttl 128, id 0xf5ae, offset 0, flags [0x02], proto TCP (6), length 71)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe581, seq 3030, ack 3111, win 255, length 31
+00:11:25.145530 IP (tos 0x00, ttl 128, id 0xf5af, offset 0, flags [0x02], proto TCP (6), length 79)
+    192.168.4.68.51309 > 172.253.115.94.443: Flags [.], cksum 0xe589, seq 3061, ack 3111, win 255, length 39
+00:11:25.153170 IP (tos 0x00, ttl 117, id 0x6646, offset 0, flags [0x00], proto TCP (6), length 40)
+    172.253.115.94.443 > 192.168.4.68.51309: Flags [.], cksum 0x7498, seq 3111, ack 3100, win 1043, length 0
+00:11:25.390866 IP (tos 0x00, ttl 128, id 0x410e, offset 0, flags [0x02], proto TCP (6), length 150)
+    192.168.4.68.53103 > 192.168.4.43.8009: Flags [.], cksum 0x8a48, seq 111, ack 111, win 254, length 110
+00:11:25.397810 IP (tos 0x00, ttl 64, id 0xe6e3, offset 0, flags [0x00], proto TCP (6), length 40)
+    192.168.4.43.8009 > 192.168.4.68.53103: Flags [.], cksum 0xde44, seq 111, ack 221, win 4095, length 0
+00:11:25.435428 IP (tos 0x00, ttl 64, id 0x4ac4, offset 0, flags [0x00], proto TCP (6), length 150)
+    192.168.4.43.8009 > 192.168.4.68.53103: Flags [.], cksum 0x814d, seq 111, ack 221, win 4096, length 110
+00:11:25.485660 IP (tos 0x00, ttl 128, id 0x410f, offset 0, flags [0x02], proto TCP (6), length 40)
+    192.168.4.68.53103 > 192.168.4.43.8009: Flags [.], cksum 0x89da, seq 221, ack 221, win 253, length 0
+00:11:26.619684 IP (tos 0x00, ttl 52, id 0x3759, offset 0, flags [0x02], proto TCP (6), length 81)
+    172.64.148.235.443 > 192.168.4.68.56225: Flags [.], cksum 0x6948, seq 1, ack 1, win 16, length 41
+00:11:26.620269 IP (tos 0x00, ttl 128, id 0x031c, offset 0, flags [0x02], proto TCP (6), length 85)
+    192.168.4.68.56225 > 172.64.148.235.443: Flags [.], cksum 0x0660, seq 1, ack 42, win 255, length 45
+00:11:26.626752 IP (tos 0x00, ttl 52, id 0x375a, offset 0, flags [0x02], proto TCP (6), length 40)
+    172.64.148.235.443 > 192.168.4.68.56225: Flags [.], cksum 0xc4da, seq 42, ack 46, win 16, length 0
+00:11:27.427513 IP (tos 0x00, ttl 255, id 0x0912, offset 0, flags [0x00], proto Proto (17), length 113)
+    192.168.4.48. > 224.0.0.251.: Flags [.], cksum , , , , length 
