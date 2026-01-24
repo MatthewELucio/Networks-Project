@@ -4,6 +4,12 @@ CS 7457 research project authored by Gavin Crigger, Tao Groves, Matthew Lucio, a
 
 ## File Structure
 
+### Data-pipeline directory
+
+The 'data-pipeline' directory is the location for our working, updated data pipeline that streamlines traffic captures for both LLM and non-LLM traffic. It contains a 'generate_prompt_bank.py' script that takes an OpenAI LLM key (alongside some other parameters) to generate and load a large number of prompt chains across many categories to a flat-file database. This is intended to create prompts similar to everyday LLM usage that will thus give us the most realistic traffic while still allowing us to automate data collection at a large scale. The 'prepare_prompt_runner.py' file is used to load in these prompts to then be passed to browser-based LLM services via Selenium, all with traffic being captured and stored.
+
+For non-LLM traffic, we employ a data pipeline methodology based on [Qian et. al's work][https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10606298&tag=1]. That is, we access a list of popular URLs via a traffic ranking website, access the URLs with an automated browser tool, deploy a pcap tool, stop captures when the page loads, and process the data. *This is still to be implemented.*
+
 ### Captures directory
 
 The 'captures' directory houses subdirectories that each contain corresponding packet captures. The 'all' directories have captures of all traffic on an interface and should be used as non-LLM flow data. The 'chatgpt', 'gemini', and 'claude' directories all contain captures of LLM-specific data for one set of interactions corresponding to a single IP address. Thus, these captures each represent one flow and contain many flowlets (exact number depends on selected threshold). Furthermore, capture names end with a general description of the queries that took place to hopefully allow for insight into any anomalous data. Finally, 'ipv4' and 'ipv6' simply distinguishes between the IP version that the captures correspond to - all eduroam packet captures are in ipv4 folders.
