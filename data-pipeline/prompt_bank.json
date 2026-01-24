@@ -1,0 +1,34 @@
+[
+  {
+    "category": "debugging help",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm working on a Python script that processes data from a CSV file, but I'm running into an error when I try to read the file. Can you help me debug it?",
+      "The error message says 'FileNotFoundError: [Errno 2] No such file or directory: 'data.csv''. What could be causing this issue?",
+      "I've checked the file path and confirmed that 'data.csv' exists in the same directory as my script. What other things should I look for to resolve this?"
+    ],
+    "chain_length": 3
+  },
+  {
+    "category": "coding from scratch",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'd like to build a simple calculator application from scratch. Can you help me with an outline of the features it should include?",
+      "Now that I have the features listed, can you guide me through setting up the project structure and the necessary files for a basic calculator?",
+      "What code do I need to implement the addition and subtraction functionalities in my calculator application?"
+    ],
+    "chain_length": 3
+  },
+  {
+    "category": "conversations",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm looking to improve my conversational skills. Can you provide some tips on how to engage someone in a meaningful discussion?",
+      "What are some open-ended questions I could ask to keep the conversation flowing?",
+      "How can I show active listening during a conversation to make the other person feel valued?",
+      "What should I avoid saying or doing to prevent awkward moments in a chat?",
+      "Can you suggest any fun topics or activities that could spark interesting conversations with new people?"
+    ],
+    "chain_length": 5
+  }
+]

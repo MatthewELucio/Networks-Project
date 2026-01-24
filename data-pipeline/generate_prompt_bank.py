@@ -9,9 +9,10 @@ import os
 import random
 import sys
 import time
+from pathlib import Path
 from typing import Iterable
 
-import openai
+from openai import OpenAI, OpenAIError
 
 CATEGORIES = [
     "coding from scratch",
@@ -26,16 +27,18 @@ CATEGORIES = [
     "creative writing",
 ]
 
+OUTPUT_PATH = Path(__file__).resolve().parent / "prompt_bank.json"
+
 SYSTEM_MESSAGE = (
     "You are a prompt engineer whose job is to enumerate realistic, logical prompt chains that a human would feed to a large language model. "
     "Every prompt should build on context when it makes sense, and the entire chain should feel like a single interaction (one-shot or few-shot). "
-    "Strictly reply with a JSON array of prompt strings so that downstream tools can ingest the collection without additional parsing."
+    "Strictly reply with a JSON array of prompt strings containing only the human (user) input side of each step—do not include assistant/model responses—so that downstream tools can ingest the collection without additional parsing."
 )
 
 REQUEST_TEMPLATE = (
     "Generate {count} prompts for a human-style interaction in the \"{category}\" category. "
     "The first prompt should introduce the goal, and subsequent prompts should naturally follow. "
-    "Keep the prompts concise while keeping a natural conversational rhythm. "
+    "Each prompt should be phrased as a user query or instruction; assume the assistant will respond, but do not include any assistant text in your response. "
     "Return exactly {count} distinct prompt strings encoded as a JSON array."
 )
 
@@ -65,11 +68,6 @@ def parse_arguments() -> argparse.Namespace:
         default="gpt-4o-mini",
         help="OpenAI model to use for generation."
     )
-    parser.add_argument(
-        "--output",
-        default="prompt_bank.json",
-        help="Output file under the current directory containing the generated prompt bank.",
-    )
     return parser.parse_args()
 
 
@@ -77,17 +75,17 @@ def backoff_sleep(attempt: int) -> None:
     time.sleep(min(60, 2 ** attempt))
 
 
-def call_openai(messages: Iterable[dict], model: str) -> str:
+def call_openai(client: OpenAI, messages: Iterable[dict], model: str) -> str:
     for attempt in range(5):
         try:
-            resp = openai.ChatCompletion.create(
+            resp = client.chat.completions.create(
                 model=model,
                 messages=list(messages),
                 temperature=0.9,
                 max_tokens=600,
             )
             return resp.choices[0].message.content
-        except openai.error.OpenAIError as exc:
+        except OpenAIError as exc:
             if attempt == 4 or not hasattr(exc, "code"):
                 raise
             backoff_sleep(attempt)
@@ -95,17 +93,32 @@ def call_openai(messages: Iterable[dict], model: str) -> str:
 
 
 def normalize_chain(raw_text: str) -> list[str]:
-    try:
-        parsed = json.loads(raw_text)
-        if isinstance(parsed, list) and all(isinstance(entry, str) for entry in parsed):
+    def try_parse(text: str) -> list[str] | None:
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, list) and all(isinstance(entry, str) for entry in parsed):
+                return parsed
+        except json.JSONDecodeError:
+            return None
+        return None
+
+    parsed = try_parse(raw_text)
+    if parsed is not None:
+        return parsed
+
+    start = raw_text.find("[")
+    end = raw_text.rfind("]")
+    if start != -1 and end != -1 and end > start:
+        parsed = try_parse(raw_text[start : end + 1])
+        if parsed is not None:
             return parsed
-    except json.JSONDecodeError:
-        pass
 
     lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
     cleaned = []
     for line in lines:
         if line and not line.lower().startswith("[") and not line.lower().startswith("{"):
+            if all(char in "[]{}.," for char in line):
+                continue
             cleaned.append(line.lstrip("-0123456789. "))
     return cleaned
 
@@ -115,6 +128,19 @@ def build_messages(category: str, prompt_count: int) -> list[dict]:
         {"role": "system", "content": SYSTEM_MESSAGE},
         {"role": "user", "content": REQUEST_TEMPLATE.format(count=prompt_count, category=category)},
     ]
+
+
+def load_prompt_bank(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+
+    with path.open("r", encoding="utf-8") as reader:
+        data = json.load(reader)
+
+    if not isinstance(data, list):
+        raise ValueError("Prompt bank must contain a list of prompt-chain entries.")
+
+    return data
 
 
 def main() -> None:
@@ -129,7 +155,8 @@ def main() -> None:
     if not api_key:
         raise SystemExit("An OpenAI API key must be provided via --api-key or OPENAI_API_KEY.")
 
-    openai.api_key = api_key
+    client = OpenAI(api_key=api_key)
+    existing_bank = load_prompt_bank(OUTPUT_PATH)
 
     prompt_bank: list[dict] = []
     random.shuffle(CATEGORIES)
@@ -139,7 +166,7 @@ def main() -> None:
         chain_length = random.randint(1, args.max_chain_length)
         messages = build_messages(category, chain_length)
         print(f"Generating chain #{idx + 1}/{args.count} ({category}, {chain_length} prompts)", file=sys.stderr)
-        raw_response = call_openai(messages, args.model)
+        raw_response = call_openai(client, messages, args.model)
         prompts = normalize_chain(raw_response)
         if len(prompts) < 1:
             raise RuntimeError(f"OpenAI returned no prompts for chain #{idx + 1}")
@@ -153,11 +180,14 @@ def main() -> None:
             }
         )
 
-    outfile_path = os.path.abspath(args.output)
-    with open(outfile_path, "w", encoding="utf-8") as fout:
-        json.dump(prompt_bank, fout, indent=2)
+    combined_bank = existing_bank + prompt_bank
+    with OUTPUT_PATH.open("w", encoding="utf-8") as fout:
+        json.dump(combined_bank, fout, indent=2)
 
-    print(f"Wrote {len(prompt_bank)} prompt chains to {outfile_path}")
+    print(
+        f"Appended {len(prompt_bank)} prompt chains (total {len(combined_bank)} saved) to {OUTPUT_PATH}",
+        file=sys.stderr,
+    )
 
 
 if __name__ == "__main__":
