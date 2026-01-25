@@ -129,16 +129,33 @@ def main() -> None:
 
     prepared_prompts = build_prepared_prompts(chains)
 
-    plan = [prepared.to_dict() for prepared in prepared_prompts]
+    # Sample OpenAI API query loop (not final, for future browser LLM integration)
+    import requests
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "sk-...YOUR_KEY...")
+    OPENAI_API_URL = "https://api.openai.com/v1/chat/completions"
 
-    with args.output.open("w", encoding="utf-8") as writer:
-        json.dump(plan, writer, indent=2)
+    for prepared in prepared_prompts:
+        payload = {
+            "model": prepared.model,
+            "messages": [
+                {"role": "user", "content": prepared.text}
+            ],
+            "max_tokens": 256
+        }
+        headers = {
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        print(f"Querying OpenAI for chain {prepared.chain_id}, step {prepared.step_index}...")
+        try:
+            response = requests.post(OPENAI_API_URL, json=payload, headers=headers)
+            response.raise_for_status()
+            result = response.json()
+            print("Response:", result.get("choices", [{}])[0].get("message", {}).get("content", "No content"))
+        except Exception as e:
+            print(f"Error querying OpenAI: {e}")
 
-    print(
-        f"Prepared {len(prepared_prompts)} prompt steps from {len(chains)} chains"
-        f" into {args.output.as_posix()}",
-        file=sys.stderr,
-    )
+    print(f"Queried {len(prepared_prompts)} prompt steps from {len(chains)} chains.")
 
 
 if __name__ == "__main__":
