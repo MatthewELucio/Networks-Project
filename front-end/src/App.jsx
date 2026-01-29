@@ -10,15 +10,17 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const API_BASE = "http://localhost:8000";
+// const API_BASE = "http://localhost:8000";
+const API_BASE = "";
 
 function useCaptures() {
   const [captures, setCaptures] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Start loading initially
   const [error, setError] = useState(null);
 
-  const fetchCaptures = async () => {
-    setIsLoading(true);
+  const fetchCaptures = async (silent = false) => {
+    // Only show spinner if not a silent background update
+    if (!silent) setIsLoading(true);
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/captures`);
@@ -29,17 +31,17 @@ function useCaptures() {
       console.error("Failed to fetch captures", err);
       setError(err.message);
     } finally {
-      setIsLoading(false);
+      if (!silent) setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCaptures();
-    const interval = setInterval(fetchCaptures, 5000); // Refresh every 5s
+    fetchCaptures(); // Initial load
+    const interval = setInterval(() => fetchCaptures(true), 5000); // Silent refresh every 5s
     return () => clearInterval(interval);
   }, []);
 
-  return { captures, isLoading, error, refetch: fetchCaptures };
+  return { captures, isLoading, error, refetch: () => fetchCaptures(false) };
 }
 
 function formatDate(dateStr) {
@@ -148,6 +150,8 @@ function CaptureStartDialog({ isOpen, onClose, onStart }) {
       timeout: formData.timeout ? parseInt(formData.timeout) : null,
       snaplen: parseInt(formData.snaplen) || 96,
       extra_filter: formData.extra_filter || null,
+      // FIX: Ensure this boolean is explicitly passed
+      use_ssl_decrypt: formData.use_ssl_decrypt, 
     });
     onClose();
   };
@@ -322,12 +326,13 @@ function SSLKeysDialog({ isOpen, onClose }) {
 function CaptureDetailView({ captureId, onClose }) {
   const [chartData, setChartData] = useState([]);
   const [flowlets, setFlowlets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+    const fetchData = async (silent = false) => {
+      // FIX: silent loading to prevent flashing
+      if (!silent) setIsLoading(true);
       setError(null);
       try {
         const [chartRes, flowletsRes] = await Promise.all([
@@ -344,13 +349,13 @@ function CaptureDetailView({ captureId, onClose }) {
         console.error("Failed to fetch data", err);
         setError(err.message);
       } finally {
-        setIsLoading(false);
+        if (!silent) setIsLoading(false);
       }
     };
 
     if (captureId) {
-      fetchData();
-      const interval = setInterval(fetchData, 5000);
+      fetchData(); // Initial load
+      const interval = setInterval(() => fetchData(true), 5000); // Silent refresh
       return () => clearInterval(interval);
     }
   }, [captureId]);
@@ -370,11 +375,13 @@ function CaptureDetailView({ captureId, onClose }) {
           </button>
         </div>
         {error && <div className="alert alert-error">{error}</div>}
-        {isLoading && <div>Loading data...</div>}
+        {isLoading && !flowlets.length && <div>Loading data...</div>}
+        
         {!isLoading && chartData.length === 0 && (
           <div className="text-muted">No flowlet data available.</div>
         )}
-        {!isLoading && chartData.length > 0 && (
+        
+        {chartData.length > 0 && (
           <>
             <div style={{ height: "400px", marginBottom: "20px" }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -428,9 +435,10 @@ function CaptureDetailView({ captureId, onClose }) {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            
             {(hasGroundTruth || hasPredictions) && (
               <div style={{ marginTop: "20px" }}>
-                <h3>Predicted vs Actual (Sample Flowlets)</h3>
+                <h3>Predicted vs Actual (All Flows)</h3>
                 <div className="table-wrapper" style={{ maxHeight: "300px", overflowY: "auto" }}>
                   <table>
                     <thead>
@@ -445,14 +453,12 @@ function CaptureDetailView({ captureId, onClose }) {
                     <tbody>
                       {flowlets
                         .filter((f) => f.ground_truth_llm || f.model_llm_prediction)
-                        .slice(0, 50)
+                        // FIX: Removed .slice(0,50) so you see all rows
                         .map((flowlet) => {
-                          // Determine if prediction matches ground truth
                           let match = null;
                           if (flowlet.ground_truth_llm && flowlet.model_llm_prediction) {
                             const gt = flowlet.ground_truth_llm.toLowerCase();
                             const pred = flowlet.model_llm_prediction.toLowerCase();
-                            // Match if they're the same, or if ground truth is an LLM and prediction is non_llm (mismatch)
                             match = gt === pred;
                           }
                           return (
@@ -516,18 +522,18 @@ export default function App() {
     }
   };
 
-  const handleStopCapture = async (captureId) => {
-    try {
-      const res = await fetch(`${API_BASE}/api/captures/${captureId}/stop`, {
-        method: "POST",
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setRunningCaptures(new Set([...runningCaptures].filter(id => id !== captureId)));
-      refetch();
-    } catch (err) {
-      alert(`Failed to stop capture: ${err.message}`);
-    }
-  };
+  // const handleStopCapture = async (captureId) => {
+  //   try {
+  //     const res = await fetch(`${API_BASE}/api/captures/${captureId}/stop`, {
+  //       method: "POST",
+  //     });
+  //     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  //     setRunningCaptures(new Set([...runningCaptures].filter(id => id !== captureId)));
+  //     refetch();
+  //   } catch (err) {
+  //     alert(`Failed to stop capture: ${err.message}`);
+  //   }
+  // };
 
   const handleParse = async (captureId) => {
     try {

@@ -53,4 +53,12 @@ front-end/*.ntvs*
 front-end/*.njsproj
 front-end/*.sln
 front-end/*.sw?
+
+
+.venv*
+data
+captures
 networks_project.db
+ssl_keys_config.json
+sslkeys.txt
+sslkeylogfile.txt

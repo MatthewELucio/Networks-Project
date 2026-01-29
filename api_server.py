@@ -38,7 +38,7 @@ app.add_middleware(
 _running_captures: Dict[int, subprocess.Popen] = {}
 
 # SSL keys config file
-SSL_CONFIG_FILE = Path("ssl_keys_config.json")
+SSL_CONFIG_FILE = Path("data/ssl_keys_config.json")
 
 
 def load_ssl_config() -> Dict[str, Any]:
@@ -112,7 +112,7 @@ class SSLKeysConfig(BaseModel):
 # Initialize database on startup
 @app.on_event("startup")
 async def startup_event():
-    db_path = Path("networks_project.db")
+    db_path = Path("data/networks_project.db")
     init_database(str(db_path))
     print(f"Database initialized at {db_path}")
 
@@ -233,8 +233,7 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
             )
         
         # Use decrypt script
-        cmd = ["python3", "ip_range_capture_tshark_decrypt_llm_only.py", capture_data.ip_range]
-        cmd.extend(["--sniff"])  # Enable filtering/decryption mode
+        cmd = ["python3", "ip_range_capture_with_llm.py", capture_data.ip_range]
         cmd.extend(["-k", ssl_key_path])
     else:
         # Use regular capture script
@@ -293,7 +292,6 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to start capture: {str(e)}")
 
-
 async def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
     """Monitor a running capture and update database when it completes."""
     proc.wait()
@@ -302,23 +300,26 @@ async def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
     try:
         capture = db.query(Capture).filter_by(id=capture_id).first()
         if capture:
-            # Find the output file (most recent in outdir)
-            outdir_path = Path(outdir)
-            if outdir_path.exists():
-                # Check for both regular and hybrid captures
-                capture_files = sorted(
-                    list(outdir_path.glob("capture_*.txt")) + list(outdir_path.glob("hybrid_capture_*.txt")),
-                    key=lambda p: p.stat().st_mtime
-                )
-                if capture_files:
-                    capture.file_path = str(capture_files[-1])
+            # --- FIX STARTS HERE ---
+            # Only look for a file if the capture process was SUCCESSFUL
+            if proc.returncode == 0:
+                outdir_path = Path(outdir)
+                if outdir_path.exists():
+                    capture_files = sorted(
+                        list(outdir_path.glob("capture_*.txt")) + list(outdir_path.glob("hybrid_capture_*.txt")),
+                        key=lambda p: p.stat().st_mtime
+                    )
+                    # Only assign if we found a NEW file
+                    if capture_files:
+                        capture.file_path = str(capture_files[-1])
             
             capture.status = "completed" if proc.returncode == 0 else "failed"
+            # --- FIX ENDS HERE ---
+            
             db.commit()
     finally:
         db.close()
     
-    # Remove from running captures
     if capture_id in _running_captures:
         del _running_captures[capture_id]
 
@@ -486,5 +487,5 @@ async def run_classify(capture_id: int):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=5000)
 
