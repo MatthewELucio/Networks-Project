@@ -25,7 +25,7 @@ The front-end provides a web-based interface for managing packet captures and an
    python api_server.py
    # Or with auto-reload: uvicorn api_server:app --reload
    ```
-   The API server runs on `http://localhost:8000` and manages the SQLite database (`networks_project.db`).
+   The API server runs on `http://localhost:8000` and manages the SQLite database (`data/networks_project.db`).
 
 2. **Start the front-end:**
    ```bash
@@ -93,7 +93,7 @@ python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --outp
 
 **Input**: Raw packet captures in `captures/` directory  
 **Output**: 
-- Flowlets saved to SQLite database (`networks_project.db`) with foreign keys to captures
+- Flowlets saved to SQLite database (`data/networks_project.db`) with foreign keys to captures
 - If using decrypted captures (with `LLM_IP` headers), ground truth LLM names are automatically extracted and stored in `ground_truth_llm` field
 - Optional: `flowlet_features.json` for legacy workflows
 
@@ -108,7 +108,7 @@ python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --outp
 
 ```bash
 # Classify flowlets from database
-python packet-analysis/classify.py --input networks_project.db --input-type sql --sql-query "SELECT * FROM flowlets WHERE capture_id = 1" --model-weights packet-analysis/flowlet_model_weights.pkl
+python packet-analysis/classify.py --input data/networks_project.db --input-type sql --sql-query "SELECT * FROM flowlets WHERE capture_id = 1" --model-weights packet-analysis/flowlet_model_weights.pkl
 
 # Or classify from JSON (legacy)
 python packet-analysis/classify.py --input flowlet_features.json --model-weights packet-analysis/flowlet_model_weights.pkl --output classified_flowlets.json
@@ -224,3 +224,33 @@ The API server provides the following endpoints:
 - `POST /api/ssl-keys` - Set SSL keys configuration
 
 See the API server code (`api_server.py`) for detailed request/response formats.
+
+
+# 🔐 Setting Up SSL Decryption
+
+To allow the application to analyze encrypted HTTPS traffic (e.g., traffic to LLMs like ChatGPT), you must configure your browser to log its SSL/TLS keys to a file that our Docker container can read.
+
+### Step 1: Set the Environment Variable
+You need to tell your browser where to save the keys. We will set this to be **inside this project folder**.
+
+#### 🪟 For Windows Users
+1.  Open the **Start Menu**, search for **"Edit environment variables for your account"**, and press Enter.
+2.  In the "User variables" section (top half), click **New**.
+3.  **Variable name:** `SSLKEYLOGFILE`
+4.  **Variable value:** Browse to this project's folder, and append `\data\sslkeylogfile.txt` to the end.
+    * *Example:* `C:\Users\You\Documents\Networks-Project\data\sslkeylogfile.txt`
+5.  Click **OK** to save.
+
+#### 🍎/🐧 For Mac & Linux Users
+Run the following command in your terminal **inside the project root directory**:
+
+```bash
+# Add this to your shell profile (.zshrc or .bashrc) to make it permanent
+export SSLKEYLOGFILE=$(pwd)/data/sslkeylogfile.txt
+```
+
+### Step 2: Restart Browser
+Completely quit Chrome/Edge (ensure it is not running in the background) and reopen it.
+
+### Step 3: Verify
+Visit a website. Check your project folder in data for a file named sslkeylogfile.txt.

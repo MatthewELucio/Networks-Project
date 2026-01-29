@@ -138,7 +138,7 @@ _engine = None
 _SessionLocal = None
 
 
-def init_database(db_path: str = "networks_project.db") -> None:
+def init_database(db_path: str = "data/networks_project.db") -> None:
     """Initialize the database and create tables."""
     global _engine, _SessionLocal
     _engine = create_engine(f"sqlite:///{db_path}", echo=False)
