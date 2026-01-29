@@ -66,7 +66,9 @@ use any other ADC mechanism supported by the library.
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Tuple
 
 from google.cloud import firestore
@@ -79,6 +81,7 @@ load_dotenv()
 
 DEFAULT_PROJECT_ID = "networks-project-s26"
 DEFAULT_COLLECTION = "parsed-flowlets"
+REPO_ROOT = Path(__file__).resolve().parent
 
 
 FlowletDict = Dict[str, Any]
@@ -108,6 +111,22 @@ def _default_flowlet_transform(flowlet: FlowletDict) -> FlowletDict:
     # Drop detailed per-packet arrays to keep documents small.
     out.pop("inter_packet_times", None)
     out.pop("packet_sizes", None)
+
+    # Store `source_file` relative to the repository root (directory containing this file),
+    # when possible. If it cannot be relativized (e.g. different filesystem), keep as-is.
+    source_file = out.get("source_file")
+    if isinstance(source_file, str) and source_file:
+        try:
+            sf_path = Path(source_file).expanduser()
+            # Avoid `.resolve()` here to keep this purely string-based; if the file
+            # doesn't exist, `.resolve()` can still work but may be surprising.
+            if sf_path.is_absolute():
+                out["source_file"] = sf_path.relative_to(REPO_ROOT).as_posix()
+            else:
+                # Normalize separators for consistency.
+                out["source_file"] = Path(os.fspath(sf_path)).as_posix()
+        except Exception:
+            pass
     llm_name = out.get("llm_name")
     ground_truth_llm = out.get("ground_truth_llm")
 
