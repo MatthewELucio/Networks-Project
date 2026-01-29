@@ -35,6 +35,13 @@ The front-end provides a web-based interface for managing packet captures and an
    ```
    The front-end runs on `http://localhost:5173` (Vite default port).
 
+3. **Or with Docker:**
+
+  ```bash
+  docker compose down
+  docker compose up --build
+  ```
+
 #### Features
 
 - **Capture Management**: View all captures in a table with flow counts and LLM flow counts (after classification)
@@ -254,3 +261,7 @@ Completely quit Chrome/Edge (ensure it is not running in the background) and reo
 
 ### Step 3: Verify
 Visit a website. Check your project folder in data for a file named sslkeylogfile.txt.
+
+
+
+# 
