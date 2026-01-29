@@ -54,3 +54,7 @@ front-end/*.njsproj
 front-end/*.sln
 front-end/*.sw?
 networks_project.db
+
+# Firebase credentials (should start with networks-project-s26-firebase-adminsdk)
+networks-project-s26-firebase-adminsdk-*.json
+*.env
