@@ -8,7 +8,23 @@ CS 7457 research project authored by Gavin Crigger, Tao Groves, Matthew Lucio, a
 
 The 'data-pipeline' directory is the location for our working, updated data pipeline that streamlines traffic captures for both LLM and non-LLM traffic. It contains a 'generate_prompt_bank.py' script that takes an OpenAI LLM key (alongside some other parameters) to generate and load a large number of prompt chains across many categories to a flat-file database. This is intended to create prompts similar to everyday LLM usage that will thus give us the most realistic traffic while still allowing us to automate data collection at a large scale. The 'prepare_prompt_runner.py' file is used to load in these prompts to then be passed to browser-based LLM services via Selenium, all with traffic being captured and stored. At the current moment, this script is formatted to query an OpenAI API endpoint (which will then be replaced with the Selenium part of the pipeline).
 
-For non-LLM traffic, we employ a data pipeline methodology based on [Qian et. al's work][https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10606298&tag=1]. That is, we access a list of popular URLs via a traffic ranking website, access the URLs with an automated browser tool, deploy a pcap tool, stop captures when the page loads, and process the data. *This is still to be implemented.*
+
+For non-LLM traffic, we now provide an automated pipeline in `data-pipeline/non-llm/collect_non_llm_data.py` that closely follows the methodology of Qian et al. (2024):
+
+1. **Fetch Top URLs**: Downloads the top N sites from the Tranco list (a research-friendly Alexa alternative).
+2. **Automated Visits**: Uses Selenium to visit each site in incognito mode with cache disabled.
+3. **Traffic Capture**: Starts a `tcpdump` capture before navigation and stops after the page loads.
+4. **Raw Data**: Stores each site's raw pcap for later processing and feature extraction.
+5. **No Noise**: No noise injection or mitigation is performed—captures are raw, as in the original paper.
+
+#### Sample Run Command
+
+```bash
+cd data-pipeline/non-llm
+sudo python3 collect_non_llm_data.py --num-urls 100 --output-dir ../../captures/non_llm/
+```
+
+This will visit the top 100 Tranco sites, saving a pcap for each in `captures/non_llm/`. Adjust `--num-urls` and `--output-dir` as needed. Requires `tcpdump`, Google Chrome, and `chromedriver` installed.
 
 ### Captures directory
 
