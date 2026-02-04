@@ -458,7 +458,7 @@ def export_to_traffic_json(
 
 def compute_packet_statistics(pkts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Compute statistical features from packet-level data.
-    
+
     Returns dict with:
     - inter_packet_times: list of time gaps between consecutive packets
     - inter_packet_time_mean: mean of inter-packet times
@@ -476,28 +476,30 @@ def compute_packet_statistics(pkts: List[Dict[str, Any]]) -> Dict[str, Any]:
             "packet_size_mean": 0.0,
             "packet_size_std": 0.0,
         }
-    
+
     # Sort by timestamp
     sorted_pkts = sorted(pkts, key=lambda p: p["ts"])
-    
+
     # Compute inter-packet times
     inter_packet_times = []
     for i in range(1, len(sorted_pkts)):
-        gap = sorted_pkts[i]["ts"] - sorted_pkts[i-1]["ts"]
+        gap = sorted_pkts[i]["ts"] - sorted_pkts[i - 1]["ts"]
         inter_packet_times.append(gap)
-    
+
     # Compute packet sizes
     packet_sizes = [p.get("length", 0) or 0 for p in sorted_pkts]
-    
+
     # Calculate statistics
     import statistics
-    
+
     ipt_mean = statistics.mean(inter_packet_times) if inter_packet_times else 0.0
-    ipt_std = statistics.stdev(inter_packet_times) if len(inter_packet_times) > 1 else 0.0
-    
+    ipt_std = (
+        statistics.stdev(inter_packet_times) if len(inter_packet_times) > 1 else 0.0
+    )
+
     ps_mean = statistics.mean(packet_sizes) if packet_sizes else 0.0
     ps_std = statistics.stdev(packet_sizes) if len(packet_sizes) > 1 else 0.0
-    
+
     return {
         "inter_packet_times": inter_packet_times,
         "inter_packet_time_mean": ipt_mean,
@@ -509,30 +511,39 @@ def compute_packet_statistics(pkts: List[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 def extract_flowlet_features(
-    flows: Dict[Tuple, List[Dict[str, Any]]], 
+    flows: Dict[Tuple, List[Dict[str, Any]]],
     threshold: float,
     traffic_class: str,
-    source_file: str
+    source_file: str,
+    client_ip: Optional[str] = None,
+    server_ip: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """Extract detailed flowlet features including packet-level statistics.
-    
+
     Returns list of flowlet feature dicts suitable for ML training.
     """
     flowlet_features = []
-    
+
     for flow_key, pkts in flows.items():
         src_ip, src_port, dst_ip, dst_port, proto = flow_key
-        
+
         # Sort packets by timestamp
         pkts_sorted = sorted(pkts, key=lambda x: x["ts"])
-        
+
+        # Infer flow direction
+        direction = infer_flow_direction(
+            flow_key, client_ip=client_ip, server_ip=server_ip
+        )
+        outgoing = direction == "client_to_server"
+        direction_encoded = 1 if outgoing else -1
+
         # Split into flowlets
         flowlets = split_flowlets(pkts_sorted, threshold=threshold)
-        
+
         for idx, flowlet in enumerate(flowlets, start=1):
             # Compute packet-level statistics
             stats = compute_packet_statistics(flowlet["pkts"])
-            
+
             # Build feature dict
             feature = {
                 "flow_key": {
@@ -545,6 +556,10 @@ def extract_flowlet_features(
                 "flowlet_id": idx,
                 "traffic_class": traffic_class,
                 "source_file": source_file,
+                # Direction features
+                "direction": direction,
+                "outgoing": outgoing,
+                "direction_encoded": direction_encoded,
                 # Flowlet-level features
                 "start_ts": flowlet["start_ts"],
                 "end_ts": flowlet["end_ts"],
@@ -560,9 +575,9 @@ def extract_flowlet_features(
                 "inter_packet_times": stats["inter_packet_times"],
                 "packet_sizes": stats["packet_sizes"],
             }
-            
+
             flowlet_features.append(feature)
-    
+
     return flowlet_features
 
 
@@ -572,24 +587,28 @@ def parse_captures_to_features(
     threshold: float = 0.1,
     bidirectional: bool = False,
     output_file: Optional[str] = None,
+    client_ip: Optional[str] = None,
+    server_ip: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """Parse all captures and extract flowlet features for ML training.
-    
+
     Args:
         captures_root: Root directory containing capture subdirectories
         file_pattern: Glob pattern for capture files
         threshold: Flowlet gap threshold in seconds
         bidirectional: Whether to treat flows as bidirectional
         output_file: Optional path to save JSON output
-        
+        client_ip: Optional hint for client IP (for direction inference)
+        server_ip: Optional hint for server IP (for direction inference)
+
     Returns:
         List of flowlet feature dicts
     """
     from pathlib import Path
-    
+
     all_features = []
     captures_path = Path(captures_root)
-    
+
     # Define traffic classes based on directory structure
     traffic_class_map = {
         "chatgpt_ipv4": "llm",
@@ -601,46 +620,48 @@ def parse_captures_to_features(
         "all_v6": "non_llm",
         "all_v4": "non_llm",
     }
-    
+
     # Process each subdirectory
     for subdir in captures_path.iterdir():
         if not subdir.is_dir():
             continue
-            
+
         traffic_class = traffic_class_map.get(subdir.name, "unknown")
         if traffic_class == "unknown":
             continue
-        
+
         # Find all capture files in this subdirectory
         capture_files = sorted(subdir.glob(file_pattern))
-        
+
         for capture_file in capture_files:
             print(f"Processing {capture_file}...")
-            
+
             # Parse packets from this capture
             packets = parse_capture_text(capture_file)
             for pkt in packets:
                 pkt["source_file"] = str(capture_file)
-            
+
             # Group into flows
             flows = group_packets_into_flows(packets, bidirectional=bidirectional)
-            
-            # Extract features
+
+            # Extract features with direction information
             features = extract_flowlet_features(
-                flows, 
+                flows,
                 threshold=threshold,
                 traffic_class=traffic_class,
-                source_file=str(capture_file)
+                source_file=str(capture_file),
+                client_ip=client_ip,
+                server_ip=server_ip,
             )
-            
+
             all_features.extend(features)
-    
+
     # Save to file if requested
     if output_file:
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(all_features, f, indent=2)
         print(f"Saved {len(all_features)} flowlet features to {output_file}")
-    
+
     return all_features
 
 
@@ -649,7 +670,9 @@ def main(argv=None):
         description="Parse tcpdump-style text into flows, flowlets, and estimated LLM queries"
     )
     p.add_argument(
-        "input", nargs="?", help="capture text file or directory containing capture_*.txt files"
+        "input",
+        nargs="?",
+        help="capture text file or directory containing capture_*.txt files",
     )
     p.add_argument(
         "--threshold",
@@ -717,6 +740,8 @@ def main(argv=None):
             threshold=args.threshold,
             bidirectional=args.bidirectional,
             output_file=args.features_output,
+            client_ip=args.client_ip,
+            server_ip=args.server_ip,
         )
         print(f"Extracted {len(features)} flowlet features")
         return
