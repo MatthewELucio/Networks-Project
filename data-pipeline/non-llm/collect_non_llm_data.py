@@ -32,6 +32,9 @@ import subprocess
 import time
 import socket
 import requests
+import threading
+import signal
+import random
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -41,6 +44,62 @@ from tqdm import tqdm
 from pathlib import Path
 
 TRANCO_LIST_URL = "https://tranco-list.eu/top-1m.csv.zip"
+
+
+def stream_proc_output(proc, dest_file):
+    """Continuously write tcpdump stdout to destination file until the process exits."""
+    if not proc.stdout:
+        return
+    for line in proc.stdout:
+        if not line:
+            break
+        dest_file.write(line)
+
+
+def human_like_browse(driver, action_budget=3):
+    for _ in range(action_budget):
+        action = random.choice(["scroll", "idle", "click"])
+        try:
+            if action == "scroll":
+                body = driver.find_element(By.TAG_NAME, "body")
+                body.send_keys(random.choice([Keys.PAGE_DOWN, Keys.PAGE_UP, Keys.HOME, Keys.END]))
+                time.sleep(random.uniform(0.5, 1.5))
+            elif action == "click":
+                links = [el for el in driver.find_elements(By.CSS_SELECTOR, "a[href]") if el.is_displayed()]
+                if not links:
+                    continue
+                random.choice(links).click()
+                time.sleep(random.uniform(1.0, 2.5))
+            else:
+                time.sleep(random.uniform(0.5, 1.5))
+        except Exception:
+            continue
+
+
+def build_tcpdump_cmd(domain: str, interface: str) -> list[str]:
+    cmd = [
+        "tcpdump",
+        "-i",
+        interface,
+        "-nn",
+        "-v",
+        "-U",
+        "-s",
+        "96",
+        "host",
+        domain,
+    ]
+    if os.geteuid() != 0:
+        cmd.insert(0, "sudo")
+    return cmd
+
+
+def terminate_capture(proc: subprocess.Popen):
+    if proc.poll() is None:
+        try:
+            os.killpg(proc.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            return
 
 
 def fetch_tranco_top_sites(n=100):
@@ -78,7 +137,9 @@ def visit_url_with_selenium(url, driver, timeout=20):
     try:
         driver.set_page_load_timeout(timeout)
         driver.get(url)
-        time.sleep(5)  # Wait for network to settle
+        time.sleep(2)
+        human_like_browse(driver, action_budget=random.randint(2, 4))
+        time.sleep(1.5)
         return True
     except Exception as e:
         print(f"Selenium error visiting {url}: {e}")
@@ -104,6 +165,8 @@ def main():
     chrome_options.add_argument("--headless=new")
     driver = webdriver.Chrome(options=chrome_options)
 
+    from pathlib import Path
+    import datetime
     for i, domain in enumerate(tqdm(domains, desc="Visiting sites")):
         url = f"https://{domain}"
         # DNS resolution check
@@ -112,12 +175,50 @@ def main():
         except Exception:
             print(f"[{i+1}/{len(domains)}] {domain}: SKIPPED (DNS resolution failed)")
             continue
-        timestamp = time.strftime("%Y%m%d_%H%M%S")
-        pcap_file = os.path.join(args.output_dir, f"capture_{timestamp}_{domain}.pcap")
-        proc = start_tcpdump_capture(pcap_file, interface=args.interface)
-        success = visit_url_with_selenium(url, driver)
-        stop_tcpdump_capture(proc)
-        print(f"[{i+1}/{len(domains)}] {domain}: {'OK' if success else 'FAILED'} -> {pcap_file}")
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_name = domain.replace("/", "_").replace(":", "-")
+        outdir = Path(args.output_dir)
+        outdir.mkdir(parents=True, exist_ok=True)
+        txt_file = outdir / f"capture_{timestamp}_{safe_name}.txt"
+        # Build tcpdump command to output as text (not pcap)
+        cmd = build_tcpdump_cmd(domain, args.interface)
+        print(f"Executing: {' '.join(cmd)}")
+        print(f"Writing to: {txt_file}")
+        with txt_file.open("w", buffering=1, encoding="utf-8") as f:
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+                start_new_session=True,
+            )
+            reader = threading.Thread(target=stream_proc_output, args=(proc, f), daemon=True)
+            reader.start()
+
+            def timeout_handler():
+                if proc.poll() is None:
+                    print("Timeout reached, stopping capture...")
+                    terminate_capture(proc)
+
+            timeout_timer = threading.Timer(20, timeout_handler)
+            timeout_timer.start()
+
+            success = False
+            try:
+                success = visit_url_with_selenium(url, driver)
+            except Exception as e:
+                print(f"Error during Selenium: {e}")
+            finally:
+                # Stop timer if Selenium finished first
+                timeout_timer.cancel()
+                terminate_capture(proc)
+            try:
+                proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                terminate_capture(proc)
+            reader.join()
+        print(f"[{i+1}/{len(domains)}] {domain}: {'OK' if success else 'FAILED'} -> {txt_file}")
         time.sleep(2)  # Small delay between sites
 
     driver.quit()
