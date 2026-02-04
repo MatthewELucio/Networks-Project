@@ -53,8 +53,15 @@ front-end/*.ntvs*
 front-end/*.njsproj
 front-end/*.sln
 front-end/*.sw?
-networks_project.db
 
+
+.venv*
+data
+captures
+networks_project.db
+ssl_keys_config.json
+sslkeys.txt
+sslkeylogfile.txt
 # Firebase credentials (should start with networks-project-s26-firebase-adminsdk)
 networks-project-s26-firebase-adminsdk-*.json
 *.env

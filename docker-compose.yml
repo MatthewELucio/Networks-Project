@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./front-end
+    container_name: front-end
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    environment:
+      # Still points to your Local Python Backend
+      - VITE_BACKEND_URL=http://host.docker.internal:5000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # chrome:  <-- DELETE THIS BLOCK
+  #   image: selenium/standalone-chrome...
+  
+  # backend: <-- DELETE THIS BLOCK (Since you run python manually)
+  #   build: . ...

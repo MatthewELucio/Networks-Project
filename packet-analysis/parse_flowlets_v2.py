@@ -21,13 +21,19 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from database import init_database, get_db, Capture, Flowlet
+# Graceful import
+try:
+    from database import init_database, get_db, Capture, Flowlet
+except ImportError:
+    pass
 
-# Regexes reused from the full parser
+# --- REGEX DEFINITIONS ---
 TS_LINE_RE = re.compile(r"^(?P<ts>\d{2}:\d{2}:\d{2}\.\d+)\s+(?P<family>IP6|IP)\b", re.IGNORECASE)
 PROTO_HINT_RE = re.compile(r"(?:proto|next-header)\s+(?P<proto>[A-Za-z0-9_]+)", re.IGNORECASE)
 LENGTH_RE = re.compile(r"length\s+(?P<len>\d+)", re.IGNORECASE)
 LLM_HEADER_RE = re.compile(r"^LLM_IP\s+(?P<llm>[^\s]+)\s+(?P<ip>[^\s]+)$", re.IGNORECASE)
+# FIX: Regex to identify pure IPv4 addresses so we don't split their last octet as a port
+IPV4_RE = re.compile(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
 
 
 # -----------------------------
@@ -41,13 +47,35 @@ def extract_proto(header_line: str) -> str:
 
 
 def split_host_port(token: str) -> Tuple[Optional[str], Optional[int]]:
+    """Splits 'IP.PORT' or 'HOST.PORT' tokens.
+    
+    Handles tcpdump's trailing dots (e.g. '1.2.3.4.') ensuring 
+    we don't accidentally split a full IP into IP+Port.
+    """
     token = token.strip()
+    
+    # 1. Strip the trailing dot common in tcpdump/tshark output
+    if token.endswith("."):
+        token = token[:-1]
+        
     if not token:
         return None, None
+        
+    # 2. Safety Check: Is this already a full IPv4 address?
+    # If it matches x.x.x.x, return it immediately as the Host.
+    if IPV4_RE.match(token):
+        return token, None
+
+    # 3. Otherwise, try splitting the last part as a port
     if "." in token:
-        host_candidate, possible_port = token.rsplit(".", 1)
-        if possible_port.isdigit():
-            return host_candidate, int(possible_port)
+        try:
+            host_candidate, possible_port = token.rsplit(".", 1)
+            if possible_port.isdigit():
+                return host_candidate, int(possible_port)
+        except ValueError:
+            pass
+            
+    # Fallback: Treat whole token as host
     return token, None
 
 
@@ -128,10 +156,7 @@ def parse_capture_text(
 
 
 def canonical_flow_key(pkt: Dict[str, Any], bidirectional: bool = False) -> Tuple:
-    """Return a flow key tuple (src, sport, dst, dport, proto).
-
-    If bidirectional is True the tuple is ordered so both directions map to same key.
-    """
+    """Return a flow key tuple (src, sport, dst, dport, proto)."""
     src = pkt["src_ip"] or ""
     dst = pkt["dst_ip"] or ""
     sport = pkt["src_port"] or 0
@@ -247,7 +272,8 @@ def parse_llm_header(lines: List[str]) -> Tuple[Dict[str, str], int]:
         if not m:
             break
         llm_name = m.group("llm").strip()
-        llm_ip = m.group("ip").strip()
+        # FIX: Also strip dots from Header IPs to ensure exact string match later
+        llm_ip = m.group("ip").strip().rstrip('.')
         llm_map[llm_ip] = llm_name
         idx += 1
     return llm_map, idx
@@ -263,12 +289,7 @@ def extract_flowlet_features(
     llm_ip_map: Dict[str, str],
     ground_truth_llm_map: Optional[Dict[str, str]] = None,
 ) -> List[Dict[str, Any]]:
-    """Build feature dicts for all flowlets in the given flows.
-    
-    Args:
-        ground_truth_llm_map: Optional dict mapping IP -> LLM name from decrypted captures.
-            If provided, this sets ground_truth_llm for flowlets involving those IPs.
-    """
+    """Build feature dicts for all flowlets in the given flows."""
     flowlet_features = []
     if ground_truth_llm_map is None:
         ground_truth_llm_map = {}
@@ -336,11 +357,7 @@ def process_capture_file(
     db_session=None,
     capture_id: Optional[int] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
-    """Parse one capture file and return its flowlet feature dicts and LLM IP map.
-    
-    If the capture contains LLM_IP headers (from decrypted captures), those are used
-    as ground truth and stored in ground_truth_llm.
-    """
+    """Parse one capture file and return its flowlet feature dicts and LLM IP map."""
     with capture_path.open("r", encoding="utf-8", errors="replace") as f:
         lines = [l.rstrip("\n") for l in f]
 
@@ -366,31 +383,35 @@ def process_capture_file(
     
     # Save to database if session provided
     if db_session and capture_id:
-        for feature in features:
-            flowlet = Flowlet(
-                capture_id=capture_id,
-                src_ip=feature["flow_key"]["src_ip"],
-                src_port=feature["flow_key"]["src_port"],
-                dst_ip=feature["flow_key"]["dst_ip"],
-                dst_port=feature["flow_key"]["dst_port"],
-                protocol=feature["flow_key"]["protocol"],
-                flowlet_id=feature["flowlet_id"],
-                traffic_class=feature["traffic_class"],
-                llm_name=feature["llm_name"],
-                ground_truth_llm=feature.get("ground_truth_llm"),
-                start_ts=feature["start_ts"],
-                end_ts=feature["end_ts"],
-                duration=feature["duration"],
-                packet_count=feature["packet_count"],
-                total_bytes=feature["total_bytes"],
-                inter_packet_time_mean=feature["inter_packet_time_mean"],
-                inter_packet_time_std=feature["inter_packet_time_std"],
-                packet_size_mean=feature["packet_size_mean"],
-                packet_size_std=feature["packet_size_std"],
-                inter_packet_times=json.dumps(feature["inter_packet_times"]),
-                packet_sizes=json.dumps(feature["packet_sizes"]),
-            )
-            db_session.add(flowlet)
+        try:
+            from database import Flowlet
+            for feature in features:
+                flowlet = Flowlet(
+                    capture_id=capture_id,
+                    src_ip=feature["flow_key"]["src_ip"],
+                    src_port=feature["flow_key"]["src_port"],
+                    dst_ip=feature["flow_key"]["dst_ip"],
+                    dst_port=feature["flow_key"]["dst_port"],
+                    protocol=feature["flow_key"]["protocol"],
+                    flowlet_id=feature["flowlet_id"],
+                    traffic_class=feature["traffic_class"],
+                    llm_name=feature["llm_name"],
+                    ground_truth_llm=feature.get("ground_truth_llm"),
+                    start_ts=feature["start_ts"],
+                    end_ts=feature["end_ts"],
+                    duration=feature["duration"],
+                    packet_count=feature["packet_count"],
+                    total_bytes=feature["total_bytes"],
+                    inter_packet_time_mean=feature["inter_packet_time_mean"],
+                    inter_packet_time_std=feature["inter_packet_time_std"],
+                    packet_size_mean=feature["packet_size_mean"],
+                    packet_size_std=feature["packet_size_std"],
+                    inter_packet_times=json.dumps(feature["inter_packet_times"]),
+                    packet_sizes=json.dumps(feature["packet_sizes"]),
+                )
+                db_session.add(flowlet)
+        except ImportError:
+            pass
     
     return features, file_llm_map
 
@@ -401,19 +422,20 @@ def parse_directory(
     threshold: float,
     bidirectional: bool,
     use_db: bool = False,
-    db_path: str = "networks_project.db",
+    db_path: str = "data/networks_project.db",
 ) -> List[Dict[str, Any]]:
-    """Process all capture files in a directory and return combined flowlets.
-    
-    If use_db is True, saves to database instead of returning features.
-    """
+    """Process all capture files in a directory and return combined flowlets."""
     llm_ip_map: Dict[str, str] = {}
     all_features: List[Dict[str, Any]] = []
     
     db_session = None
     if use_db:
-        init_database(db_path)
-        db_session = get_db()
+        try:
+            init_database(db_path)
+            db_session = get_db()
+        except NameError:
+            print("Warning: database module missing, disabling DB.")
+            use_db = False
 
     files = sorted(input_dir.glob(pattern))
     if not files:
@@ -424,19 +446,17 @@ def parse_directory(
         
         capture_id = None
         if use_db and db_session:
-            # Check if capture already exists
             existing = db_session.query(Capture).filter_by(file_path=str(capture_file)).first()
             if existing:
                 print(f"  Capture already exists in database (ID: {existing.id}), skipping...")
                 continue
             
-            # Create capture record
             capture = Capture(
                 file_path=str(capture_file),
                 status="completed",
             )
             db_session.add(capture)
-            db_session.flush()  # Get the ID
+            db_session.flush()
             capture_id = capture.id
         
         features, file_llm_map = process_capture_file(
@@ -448,10 +468,8 @@ def parse_directory(
             capture_id=capture_id,
         )
         
-        # Update LLM IP map
         llm_ip_map.update(file_llm_map)
         
-        # Update capture's LLM IP map if using database
         if use_db and db_session and capture_id:
             capture = db_session.query(Capture).get(capture_id)
             if capture:
@@ -507,8 +525,8 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--db-path",
-        default="networks_project.db",
-        help="Path to SQLite database file (default: networks_project.db).",
+        default="data/networks_project.db",
+        help="Path to SQLite database file (default: data/networks_project.db).",
     )
     return parser.parse_args(argv)
 
@@ -547,4 +565,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
-
