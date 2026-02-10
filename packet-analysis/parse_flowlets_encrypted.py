@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""parse_flowlets.py
+"""parse_flowlets_encrypted.py
 
 Read a tcpdump-style text capture (the project's `capture_*.txt`) and
 produce flows (5-tuples) and flowlets split by an inter-packet-gap threshold.
 
-Usage: python3 parse_flowlets.py <capture.txt | captures_dir> --threshold 0.1 --bidirectional --output out.json
+Usage: python3 parse_flowlets_encrypted.py <capture.txt | captures_dir> --threshold 0.1 --bidirectional --output out.json
 """
 import argparse
 import json

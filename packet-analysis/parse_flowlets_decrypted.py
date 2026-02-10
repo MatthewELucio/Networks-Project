@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""parse_flowlets_simple.py
+"""parse_flowlets_decrypted.py
 
 Minimal parser that walks a directory of capture text files, extracts flowlets,
 and writes a single combined JSON of flowlet features. LLM sources are declared
@@ -10,7 +10,7 @@ at the top of each capture in lines like:
 All flowlets involving those IPs are marked as LLM traffic.
 
 Usage:
-    python3 parse_flowlets_simple.py --input captures/chatgpt_ipv4 --output flowlets.json
+    python3 parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --output flowlets.json
 """
 from __future__ import annotations
 
