@@ -19,7 +19,7 @@ data-pipeline/
 │   │   └── prompt_bank.json
 │   └── non-llm/                      # Non-LLM traffic collection
 │       └── collect_non_llm_data.py
-└── parsing/                           # Data processing and transformation
+└── flowlet-parsing/                   # Data processing and transformation
     ├── parse_flowlets_encrypted.py
     ├── parse_flowlets_decrypted.py
     └── database.py
@@ -76,7 +76,7 @@ Prepares and runs prompt sequences for data collection.
 ##### `collect_non_llm_data.py`
 Collects non-LLM network traffic for baseline comparison.
 
-### Flowlet Parsing (parsing/)
+### Flowlet Parsing (flowlet-parsing/)
 
 #### `parse_flowlets_encrypted.py`
 Parses encrypted network captures (tcpdump-style text) into flows and flowlets.
@@ -84,13 +84,13 @@ Parses encrypted network captures (tcpdump-style text) into flows and flowlets.
 **Usage:**
 ```bash
 # Parse a single capture file
-python parsing/parse_flowlets_encrypted.py capture.txt --threshold 0.1 --output flowlets.json
+python flowlet-parsing/parse_flowlets_encrypted.py capture.txt --threshold 0.1 --output flowlets.json
 
 # Parse a directory of captures
-python parsing/parse_flowlets_encrypted.py captures/ --pattern "capture*.txt" --threshold 0.1 --output flowlets.json
+python flowlet-parsing/parse_flowlets_encrypted.py captures/ --pattern "capture*.txt" --threshold 0.1 --output flowlets.json
 
 # Extract features for ML training
-python parsing/parse_flowlets_encrypted.py --extract-features \
+python flowlet-parsing/parse_flowlets_encrypted.py --extract-features \
     --captures-root ../captures \
     --features-output flowlet_features.json \
     --threshold 0.1
@@ -108,10 +108,10 @@ Parses decrypted network captures with LLM IP tagging for ground truth labeling.
 **Usage:**
 ```bash
 # Parse captures and save to database
-python parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --db --db-path ../data/networks_project.db
+python flowlet-parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --db --db-path ../data/networks_project.db
 
 # Parse captures and save to JSON
-python parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --output flowlets.json --threshold 0.1
+python flowlet-parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --output flowlets.json --threshold 0.1
 ```
 
 **Features:**
@@ -131,7 +131,7 @@ SQLAlchemy models and utilities for storing captures and flowlets in SQLite.
 ```python
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "parsing"))
+sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "flowlet-parsing"))
 from database import init_database, get_db_session, Capture, Flowlet
 
 # Initialize database

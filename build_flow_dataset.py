@@ -13,8 +13,8 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-# Add data-pipeline/parsing to path
-sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "parsing"))
+# Add data-pipeline/flowlet-parsing to path
+sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "flowlet-parsing"))
 import parse_flowlets_encrypted as pf  # reuse parsing helpers
 
 
