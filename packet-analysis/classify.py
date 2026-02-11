@@ -32,6 +32,9 @@ def load_flowlets_from_json(path: Path) -> List[Dict[str, Any]]:
 
 def load_flowlets_from_sql(db_path: str, capture_id: str | None = None) -> List[Dict[str, Any]]:
     """Load flowlet records from SQLite database."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent / "data-pipeline"))
     from database import init_database, get_db_session, Flowlet
     
     init_database(db_path)

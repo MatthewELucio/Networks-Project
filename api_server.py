@@ -19,8 +19,8 @@ from sqlalchemy.orm import Session
 import sys
 from pathlib import Path
 
-# Add packet-analysis to path
-sys.path.insert(0, str(Path(__file__).parent / "packet-analysis"))
+# Add data-pipeline to path
+sys.path.insert(0, str(Path(__file__).parent / "data-pipeline"))
 from database import init_database, get_db, get_db_session, Capture, Flowlet
 
 app = FastAPI(title="Networks Project API")
@@ -374,7 +374,7 @@ async def run_parse(capture_id: int, file_path: str):
     from pathlib import Path
     
     # Import parse function
-    sys.path.insert(0, str(Path(__file__).parent / "packet-analysis"))
+    sys.path.insert(0, str(Path(__file__).parent / "data-pipeline"))
     from parse_flowlets_decrypted import process_capture_file
     from database import get_db_session
     
@@ -451,6 +451,7 @@ async def run_classify(capture_id: int):
     
     sys.path.insert(0, str(Path(__file__).parent / "packet-analysis"))
     from classify import annotate_flowlets, load_model_artifacts
+    sys.path.insert(0, str(Path(__file__).parent / "data-pipeline"))
     from database import get_db_session, Flowlet
     
     db = get_db_session()

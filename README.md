@@ -108,10 +108,10 @@ This installs all required dependencies including:
 
 ```bash
 # Parse captures and save to database
-python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --db --db-path networks_project.db --threshold 0.1
+python data-pipeline/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --db --db-path networks_project.db --threshold 0.1
 
 # Or save to JSON (legacy format)
-python packet-analysis/parse_flowlets_v2.py --input captures/chatgpt_ipv4 --output flowlet_features.json --threshold 0.1
+python data-pipeline/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --output flowlet_features.json --threshold 0.1
 ```
 
 **Input**: Raw packet captures in `captures/` directory  
@@ -213,7 +213,7 @@ python ip_range_capture_tshark_decrypt_llm_only.py <IP_RANGE> -k /path/to/sslkey
 
 **Output Format:**
 - Captures start with `LLM_IP <LLM_NAME> <IP_ADDRESS>` headers
-- These headers are parsed by `parse_flowlets_v2.py` to set `ground_truth_llm` field
+- These headers are parsed by `data-pipeline/parse_flowlets_decrypted.py` to set `ground_truth_llm` field
 - Enables comparison of model predictions against actual LLM traffic
 
 ## Database Schema
