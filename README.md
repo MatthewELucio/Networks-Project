@@ -108,10 +108,10 @@ This installs all required dependencies including:
 
 ```bash
 # Parse captures and save to database
-python data-pipeline/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --db --db-path networks_project.db --threshold 0.1
+python data-pipeline/parsing/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --db --db-path networks_project.db --threshold 0.1
 
 # Or save to JSON (legacy format)
-python data-pipeline/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --output flowlet_features.json --threshold 0.1
+python data-pipeline/parsing/parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --output flowlet_features.json --threshold 0.1
 ```
 
 **Input**: Raw packet captures in `captures/` directory  
@@ -179,13 +179,13 @@ python packet-analysis/claude/flowlet_analysis_claude.py flowlet_features.json -
 
 ### ip_range_capture.py
 
-This script is the primary data-collection method. Invoking `data-pipeline/ip_range_capture.py` with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow:
+This script is the primary data-collection method. Invoking `data-pipeline/ip-capture-scripts/ip_range_capture.py` with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow:
 
 1. Open Wireshark and an LLM browser interface
 2. Issue some long request to the LLM
 3. Observe Wireshark traffic to identify the IP address streaming the LLM's response to the device
    - This became easy with time, as LLM flows have a pretty identifiable pattern among the noise of our device connections.
-4. Invoke the python script with: `sudo python3 data-pipeline/ip_range_capture.py <IP_ADDRESS>`
+4. Invoke the python script with: `sudo python3 data-pipeline/ip-capture-scripts/ip_range_capture.py <IP_ADDRESS>`
 5. Issue queries to LLM
 6. Terminate packet collection with Ctrl+C when done issuing queries or the connection switches off of the specified IP address (when a FIN ACK appears in the Wireshark capture)
 
@@ -203,7 +203,7 @@ This script extends the basic capture functionality with TLS decryption capabili
 
 **Usage:**
 ```bash
-python data-pipeline/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
+python data-pipeline/ip-capture-scripts/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
 ```
 
 **Via Web Interface:**
@@ -213,7 +213,7 @@ python data-pipeline/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/sslkeyl
 
 **Output Format:**
 - Captures start with `LLM_IP <LLM_NAME> <IP_ADDRESS>` headers
-- These headers are parsed by `data-pipeline/parse_flowlets_decrypted.py` to set `ground_truth_llm` field
+- These headers are parsed by `data-pipeline/parsing/parse_flowlets_decrypted.py` to set `ground_truth_llm` field
 - Enables comparison of model predictions against actual LLM traffic
 
 ## Database Schema

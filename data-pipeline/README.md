@@ -2,9 +2,81 @@
 
 This directory contains scripts for data collection, processing, and flowlet extraction.
 
+## Directory Structure
+
+```
+data-pipeline/
+├── README.md                          # This file
+├── ip-capture-scripts/                # Network capture utilities
+│   ├── ip_range_capture.py
+│   ├── ip_range_capture_with_llm.py
+│   └── pcap_to_txt.py
+├── data-collection/                   # Automated data collection
+│   ├── llm/                          # LLM interaction automation
+│   │   ├── selenium_bot_llm.py
+│   │   ├── generate_prompt_bank.py
+│   │   ├── prepare_prompt_runner.py
+│   │   └── prompt_bank.json
+│   └── non-llm/                      # Non-LLM traffic collection
+│       └── collect_non_llm_data.py
+└── parsing/                           # Data processing and transformation
+    ├── parse_flowlets_encrypted.py
+    ├── parse_flowlets_decrypted.py
+    └── database.py
+```
+
 ## Scripts
 
-### Flowlet Parsing
+### Network Capture (ip-capture-scripts/)
+
+#### `ip_range_capture.py`
+Captures network traffic for specific IP ranges using tcpdump.
+
+**Usage:**
+```bash
+sudo python3 ip-capture-scripts/ip_range_capture.py <IP_ADDRESS>
+```
+
+#### `ip_range_capture_with_llm.py`
+Captures network traffic with TLS decryption and automatic LLM detection.
+
+**Usage:**
+```bash
+python ip-capture-scripts/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
+```
+
+**Features:**
+- Decrypts TLS traffic using SSLKEYLOGFILE
+- Automatically detects LLM traffic (ChatGPT, Claude, Gemini, etc.)
+- Outputs captures with `LLM_IP` headers for ground truth labeling
+
+#### `pcap_to_txt.py`
+Converts PCAP files to text format for parsing.
+
+**Usage:**
+```bash
+python ip-capture-scripts/pcap_to_txt.py <input.pcap> <output.txt>
+```
+
+### Data Collection (data-collection/)
+
+#### LLM Collection (data-collection/llm/)
+
+##### `selenium_bot_llm.py`
+Selenium-based bot for automated LLM interaction and traffic capture.
+
+##### `generate_prompt_bank.py`
+Generates diverse prompts for LLM testing.
+
+##### `prepare_prompt_runner.py`
+Prepares and runs prompt sequences for data collection.
+
+#### Non-LLM Collection (data-collection/non-llm/)
+
+##### `collect_non_llm_data.py`
+Collects non-LLM network traffic for baseline comparison.
+
+### Flowlet Parsing (parsing/)
 
 #### `parse_flowlets_encrypted.py`
 Parses encrypted network captures (tcpdump-style text) into flows and flowlets.
@@ -12,13 +84,13 @@ Parses encrypted network captures (tcpdump-style text) into flows and flowlets.
 **Usage:**
 ```bash
 # Parse a single capture file
-python parse_flowlets_encrypted.py capture.txt --threshold 0.1 --output flowlets.json
+python parsing/parse_flowlets_encrypted.py capture.txt --threshold 0.1 --output flowlets.json
 
 # Parse a directory of captures
-python parse_flowlets_encrypted.py captures/ --pattern "capture*.txt" --threshold 0.1 --output flowlets.json
+python parsing/parse_flowlets_encrypted.py captures/ --pattern "capture*.txt" --threshold 0.1 --output flowlets.json
 
 # Extract features for ML training
-python parse_flowlets_encrypted.py --extract-features \
+python parsing/parse_flowlets_encrypted.py --extract-features \
     --captures-root ../captures \
     --features-output flowlet_features.json \
     --threshold 0.1
@@ -36,10 +108,10 @@ Parses decrypted network captures with LLM IP tagging for ground truth labeling.
 **Usage:**
 ```bash
 # Parse captures and save to database
-python parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --db --db-path ../data/networks_project.db
+python parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --db --db-path ../data/networks_project.db
 
 # Parse captures and save to JSON
-python parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --output flowlets.json --threshold 0.1
+python parsing/parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --output flowlets.json --threshold 0.1
 ```
 
 **Features:**
@@ -47,8 +119,6 @@ python parse_flowlets_decrypted.py --input ../captures/chatgpt_ipv4 --output flo
 - Tags flowlets with ground truth LLM provider labels
 - Saves to SQLite database or JSON format
 - Supports bidirectional flow grouping
-
-### Database
 
 #### `database.py`
 SQLAlchemy models and utilities for storing captures and flowlets in SQLite.
@@ -59,6 +129,9 @@ SQLAlchemy models and utilities for storing captures and flowlets in SQLite.
 
 **Usage:**
 ```python
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "parsing"))
 from database import init_database, get_db_session, Capture, Flowlet
 
 # Initialize database
@@ -71,58 +144,14 @@ db = get_db_session()
 flowlets = db.query(Flowlet).filter_by(traffic_class="llm").all()
 ```
 
-### Data Collection
+## Pipeline Workflow
 
-#### `ip_range_capture.py`
-Captures network traffic for specific IP ranges.
+The data pipeline follows this flow:
 
-**Usage:**
-```bash
-python ip_range_capture.py
-```
-
-#### `ip_range_capture_with_llm.py`
-Captures network traffic for specific IP ranges with LLM interaction support.
-
-**Usage:**
-```bash
-python ip_range_capture_with_llm.py
-```
-
-#### `pcap_to_txt.py`
-Converts PCAP files to text format for parsing.
-
-**Usage:**
-```bash
-python pcap_to_txt.py <input.pcap> <output.txt>
-```
-
-#### `selenium_bot_llm.py`
-Selenium-based bot for automated LLM interaction and traffic capture.
-
-#### `generate_prompt_bank.py`
-Generates diverse prompts for LLM testing.
-
-#### `prepare_prompt_runner.py`
-Prepares and runs prompt sequences for data collection.
-
-## Directory Structure
-
-```
-data-pipeline/
-├── README.md                          # This file
-├── parse_flowlets_encrypted.py        # Parse encrypted captures
-├── parse_flowlets_decrypted.py        # Parse decrypted captures with LLM tagging
-├── database.py                        # Database models and utilities
-├── ip_range_capture.py                # IP range capture utility
-├── ip_range_capture_with_llm.py       # IP range capture with LLM support
-├── pcap_to_txt.py                     # PCAP to text converter
-├── selenium_bot_llm.py                # Automated LLM interaction
-├── generate_prompt_bank.py            # Prompt generation
-├── prepare_prompt_runner.py           # Prompt runner
-├── prompt_bank.json                   # Generated prompts
-└── non-llm/                           # Non-LLM traffic collection scripts
-```
+1. **Capture** (ip-capture-scripts/) - Collect raw network traffic
+2. **Collection** (data-collection/) - Automate LLM interactions and traffic generation
+3. **Parsing** (parsing/) - Convert captures to structured flowlet data
+4. **Analysis** (../packet-analysis/) - ML classification and analysis
 
 ## Related Directories
 
