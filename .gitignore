@@ -65,3 +65,4 @@ sslkeylogfile.txt
 # Firebase credentials (should start with networks-project-s26-firebase-adminsdk)
 networks-project-s26-firebase-adminsdk-*.json
 *.env
+flowlet_features_updated.json

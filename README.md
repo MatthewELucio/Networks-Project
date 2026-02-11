@@ -179,19 +179,19 @@ python packet-analysis/claude/flowlet_analysis_claude.py flowlet_features.json -
 
 ### ip_range_capture.py
 
-This script is the primary data-collection method. Invoking `ip_range_capture.py` with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow:
+This script is the primary data-collection method. Invoking `data-pipeline/ip_range_capture.py` with a specified IP address or range begins a tcpdump into a .txt file with that range/address applied as a filter. The general workflow:
 
 1. Open Wireshark and an LLM browser interface
 2. Issue some long request to the LLM
 3. Observe Wireshark traffic to identify the IP address streaming the LLM's response to the device
    - This became easy with time, as LLM flows have a pretty identifiable pattern among the noise of our device connections.
-4. Invoke the python script with: `sudo python3 ip_range_capture.py <IP_ADDRESS>`
+4. Invoke the python script with: `sudo python3 data-pipeline/ip_range_capture.py <IP_ADDRESS>`
 5. Issue queries to LLM
 6. Terminate packet collection with Ctrl+C when done issuing queries or the connection switches off of the specified IP address (when a FIN ACK appears in the Wireshark capture)
 
 Output captures are saved with the naming convention: `capture_<DATE>_<TIME>_<IP>_<ADDRESS_SIZE>.txt`
 
-### ip_range_capture_tshark_decrypt_llm_only.py
+### ip_range_capture_with_llm.py
 
 This script extends the basic capture functionality with TLS decryption capabilities. It uses tshark to decrypt TLS traffic when SSL keys are provided, and automatically identifies LLM traffic by detecting keywords in hostnames, SNI, DNS queries, and HTTP headers.
 
@@ -203,7 +203,7 @@ This script extends the basic capture functionality with TLS decryption capabili
 
 **Usage:**
 ```bash
-python ip_range_capture_tshark_decrypt_llm_only.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
+python data-pipeline/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/sslkeylogfile.txt --sniff
 ```
 
 **Via Web Interface:**
