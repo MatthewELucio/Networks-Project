@@ -375,7 +375,7 @@ async def run_parse(capture_id: int, file_path: str):
     
     # Import parse function
     sys.path.insert(0, str(Path(__file__).parent / "packet-analysis"))
-    from parse_flowlets_v2 import process_capture_file
+    from parse_flowlets_decrypted import process_capture_file
     from database import get_db_session
     
     db = get_db_session()
