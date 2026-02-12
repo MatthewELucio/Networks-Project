@@ -50,14 +50,6 @@ python ip-capture-scripts/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/ss
 - Automatically detects LLM traffic (ChatGPT, Claude, Gemini, etc.)
 - Outputs captures with `LLM_IP` headers for ground truth labeling
 
-#### `pcap_to_txt.py`
-Converts PCAP files to text format for parsing.
-
-**Usage:**
-```bash
-python ip-capture-scripts/pcap_to_txt.py <input.pcap> <output.txt>
-```
-
 ### Data Collection (data-collection/)
 
 #### LLM Collection (data-collection/llm/)
