@@ -44,10 +44,14 @@ def launch_firefox_stealth():
     # Stealth Switches
     options.set_preference("dom.webdriver.enabled", False)
     options.set_preference("useAutomationExtension", False)
+    options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0")
+
 
     try:
         service = Service(GeckoDriverManager().install())
         driver = webdriver.Firefox(service=service, options=options)
+        driver.set_window_size(random.randint(1050, 1920), random.randint(800, 1080))
+        
         print(f"✅ Launched! Title: {driver.title}")
         return driver
     except Exception as e:
@@ -66,14 +70,16 @@ def run_chatgpt(driver):
     print("🤖 Mode: ChatGPT")
     if "chatgpt.com" not in driver.current_url:
         driver.get("https://chatgpt.com")
-        time.sleep(5)
+        print("⚠️  Cloudflare detected? Please solve the CAPTCHA manually in the browser window.")
+        print("👉  Press ENTER in this terminal once the chat interface is visible...")
+        input()  # The script will pause here until you hit Enter
 
     for i, prompt in enumerate(PROMPTS[:NUM_QUERIES], 1):
         print(f"\n[ChatGPT {i}] Asking: {prompt}")
         
         try:
             # Wait longer for initial load
-            input_box = WebDriverWait(driver, 10).until(
+            input_box = WebDriverWait(driver, 15).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "#prompt-textarea"))
             )
         except:
@@ -96,7 +102,9 @@ def run_gemini(driver):
     print("🤖 Mode: Gemini")
     if "gemini.google.com" not in driver.current_url:
         driver.get("https://gemini.google.com/app")
-        time.sleep(5)
+        print("⚠️  Cloudflare detected? Please solve the CAPTCHA manually in the browser window.")
+        print("👉  Press ENTER in this terminal once the chat interface is visible...")
+        input()  # The script will pause here until you hit Enter
 
     for i, prompt in enumerate(PROMPTS[:NUM_QUERIES], 1):
         print(f"\n[Gemini {i}] Asking: {prompt}")
@@ -120,13 +128,15 @@ def run_claude(driver):
     print("🤖 Mode: Claude")
     if "claude.ai" not in driver.current_url:
         driver.get("https://claude.ai/chats")
-        time.sleep(5)
+        print("⚠️  Cloudflare detected? Please solve the CAPTCHA manually in the browser window.")
+        print("👉  Press ENTER in this terminal once the chat interface is visible...")
+        input()  # The script will pause here until you hit Enter
 
     for i, prompt in enumerate(PROMPTS[:NUM_QUERIES], 1):
         print(f"\n[Claude {i}] Asking: {prompt}")
         
         try:
-            input_box = WebDriverWait(driver, 10).until(
+            input_box = WebDriverWait(driver, 15).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "div[contenteditable='true']"))
             )
             input_box.click()

@@ -196,7 +196,7 @@ def get_capture_flowlets_chart(capture_id: int, db: Session = Depends(get_db)):
     # Bucket flowlets by time (10 second intervals)
     buckets = {}
     for flowlet in flowlets:
-        bucket_time = int(flowlet.start_ts / 10) * 10
+        bucket_time = int(flowlet.start_ts / 5) * 5
         if bucket_time not in buckets:
             buckets[bucket_time] = {"total_bytes": 0, "llm_bytes": 0, "count": 0}
         
@@ -233,11 +233,11 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
             )
         
         # Use decrypt script
-        cmd = ["python3", "ip_range_capture_with_llm.py", capture_data.ip_range]
+        cmd = ["python3", "data-pipeline/ip-capture-scripts/ip_range_capture_with_llm.py", capture_data.ip_range]
         cmd.extend(["-k", ssl_key_path])
     else:
         # Use regular capture script
-        cmd = ["python3", "ip_range_capture.py", capture_data.ip_range]
+        cmd = ["python3", "data-pipeline/ip-capture-scripts/ip_range_capture.py", capture_data.ip_range]
         if capture_data.snaplen:
             cmd.extend(["--snaplen", str(capture_data.snaplen)])
         if capture_data.extra_filter:
@@ -292,7 +292,7 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to start capture: {str(e)}")
 
-async def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
+def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
     """Monitor a running capture and update database when it completes."""
     proc.wait()
     
@@ -369,7 +369,7 @@ def parse_capture(capture_id: int, background_tasks: BackgroundTasks, db: Sessio
 
 
 async def run_parse(capture_id: int, file_path: str):
-    """Run parse_flowlets_v2.py on a single capture file."""
+    """Run parse_flowlets_decrypt.py on a single capture file."""
     import sys
     from pathlib import Path
     
