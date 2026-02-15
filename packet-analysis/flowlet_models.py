@@ -202,6 +202,7 @@ def extract_ml_features(
     
     Combines:
     - Statistical features (mean, std, count, etc.)
+    - Direction features (0 for non-LLM, +1 for outgoing LLM, -1 for incoming LLM)
     - Markov model log-likelihoods (MaMPF fingerprint)
     """
     features = []
@@ -214,6 +215,9 @@ def extract_ml_features(
     features.append(flowlet.get("inter_packet_time_std", 0.0))
     features.append(flowlet.get("packet_size_mean", 0.0))
     features.append(flowlet.get("packet_size_std", 0.0))
+    
+    # Direction feature (0 for non-LLM, +1 for outgoing LLM, -1 for incoming LLM)
+    features.append(flowlet.get("direction_encoded", 0))
     
     # Build sequences for Markov models
     inter_packet_times = flowlet.get("inter_packet_times", [])

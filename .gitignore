@@ -1,6 +1,9 @@
 *.pcap
 __pycache__/
 MODEL_SUMMARY.md
+#gavin's really really big non-llm data files
+MAWI-captures/*.pcap
+MAWI-captures/*.txt 
 
 # Front-end build artifacts and dev-only files
 front-end/front-logs/
@@ -62,3 +65,7 @@ networks_project.db
 ssl_keys_config.json
 sslkeys.txt
 sslkeylogfile.txt
+# Firebase credentials (should start with networks-project-s26-firebase-adminsdk)
+networks-project-s26-firebase-adminsdk-*.json
+*.env
+flowlet_features_updated.json

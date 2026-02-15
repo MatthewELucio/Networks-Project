@@ -72,6 +72,10 @@ class Flowlet(Base):
     traffic_class = Column(String, nullable=True)  # 'llm' or 'non_llm'
     llm_name = Column(String, nullable=True)  # e.g., 'ChatGPT', 'Claude', etc.
     
+    # Direction features (for LLM traffic only)
+    outgoing = Column(Boolean, nullable=True)  # True=user->LLM, False=LLM->user, None=non-LLM
+    direction_encoded = Column(Integer, default=0)  # +1=outgoing, -1=incoming, 0=non-LLM
+    
     # Timing
     start_ts = Column(Float, nullable=False)
     end_ts = Column(Float, nullable=False)
@@ -116,6 +120,8 @@ class Flowlet(Base):
             "flowlet_id": self.flowlet_id,
             "traffic_class": self.traffic_class,
             "llm_name": self.llm_name,
+            "outgoing": self.outgoing,
+            "direction_encoded": self.direction_encoded,
             "start_ts": self.start_ts,
             "end_ts": self.end_ts,
             "duration": self.duration,

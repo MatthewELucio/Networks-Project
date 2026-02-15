@@ -9,10 +9,13 @@ everything else is labeled as LLM traffic.
 import argparse
 import datetime as dt
 import json
+import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-import parse_flowlets as pf  # reuse parsing helpers
+# Add data-pipeline/flowlet-parsing to path
+sys.path.insert(0, str(Path(__file__).parent / "data-pipeline" / "flowlet-parsing"))
+import parse_flowlets_encrypted as pf  # reuse parsing helpers
 
 
 def classify_capture(path: Path, root: Path) -> str:

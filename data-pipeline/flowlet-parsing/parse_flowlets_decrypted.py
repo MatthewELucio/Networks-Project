@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""parse_flowlets_simple.py
+"""parse_flowlets_decrypted.py
 
 Minimal parser that walks a directory of capture text files, extracts flowlets,
 and writes a single combined JSON of flowlet features. LLM sources are declared
@@ -10,7 +10,7 @@ at the top of each capture in lines like:
 All flowlets involving those IPs are marked as LLM traffic.
 
 Usage:
-    python3 parse_flowlets_simple.py --input captures/chatgpt_ipv4 --output flowlets.json
+    python3 parse_flowlets_decrypted.py --input captures/chatgpt_ipv4 --output flowlets.json
 """
 from __future__ import annotations
 
@@ -316,6 +316,19 @@ def extract_flowlet_features(
                     ground_truth_llm = ground_truth_llm_map[ip]
                     break
 
+            # Determine direction for LLM traffic only
+            outgoing = None
+            direction_encoded = 0
+            if llm_name:  # Only determine direction for LLM traffic
+                # Check if destination is LLM IP (user -> LLM = outgoing)
+                if dst_ip and dst_ip in llm_ip_map:
+                    outgoing = True
+                    direction_encoded = 1
+                # Check if source is LLM IP (LLM -> user = incoming)
+                elif src_ip and src_ip in llm_ip_map:
+                    outgoing = False
+                    direction_encoded = -1
+
             feature = {
                 "flow_key": {
                     "src_ip": src_ip,
@@ -329,15 +342,21 @@ def extract_flowlet_features(
                 "llm_name": llm_name,
                 "ground_truth_llm": ground_truth_llm,
                 "source_file": source_file,
+                # Direction features (only for LLM traffic)
+                "outgoing": outgoing,
+                "direction_encoded": direction_encoded,
+                # Flowlet timing and size features
                 "start_ts": flowlet["start_ts"],
                 "end_ts": flowlet["end_ts"],
                 "duration": flowlet["end_ts"] - flowlet["start_ts"],
                 "packet_count": flowlet["packets"],
                 "total_bytes": flowlet["bytes"],
+                # Packet-level statistics
                 "inter_packet_time_mean": stats["inter_packet_time_mean"],
                 "inter_packet_time_std": stats["inter_packet_time_std"],
                 "packet_size_mean": stats["packet_size_mean"],
                 "packet_size_std": stats["packet_size_std"],
+                # Raw sequences for Markov modeling
                 "inter_packet_times": stats["inter_packet_times"],
                 "packet_sizes": stats["packet_sizes"],
             }
@@ -397,6 +416,8 @@ def process_capture_file(
                     traffic_class=feature["traffic_class"],
                     llm_name=feature["llm_name"],
                     ground_truth_llm=feature.get("ground_truth_llm"),
+                    outgoing=feature["outgoing"],
+                    direction_encoded=feature["direction_encoded"],
                     start_ts=feature["start_ts"],
                     end_ts=feature["end_ts"],
                     duration=feature["duration"],
