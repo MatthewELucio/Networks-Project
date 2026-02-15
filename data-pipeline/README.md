@@ -13,7 +13,8 @@ data-pipeline/
 │   └── pcap_to_txt.py
 ├── data-collection/                   # Automated data collection
 │   ├── llm/                          # LLM interaction automation
-│   │   ├── selenium_bot_llm.py
+│   │   ├── selenium_bot_llm_chrome.py
+│   │   ├── selenium_bot_llm_firefox.py
 │   │   ├── generate_prompt_bank.py
 │   │   ├── prepare_prompt_runner.py
 │   │   └── prompt_bank.json
@@ -62,8 +63,16 @@ python ip-capture-scripts/pcap_to_txt.py <input.pcap> <output.txt>
 
 #### LLM Collection (data-collection/llm/)
 
-##### `selenium_bot_llm.py`
+##### `selenium_bot_llm_firefox.py`
 Selenium-based bot for automated LLM interaction and traffic capture.
+
+##### `selenium_bot_llm_chrome.py`
+Selenium-based bot for automated LLM interaction and traffic capture on Chrome (set ssl keys environment variable: SSLKEYLOGFILE) for chatgpt, gemini, or claude (requires logging in first).
+
+**Usage:**
+```bash
+python data-collection/llm/selenium_bot_llm_chrome.py --target <PROVIDER> --prompts <PROMPT_FILE> # (default is prompt_back.json)
+```
 
 ##### `generate_prompt_bank.py`
 Generates diverse prompts for LLM testing.

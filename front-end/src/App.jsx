@@ -522,18 +522,18 @@ export default function App() {
     }
   };
 
-  // const handleStopCapture = async (captureId) => {
-  //   try {
-  //     const res = await fetch(`${API_BASE}/api/captures/${captureId}/stop`, {
-  //       method: "POST",
-  //     });
-  //     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  //     setRunningCaptures(new Set([...runningCaptures].filter(id => id !== captureId)));
-  //     refetch();
-  //   } catch (err) {
-  //     alert(`Failed to stop capture: ${err.message}`);
-  //   }
-  // };
+  const handleStopCapture = async (captureId) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/captures/${captureId}/stop`, {
+        method: "POST",
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setRunningCaptures(new Set([...runningCaptures].filter(id => id !== captureId)));
+      refetch();
+    } catch (err) {
+      alert(`Failed to stop capture: ${err.message}`);
+    }
+  };
 
   const handleParse = async (captureId) => {
     try {
