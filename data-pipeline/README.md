@@ -103,6 +103,8 @@ python flowlet-parsing/parse_flowlets_encrypted.py --extract-features \
     --captures-root ../captures \
     --features-output flowlet_features.json \
     --threshold 0.1
+
+python live_capture_to_db.py -o captures -k ~/mnt/c/Users/matth/Documents/sslkeys.txt -t 30 -i Wi-Fi 0.0.0.0/0 
 ```
 
 **Features:**

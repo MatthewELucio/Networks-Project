@@ -70,7 +70,7 @@ def type_like_human(element, text):
     """Types text one character at a time with random delays."""
     for char in text:
         element.send_keys(char)
-        time.sleep(random.uniform(0.01, 0.08)) # Slightly faster typing
+        time.sleep(random.uniform(0.01, 0.04)) # Slightly faster typing
 
 def get_driver():
     """Initializes the undetected_chromedriver."""
