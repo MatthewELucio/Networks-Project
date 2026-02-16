@@ -79,7 +79,7 @@ class CaptureResponse(BaseModel):
     llm_ip_map: Dict[str, str]
     notes: Optional[str]
     flow_count: int
-    llm_flow_count: Optional[int] = None
+    groundtruth_llm_flow_count: Optional[int] = None
 
     class Config:
         from_attributes = True
@@ -135,8 +135,7 @@ def list_captures(db: Session = Depends(get_db)):
         
         capture_dict = capture.to_dict()
         capture_dict["flow_count"] = flow_count
-        if classified_count > 0:
-            capture_dict["llm_flow_count"] = llm_flow_count
+        capture_dict["groundtruth_llm_flow_count"] = llm_flow_count
         result.append(capture_dict)
     
     return result
@@ -217,104 +216,112 @@ def get_capture_flowlets_chart(capture_id: int, db: Session = Depends(get_db)):
     
     return chart_data
 
-
 @app.post("/api/captures/start")
 def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks):
-    """Start a new packet capture. Uses decrypt script if use_ssl_decrypt is True."""
-    # Determine which script to use
+    """Start a new packet capture. If SSL Decrypt is checked, run the LIVE pipeline."""
+    
+    # 1. Prepare Database Entry
+    db = get_db_session()
+    try:
+        notes = f"IP: {capture_data.ip_range}, Interface: {capture_data.interface or 'default'}"
+        if capture_data.use_ssl_decrypt:
+            notes += " [Live Decrypted]"
+        
+        # We set file_path to 'LIVE' initially if decrypting
+        capture = Capture(
+            file_path=None, 
+            status="running",
+            notes=notes
+        )
+        db.add(capture)
+        db.commit()
+        db.refresh(capture)
+        capture_id = capture.id
+    finally:
+        db.close()
+
+    # 2. Determine Command
     if capture_data.use_ssl_decrypt:
+        # --- NEW LIVE PIPELINE ---
         ssl_config = load_ssl_config()
         ssl_key_path = ssl_config.get("ssl_key_path")
-        if not ssl_key_path or not Path(ssl_key_path).exists():
-            raise HTTPException(
-                status_code=400,
-                detail="SSL key file not configured or not found. Please set SSL keys first."
-            )
         
-        # Use decrypt script
-        cmd = ["python3", "data-pipeline/ip-capture-scripts/ip_range_capture_with_llm.py", capture_data.ip_range]
-        cmd.extend(["-k", ssl_key_path])
+        # We call the new live script and pass the capture_id
+        cmd = [
+            "python3", "data-pipeline/flowlet-parsing/live_capture_to_db.py", 
+            capture_data.ip_range,
+            "--capture-id", str(capture_id)
+        ]
+        if ssl_key_path:
+            cmd.extend(["-k", ssl_key_path])
+        if capture_data.interface:
+            cmd.extend(["-i", capture_data.interface])
+        if capture_data.timeout:
+            cmd.extend(["-t", str(capture_data.timeout)])
+            
     else:
-        # Use regular capture script
+        # --- OLD FILE-BASED PIPELINE (For regular captures) ---
         cmd = ["python3", "data-pipeline/ip-capture-scripts/ip_range_capture.py", capture_data.ip_range]
         if capture_data.snaplen:
             cmd.extend(["--snaplen", str(capture_data.snaplen)])
-        if capture_data.extra_filter:
-            cmd.extend(["--extra-filter", capture_data.extra_filter])
-    
-    if capture_data.interface:
-        cmd.extend(["-i", capture_data.interface])
-    
-    if capture_data.outdir:
-        cmd.extend(["-o", capture_data.outdir])
-    else:
-        # Default to captures directory
-        cmd.extend(["-o", "captures"])
-    
-    if capture_data.timeout:
-        cmd.extend(["-t", str(capture_data.timeout)])
-    
-    # Start capture process
+        if capture_data.interface:
+            cmd.extend(["-i", capture_data.interface])
+        if capture_data.outdir:
+            cmd.extend(["-o", capture_data.outdir])
+        else:
+            cmd.extend(["-o", "captures"])
+        if capture_data.timeout:
+            cmd.extend(["-t", str(capture_data.timeout)])
+
+    # 3. Launch and Monitor
     try:
-        proc = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        
-        # Create capture record in database
-        db = get_db_session()
-        try:
-            notes = f"IP: {capture_data.ip_range}, Interface: {capture_data.interface or 'default'}"
-            if capture_data.use_ssl_decrypt:
-                notes += " [SSL Decrypted]"
-            capture = Capture(
-                file_path=None,  # Will be updated when capture completes
-                status="running",
-                notes=notes
-            )
-            db.add(capture)
-            db.commit()
-            db.refresh(capture)
-            capture_id = capture.id
-        finally:
-            db.close()
-        
-        # Store process reference
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         _running_captures[capture_id] = proc
         
-        # Monitor process in background
-        background_tasks.add_task(monitor_capture, capture_id, proc, capture_data.outdir or "captures")
+        # Pass use_ssl_decrypt as 'is_live' to monitor_capture
+        background_tasks.add_task(
+            monitor_capture, 
+            capture_id, 
+            proc, 
+            capture_data.outdir or "captures", 
+            capture_data.use_ssl_decrypt
+        )
         
-        return {"id": capture_id, "status": "running", "message": "Capture started"}
+        return {"id": capture_id, "status": "running"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to start capture: {str(e)}")
-
-def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str):
+        raise HTTPException(status_code=500, detail=str(e))
+    
+def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str, is_live: bool):
     """Monitor a running capture and update database when it completes."""
+    
+    stdout, stderr = proc.communicate() # This captures the error
+    if proc.returncode != 0:
+        print(f"❌ Capture {capture_id} failed!")
+        print(f"STDOUT: {stdout}")
+        print(f"STDERR: {stderr}") # This will tell you exactly why it failed
+        
     proc.wait()
     
     db = get_db_session()
     try:
         capture = db.query(Capture).filter_by(id=capture_id).first()
         if capture:
-            # --- FIX STARTS HERE ---
-            # Only look for a file if the capture process was SUCCESSFUL
-            if proc.returncode == 0:
+            # If it's NOT live, find the generated file so the user can 'Parse' it later
+            if not is_live and proc.returncode == 0:
                 outdir_path = Path(outdir)
                 if outdir_path.exists():
                     capture_files = sorted(
-                        list(outdir_path.glob("capture_*.txt")) + list(outdir_path.glob("hybrid_capture_*.txt")),
+                        list(outdir_path.glob("capture_*.txt")),
                         key=lambda p: p.stat().st_mtime
                     )
-                    # Only assign if we found a NEW file
                     if capture_files:
                         capture.file_path = str(capture_files[-1])
             
+            # If it IS live, we already have the data in the DB
+            if is_live:
+                capture.file_path = f"LIVE_SESSION_{capture_id}"
+
             capture.status = "completed" if proc.returncode == 0 else "failed"
-            # --- FIX ENDS HERE ---
-            
             db.commit()
     finally:
         db.close()
