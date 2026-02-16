@@ -20,39 +20,40 @@ Firestore layout
 - Collection: ``parsed-flowlets``
 - One **document per capture**, where the document ID is a user-supplied
   string (e.g. capture file name).
-- Each document contains a top-level field for each flowlet:
+- Each document contains capture metadata and one top-level field per flowlet:
 
     {
-        "capture_id": "...",             # optional metadata, kept as-is
-        "flowlet_000001": { ... },       # flowlet dict
-        "flowlet_000002": { ... },       # flowlet dict
+        "capture_id": "...",
+        "file_path": "...",              # capture file path (from database.Capture)
+        "created_at": "...",             # ISO datetime
+        "status": "completed",
+        "llm_ip_map": { ... },           # optional {ip: llm_name}
+        "notes": null,
+        "flowlet_000001": { ... },       # flowlet dict (schema below)
+        "flowlet_000002": { ... },
         ...
     }
 
 Field mapping
 -------------
-Input flowlet objects are expected to look like what the current
-SQLite / JSON pipeline produces, e.g. from:
-- ``packet-analysis/parse_flowlets_v2.py`` (feature dicts)
-- ``packet-analysis/database.py`` (``Flowlet.to_dict()``)
+Two modes are supported:
 
-The Firestore document for each flowlet contains **all existing fields**
-from those dicts, with the following transformation:
+**1. Full schema (database.py parity)**  
+Use ``identity_flowlet_transform`` so each flowlet sub-document stores the same
+fields as ``database.Flowlet.to_dict()``: ``capture_id``, ``flow_key``,
+``flowlet_id``, ``traffic_class``, ``llm_name``, ``outgoing``,
+``direction_encoded``, ``start_ts``, ``end_ts``, ``duration``,
+``packet_count``, ``total_bytes``, ``inter_packet_time_mean/std``,
+``packet_size_mean/std``, ``inter_packet_times``, ``packet_sizes``,
+``model_llm_prediction``, ``model_llm_confidence``, ``ground_truth_llm``.
+Used by ``data-pipeline/flowlet-parsing/database_firebase.py``.
 
-- Remove: ``traffic_class``
-- Remove: ``inter_packet_times``, ``packet_sizes``
-- Add:
-    - ``is_llm_prediction`` (bool)
-    - ``predicted_llm_name`` (str or None)
-    - ``ground_truth_llm_name`` (str or None)
+**2. Default transform (legacy)**  
+``_default_flowlet_transform``:
+- Removes: ``traffic_class``, ``inter_packet_times``, ``packet_sizes``
+- Adds: ``is_llm_prediction``, ``predicted_llm_name``, ``ground_truth_llm_name``
 
-By default the mapping is:
-- ``is_llm_prediction`` = (``traffic_class`` == "llm")
-- ``predicted_llm_name`` = ``llm_name`` (if present)
-- ``ground_truth_llm_name`` = ``ground_truth_llm`` (if present)
-
-You can override this behaviour by passing an explicit transform
-function into the helper class if needed.
+You can pass a custom ``flowlet_transform`` into ``ParsedFlowletFirestore``.
 
 Dependencies
 ------------
@@ -86,6 +87,14 @@ REPO_ROOT = Path(__file__).resolve().parent
 
 FlowletDict = Dict[str, Any]
 TransformFn = Callable[[FlowletDict], FlowletDict]
+
+
+def identity_flowlet_transform(flowlet: FlowletDict) -> FlowletDict:
+    """
+    No-op transform: store flowlet exactly as provided (full database.py schema).
+    Use this when writing from database_firebase.py so Firestore matches database.Flowlet.
+    """
+    return dict(flowlet)
 
 
 def _default_flowlet_transform(flowlet: FlowletDict) -> FlowletDict:
@@ -342,6 +351,7 @@ class ParsedFlowletFirestore:
 
 __all__ = [
     "ParsedFlowletFirestore",
+    "identity_flowlet_transform",
     "_default_flowlet_transform",
 ]
 
