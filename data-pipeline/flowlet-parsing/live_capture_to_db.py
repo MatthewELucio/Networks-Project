@@ -10,13 +10,19 @@ import json
 from pathlib import Path
 from collections import defaultdict
 import statistics
+from typing import Optional, Union
 
-# Import your database models
+# Cloud DB: set True to use Firebase by default; overridden by --cloud-db / --no-cloud-db.
+USE_CLOUD_DB = True
+
 try:
-    from database import init_database, get_db_session, Capture, Flowlet
+    import database as _db_local
 except ImportError:
-    print("❌ Error: database.py not found. Ensure it is in the same directory.")
-    sys.exit(1)
+    _db_local = None
+try:
+    import database_firebase as _db_cloud
+except ImportError:
+    _db_cloud = None
 
 # --- CONFIGURATION ---
 TARGET_KEYWORDS = ["chatgpt", "claude", "gemini"]
@@ -67,12 +73,14 @@ def build_command(tshark_bin, is_win_bin, network, interface, ssl_keys):
     return cmd
 
 class LiveFlowletManager:
-    def __init__(self, db_session, capture_id, threshold=0.1):
+    """Works with either SQLite session (capture_id int) or Firebase session (capture_id str)."""
+    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1):
         self.db = db_session
         self.capture_id = capture_id
+        self.flowlet_cls = flowlet_cls
         self.threshold = threshold
-        self.flows = defaultdict(list) 
-        self.llm_ip_map = {} 
+        self.flows = defaultdict(list)
+        self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
 
     def process_packet(self, pkt):
@@ -140,7 +148,7 @@ class LiveFlowletManager:
         total_bytes = sum(packet_sizes)
         
         # --- SAVE TO DB (Matches full feature set) ---
-        new_flowlet = Flowlet(
+        new_flowlet = self.flowlet_cls(
             capture_id=self.capture_id,
             src_ip=src_ip, src_port=pkts[0]['sport'],
             dst_ip=dst_ip, dst_port=pkts[0]['dport'],
@@ -171,49 +179,62 @@ def main():
     p.add_argument("ip_range", help="CIDR range to sniff")
     p.add_argument("-i", "--interface", help="Network interface")
     p.add_argument("-k", "--ssl-keys", help="Path to SSLKEYLOGFILE")
-    p.add_argument("--db-path", default="data/networks_project.db")
-    # Change: capture-id is no longer required
-    p.add_argument("--capture-id", type=int, help="Database Capture ID (optional)")
+    p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using Firebase).")
+    p.add_argument("--capture-id", help="Resume: Capture ID (int for SQLite, doc ID string for Firebase). Omit to create new.")
+    p.add_argument("--cloud-db", action="store_true", default=None, help="Use Firebase Cloud Firestore.")
+    p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
     args = p.parse_args()
+
+    use_cloud_db = False if args.no_cloud_db else (args.cloud_db if args.cloud_db is not None else USE_CLOUD_DB)
+    if use_cloud_db and _db_cloud is None:
+        sys.exit("❌ Error: --cloud-db requested but database_firebase not available.")
+    if not use_cloud_db and _db_local is None:
+        sys.exit("❌ Error: database.py not found. Ensure it is in the same directory.")
+    mod = _db_cloud if use_cloud_db else _db_local
+    init_database = mod.init_database
+    get_db_session = mod.get_db_session
+    Capture = mod.Capture
+    Flowlet = mod.Flowlet
 
     tshark_bin, is_win_bin = get_tshark_path()
     try:
         network = ipaddress.ip_network(args.ip_range, strict=False)
     except ValueError:
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
-    
+
     init_database(args.db_path)
     db = get_db_session()
 
     # --- LOGIC FOR INDEPENDENT RUNS ---
     if args.capture_id:
-        # If provided by API, use existing record
-        capture = db.query(Capture).get(args.capture_id)
+        # Resume existing capture: int for SQLite, string for Firebase (doc ID)
+        capture_id_arg = int(args.capture_id) if not use_cloud_db else args.capture_id
+        capture = db.query(Capture).get(capture_id_arg)
         if not capture:
             sys.exit(f"❌ Error: Capture ID {args.capture_id} not found.")
-        capture_id = capture.id
+        capture_id = capture.id if not use_cloud_db else (capture.id or capture.file_path)
     else:
-        # If running manually, create a new record
+        # Create new record
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_name = f"MANUAL_LIVE_{args.interface or 'default'}_{timestamp}"
-        
         capture = Capture(
-            file_path=unique_name, 
-            status="active", 
-            notes=f"Manual Run on {args.ip_range}"
+            file_path=unique_name,
+            status="active",
+            notes=f"Manual Run on {args.ip_range}",
         )
         db.add(capture)
         db.commit()
-        db.refresh(capture)
+        if not use_cloud_db:
+            db.refresh(capture)
         capture_id = capture.id
         print(f"📝 Created new manual capture record (ID: {capture_id})")
 
-    manager = LiveFlowletManager(db, capture_id)
+    manager = LiveFlowletManager(db, capture_id, Flowlet)
     
     cmd = build_command(tshark_bin, is_win_bin, network, args.interface, args.ssl_keys)
 
-    print(f"🚀 Starting Live Pipeline for ID {args.capture_id}...")
+    print(f"🚀 Starting Live Pipeline for ID {capture_id}...")
     start_time = datetime.datetime.now().timestamp()
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
 

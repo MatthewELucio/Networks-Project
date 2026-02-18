@@ -143,7 +143,10 @@ class _Query:
         doc = self._session._client.get_capture_raw(id)
         if doc is None:
             return None
-        return _doc_to_capture(id, doc)
+        cap = _doc_to_capture(id, doc)
+        self._session._current_capture = cap
+        self._session._capture_doc_written = True  # doc exists, so appends/updates apply
+        return cap
 
 
 def _doc_to_capture(doc_id: str, doc: Dict[str, Any]) -> Capture:
@@ -168,16 +171,20 @@ def _doc_to_capture(doc_id: str, doc: Dict[str, Any]) -> Capture:
 
 
 class FirebaseSession:
-    """Session that buffers one capture and its flowlets, then writes to Firestore on commit."""
+    """Session that buffers one capture and its flowlets, then writes to Firestore on commit.
+    Supports streaming: add(Capture); add(Flowlet); commit(); add(Flowlet); commit(); ...
+    and metadata-only update: get(Capture); capture.status = 'completed'; commit()."""
 
     def __init__(self, client: ParsedFlowletFirestore):
         self._client = client
         self._current_capture: Optional[Capture] = None
         self._flowlets_buf: List[Flowlet] = []
+        self._capture_doc_written: bool = False
 
     def add(self, obj: Any) -> None:
         if isinstance(obj, Capture):
             self._current_capture = obj
+            self._capture_doc_written = False
             if obj.file_path and not obj.id:
                 obj.id = obj.file_path
             if obj.created_at is None:
@@ -189,6 +196,21 @@ class FirebaseSession:
         # No-op: capture.id is set in add(Capture)
         pass
 
+    def _capture_metadata(self, cap: Capture) -> Dict[str, Any]:
+        extra = {
+            "file_path": cap.file_path,
+            "created_at": cap.created_at.isoformat() if cap.created_at else None,
+            "status": cap.status,
+            "llm_ip_map": cap.llm_ip_map,
+            "notes": cap.notes,
+        }
+        if isinstance(extra.get("llm_ip_map"), str):
+            try:
+                extra["llm_ip_map"] = json.loads(extra["llm_ip_map"])
+            except Exception:
+                pass
+        return extra
+
     def commit(self) -> None:
         if not self._current_capture:
             return
@@ -196,28 +218,38 @@ class FirebaseSession:
         capture_id = cap.id or cap.file_path
         if not capture_id:
             return
-        extra = {
-            "file_path": cap.file_path,
-            "created_at": cap.created_at.isoformat() if cap.created_at else None,
-            "status": cap.status,
-            "llm_ip_map": cap.llm_ip_map,  # store as JSON string; firebase can write as-is
-            "notes": cap.notes,
-        }
-        # Normalize llm_ip_map for Firestore: can be dict or JSON string
-        if isinstance(extra.get("llm_ip_map"), str):
-            try:
-                extra["llm_ip_map"] = json.loads(extra["llm_ip_map"])
-            except Exception:
-                pass
-        flowlet_dicts = [f.to_dict() for f in self._flowlets_buf]
-        self._client.write_capture(
-            capture_id=capture_id,
-            flowlets=flowlet_dicts,
-            overwrite=True,
-            extra_metadata=extra,
-        )
-        self._current_capture = None
-        self._flowlets_buf = []
+        metadata = self._capture_metadata(cap)
+
+        if self._flowlets_buf:
+            flowlet_dicts = [f.to_dict() for f in self._flowlets_buf]
+            if not self._capture_doc_written:
+                self._client.write_capture(
+                    capture_id=capture_id,
+                    flowlets=flowlet_dicts,
+                    overwrite=True,
+                    extra_metadata=metadata,
+                )
+                self._capture_doc_written = True
+            else:
+                self._client.write_capture(
+                    capture_id=capture_id,
+                    flowlets=flowlet_dicts,
+                    overwrite=False,
+                    extra_metadata=metadata,
+                )
+            self._flowlets_buf = []
+            return
+
+        if not self._capture_doc_written:
+            self._client.write_capture(
+                capture_id=capture_id,
+                flowlets=[],
+                overwrite=True,
+                extra_metadata=metadata,
+            )
+            self._capture_doc_written = True
+        else:
+            self._client.update_capture_metadata(capture_id, metadata)
 
     def query(self, model: Type[T]) -> _Query:
         return _Query(self, model)
@@ -225,6 +257,7 @@ class FirebaseSession:
     def close(self) -> None:
         self._current_capture = None
         self._flowlets_buf = []
+        self._capture_doc_written = False
 
 
 _client: Optional[ParsedFlowletFirestore] = None

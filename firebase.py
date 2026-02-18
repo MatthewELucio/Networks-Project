@@ -295,6 +295,18 @@ class ParsedFlowletFirestore:
             extra_metadata=extra_metadata,
         )
 
+    def update_capture_metadata(
+        self,
+        capture_id: str,
+        metadata: Dict[str, Any],
+    ) -> None:
+        """
+        Update only top-level metadata fields for a capture document (merge).
+        Does not modify flowlet fields. Use for status, llm_ip_map, notes, etc.
+        """
+        doc_ref = self.capture_ref(capture_id)
+        doc_ref.set(metadata, merge=True)
+
     # -------------------------------
     # Read helper methods
     # -------------------------------
