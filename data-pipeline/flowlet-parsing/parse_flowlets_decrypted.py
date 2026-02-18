@@ -295,12 +295,9 @@ def extract_flowlet_features(
     threshold: float,
     source_file: str,
     llm_ip_map: Dict[str, str],
-    ground_truth_llm_map: Optional[Dict[str, str]] = None,
 ) -> List[Dict[str, Any]]:
     """Build feature dicts for all flowlets in the given flows."""
     flowlet_features = []
-    if ground_truth_llm_map is None:
-        ground_truth_llm_map = {}
 
     for flow_key, pkts in flows.items():
         src_ip, src_port, dst_ip, dst_port, proto = flow_key
@@ -310,18 +307,11 @@ def extract_flowlet_features(
         for idx, flowlet in enumerate(flowlets, start=1):
             stats = compute_packet_statistics(flowlet["pkts"])
             llm_name = None
-            ground_truth_llm = None
             
             # Check for LLM in regular llm_ip_map (from headers)
             for ip in (src_ip, dst_ip):
                 if ip and ip in llm_ip_map:
                     llm_name = llm_ip_map[ip]
-                    break
-            
-            # Check for ground truth from decrypted captures
-            for ip in (src_ip, dst_ip):
-                if ip and ip in ground_truth_llm_map:
-                    ground_truth_llm = ground_truth_llm_map[ip]
                     break
 
             # Determine direction for LLM traffic only
@@ -348,7 +338,6 @@ def extract_flowlet_features(
                 "flowlet_id": idx,
                 "traffic_class": "llm" if llm_name else "non_llm",
                 "llm_name": llm_name,
-                "ground_truth_llm": ground_truth_llm,
                 "source_file": source_file,
                 # Direction features (only for LLM traffic)
                 "outgoing": outgoing,
@@ -392,7 +381,6 @@ def process_capture_file(
     header_llm_map, start_idx = parse_llm_header(lines)
     file_llm_map = dict(llm_ip_map)
     # If we have LLM_IP headers, use them as ground truth
-    ground_truth_map = header_llm_map if header_llm_map else {}
     for ip, llm_name in header_llm_map.items():
         file_llm_map[ip] = llm_name
 
@@ -406,7 +394,6 @@ def process_capture_file(
         threshold=threshold,
         source_file=str(capture_path),
         llm_ip_map=file_llm_map,
-        ground_truth_llm_map=ground_truth_map,
     )
     
     # Save to database if session provided
@@ -423,7 +410,6 @@ def process_capture_file(
                     flowlet_id=feature["flowlet_id"],
                     traffic_class=feature["traffic_class"],
                     llm_name=feature["llm_name"],
-                    ground_truth_llm=feature.get("ground_truth_llm"),
                     outgoing=feature["outgoing"],
                     direction_encoded=feature["direction_encoded"],
                     start_ts=feature["start_ts"],

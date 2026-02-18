@@ -99,7 +99,7 @@ function CaptureTable({ captures, onCaptureClick, onParse, onClassify }) {
                 </span>
               </td>
               <td>{capture.flow_count || 0}</td>
-              <td>{capture.llm_flow_count ?? "-"}</td>
+              <td>{capture.groundtruth_llm_flow_count || 0}</td>
               <td>
                 <div style={{ display: "flex", gap: "8px" }}>
                   {capture.flow_count === 0 && capture.status === "completed" && (
@@ -150,7 +150,6 @@ function CaptureStartDialog({ isOpen, onClose, onStart }) {
       timeout: formData.timeout ? parseInt(formData.timeout) : null,
       snaplen: parseInt(formData.snaplen) || 96,
       extra_filter: formData.extra_filter || null,
-      // FIX: Ensure this boolean is explicitly passed
       use_ssl_decrypt: formData.use_ssl_decrypt, 
     });
     onClose();
@@ -331,7 +330,6 @@ function CaptureDetailView({ captureId, onClose }) {
 
   useEffect(() => {
     const fetchData = async (silent = false) => {
-      // FIX: silent loading to prevent flashing
       if (!silent) setIsLoading(true);
       setError(null);
       try {
@@ -354,15 +352,15 @@ function CaptureDetailView({ captureId, onClose }) {
     };
 
     if (captureId) {
-      fetchData(); // Initial load
-      const interval = setInterval(() => fetchData(true), 5000); // Silent refresh
+      fetchData(); 
+      const interval = setInterval(() => fetchData(true), 5000); 
       return () => clearInterval(interval);
     }
   }, [captureId]);
 
   if (!captureId) return null;
 
-  const hasGroundTruth = flowlets.some((f) => f.ground_truth_llm);
+  const hasLLMData = flowlets.some((f) => f.llm_name);
   const hasPredictions = flowlets.some((f) => f.model_llm_prediction);
 
   return (
@@ -436,7 +434,7 @@ function CaptureDetailView({ captureId, onClose }) {
               </ResponsiveContainer>
             </div>
             
-            {(hasGroundTruth || hasPredictions) && (
+            {(hasLLMData || hasPredictions) && (
               <div style={{ marginTop: "20px" }}>
                 <h3>Predicted vs Actual (All Flows)</h3>
                 <div className="table-wrapper" style={{ maxHeight: "300px", overflowY: "auto" }}>
@@ -444,7 +442,7 @@ function CaptureDetailView({ captureId, onClose }) {
                     <thead>
                       <tr>
                         <th>Flowlet ID</th>
-                        <th>Ground Truth</th>
+                        <th>Detected LLM</th>
                         <th>Predicted</th>
                         <th>Confidence</th>
                         <th>Match</th>
@@ -452,19 +450,18 @@ function CaptureDetailView({ captureId, onClose }) {
                     </thead>
                     <tbody>
                       {flowlets
-                        .filter((f) => f.ground_truth_llm || f.model_llm_prediction)
-                        // FIX: Removed .slice(0,50) so you see all rows
+                        .filter((f) => f.llm_name || f.model_llm_prediction)
                         .map((flowlet) => {
                           let match = null;
-                          if (flowlet.ground_truth_llm && flowlet.model_llm_prediction) {
-                            const gt = flowlet.ground_truth_llm.toLowerCase();
+                          if (flowlet.llm_name && flowlet.model_llm_prediction) {
+                            const actual = flowlet.llm_name.toLowerCase();
                             const pred = flowlet.model_llm_prediction.toLowerCase();
-                            match = gt === pred;
+                            match = actual === pred;
                           }
                           return (
                             <tr key={flowlet.id}>
                               <td>{flowlet.flowlet_id}</td>
-                              <td>{flowlet.ground_truth_llm || "-"}</td>
+                              <td>{flowlet.llm_name || "-"}</td>
                               <td>{flowlet.model_llm_prediction || "-"}</td>
                               <td>
                                 {flowlet.model_llm_confidence
@@ -521,19 +518,6 @@ export default function App() {
       alert(`Failed to start capture: ${err.message}`);
     }
   };
-
-  // const handleStopCapture = async (captureId) => {
-  //   try {
-  //     const res = await fetch(`${API_BASE}/api/captures/${captureId}/stop`, {
-  //       method: "POST",
-  //     });
-  //     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  //     setRunningCaptures(new Set([...runningCaptures].filter(id => id !== captureId)));
-  //     refetch();
-  //   } catch (err) {
-  //     alert(`Failed to stop capture: ${err.message}`);
-  //   }
-  // };
 
   const handleParse = async (captureId) => {
     try {
