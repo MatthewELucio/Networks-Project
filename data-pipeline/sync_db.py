@@ -4,6 +4,12 @@
 Bidirectional sync between local SQLite (flowlet-parsing/database.py) and
 Firebase Cloud Firestore (firebase.py). Only adds missing data; nothing is removed.
 
+Schema: Matches live_capture_to_db / database_firebase. Flowlet fields include
+flow_key, flowlet_id, traffic_class, llm_name, direction_encoded, timing, packet
+stats, inter_packet_times/packet_sizes (JSON), model_llm_prediction/confidence.
+Firebase docs may include ground_truth_llm; SQLite Flowlet does not (omitted on
+write to local).
+
 - Captures present only in SQLite → added to Firebase (with all their flowlets).
 - Captures present only in Firebase → added to SQLite (with all their flowlets).
 - Captures present in both are left unchanged (no flowlet-level merge).
@@ -41,6 +47,16 @@ try:
     from firebase import ParsedFlowletFirestore, identity_flowlet_transform
 except ImportError as e:
     sys.exit(f"Cannot import Firebase: {e}")
+
+
+def _float_or_none(x: Any) -> Optional[float]:
+    """Coerce to float for SQLite columns; leave None as None."""
+    if x is None:
+        return None
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return None
 
 
 def _local_capture_key(cap: LocalCapture) -> str:
@@ -141,32 +157,32 @@ def write_local_capture_and_flowlets(
             ipt = json.dumps(ipt)
         if isinstance(ps, list):
             ps = json.dumps(ps)
+        # Local (SQLite) Flowlet schema: no ground_truth_llm column; optional model_llm_*.
         flowlet = LocalFlowlet(
             capture_id=cap.id,
             src_ip=fk.get("src_ip"),
-            src_port=fk.get("src_port"),
+            src_port=int(fk.get("src_port")) if fk.get("src_port") is not None else None,
             dst_ip=fk.get("dst_ip"),
-            dst_port=fk.get("dst_port"),
+            dst_port=int(fk.get("dst_port")) if fk.get("dst_port") is not None else None,
             protocol=fk.get("protocol"),
-            flowlet_id=d.get("flowlet_id", 0),
+            flowlet_id=int(d.get("flowlet_id", 0)),
             traffic_class=d.get("traffic_class"),
             llm_name=d.get("llm_name"),
             outgoing=d.get("outgoing"),
-            direction_encoded=d.get("direction_encoded", 0),
+            direction_encoded=int(d.get("direction_encoded", 0)),
             start_ts=float(d.get("start_ts", 0)),
             end_ts=float(d.get("end_ts", 0)),
             duration=float(d.get("duration", 0)),
             packet_count=int(d.get("packet_count", 0)),
             total_bytes=int(d.get("total_bytes", 0)),
-            inter_packet_time_mean=d.get("inter_packet_time_mean"),
-            inter_packet_time_std=d.get("inter_packet_time_std"),
-            packet_size_mean=d.get("packet_size_mean"),
-            packet_size_std=d.get("packet_size_std"),
+            inter_packet_time_mean=_float_or_none(d.get("inter_packet_time_mean")),
+            inter_packet_time_std=_float_or_none(d.get("inter_packet_time_std")),
+            packet_size_mean=_float_or_none(d.get("packet_size_mean")),
+            packet_size_std=_float_or_none(d.get("packet_size_std")),
             inter_packet_times=ipt,
             packet_sizes=ps,
             model_llm_prediction=d.get("model_llm_prediction"),
-            model_llm_confidence=d.get("model_llm_confidence"),
-            ground_truth_llm=d.get("ground_truth_llm"),
+            model_llm_confidence=_float_or_none(d.get("model_llm_confidence")),
         )
         session.add(flowlet)
     session.commit()
