@@ -436,7 +436,8 @@ def main():
         flowlet_features = extract_flowlet_features(
             flows,
             threshold=args.threshold,
-            source_file=gz_path
+            source_file=gz_path,
+            traffic_class="non-llm"
         )
 
         capture_id = os.path.basename(args.url).replace('.pcap.gz', '')
