@@ -71,19 +71,15 @@ def launch_browser(browser="chrome"):
 
 def _launch_chrome(sslkeylog_path):
     print("🌐 Launching Chrome (undetected)...")
-    print(f"   Profile: {CHROME_PROFILE_PATH}")
-    os.makedirs(CHROME_PROFILE_PATH, exist_ok=True)
 
     options = uc.ChromeOptions()
-    options.add_argument(f"--user-data-dir={CHROME_PROFILE_PATH}")
     options.add_argument(f"--ssl-key-log-file={sslkeylog_path}")
 
-    # Use a unique debugging port so this can run alongside other Chrome instances
-    debug_port = random.randint(9200, 9399)
-    options.add_argument(f"--remote-debugging-port={debug_port}")
-
     try:
+        # No user-data-dir — lets UC create a temp profile so it won't
+        # conflict with other Chrome instances (e.g. the LLM bot)
         driver = uc.Chrome(options=options, version_main=145)
+        time.sleep(2)
         driver.set_page_load_timeout(30)
         print("✅ Launched!")
         return driver
@@ -122,20 +118,44 @@ def _launch_firefox(sslkeylog_path):
         print(f"Details: {e}")
         sys.exit(1)
 
-# --- HUMAN-LIKE ACTIONS ---
+# --- HUMAN-LIKE ACTIONS (traffic-heavy) ---
 
 def scroll_page(driver):
-    """Scroll the page in a human-like pattern."""
-    direction = random.choice(["down", "down", "down", "up"])  # bias downward
-    distance = random.randint(200, 800)
-    if direction == "up":
-        distance = -distance
-    driver.execute_script(f"window.scrollBy(0, {distance});")
-    time.sleep(random.uniform(0.8, 2.5))
+    """Scroll the page to trigger lazy-loaded content (images, ads, infinite scroll)."""
+    for _ in range(random.randint(2, 5)):
+        distance = random.randint(300, 1000)
+        driver.execute_script(f"window.scrollBy(0, {distance});")
+        time.sleep(random.uniform(0.5, 1.5))
+    # Scroll back up partially
+    driver.execute_script(f"window.scrollBy(0, -{random.randint(100, 400)});")
+    time.sleep(random.uniform(0.5, 1.0))
 
-def read_pause(driver):
-    """Simulate reading/looking at the page."""
-    time.sleep(random.uniform(2.0, 6.0))
+def click_any_link(driver, base_domain):
+    """Click a random visible link — internal or external — to generate navigation traffic."""
+    try:
+        links = driver.find_elements(By.CSS_SELECTOR, "a[href]")
+        visible_links = []
+        for link in links:
+            try:
+                href = link.get_attribute("href") or ""
+                if href.startswith("http") and link.is_displayed() and link.size.get("height", 0) > 0:
+                    visible_links.append(link)
+            except:
+                continue
+        if not visible_links:
+            return False
+        chosen = random.choice(visible_links[:30])
+        href = chosen.get_attribute("href") or ""
+        print(f"      🔗 Navigating: {href[:80]}")
+        driver.execute_script("arguments[0].click();", chosen)
+        time.sleep(random.uniform(2.0, 5.0))
+        # Navigate back if we left the domain
+        if base_domain not in driver.current_url:
+            driver.back()
+            time.sleep(random.uniform(1.5, 3.0))
+        return True
+    except:
+        return False
 
 def click_internal_link(driver, base_domain):
     """Click a random visible internal link on the page."""
@@ -145,18 +165,15 @@ def click_internal_link(driver, base_domain):
         for link in links:
             try:
                 href = link.get_attribute("href") or ""
-                # Only follow internal links (same domain) or relative paths
                 parsed = urlparse(href)
                 if not parsed.netloc or base_domain in parsed.netloc:
-                    if link.is_displayed() and link.size["height"] > 0:
+                    if link.is_displayed() and link.size.get("height", 0) > 0:
                         visible_links.append(link)
             except:
                 continue
-
         if not visible_links:
             return False
-
-        chosen = random.choice(visible_links[:20])  # pick from first 20 visible
+        chosen = random.choice(visible_links[:20])
         print(f"      🔗 Clicking: {chosen.text[:60] or chosen.get_attribute('href')[:60]}")
         driver.execute_script("arguments[0].click();", chosen)
         time.sleep(random.uniform(2.0, 4.0))
@@ -164,8 +181,37 @@ def click_internal_link(driver, base_domain):
     except:
         return False
 
+def navigate_subpages(driver, base_domain):
+    """Visit multiple subpages on the same site to generate sustained traffic."""
+    try:
+        links = driver.find_elements(By.CSS_SELECTOR, "a[href]")
+        internal = []
+        for link in links:
+            try:
+                href = link.get_attribute("href") or ""
+                parsed = urlparse(href)
+                if base_domain in (parsed.netloc or "") and href != driver.current_url:
+                    internal.append(href)
+            except:
+                continue
+        internal = list(set(internal))
+        random.shuffle(internal)
+        visited = 0
+        for href in internal[:random.randint(2, 4)]:
+            print(f"      📄 Subpage: {href[:80]}")
+            driver.get(href)
+            time.sleep(random.uniform(2.0, 5.0))
+            # Scroll to load lazy content
+            for _ in range(random.randint(1, 3)):
+                driver.execute_script(f"window.scrollBy(0, {random.randint(300, 800)});")
+                time.sleep(random.uniform(0.5, 1.5))
+            visited += 1
+        return visited > 0
+    except:
+        return False
+
 def interact_with_search(driver):
-    """Try to find and type into a search box."""
+    """Find and use a search box — triggers autocomplete, suggestions, and results page loads."""
     search_selectors = [
         "input[type='search']",
         "input[name='q']",
@@ -175,9 +221,11 @@ def interact_with_search(driver):
         "input[aria-label*='earch']",
     ]
     search_terms = [
-        "weather today", "best restaurants", "how to cook pasta",
-        "latest news", "movie reviews", "travel deals",
-        "python tutorial", "home improvement", "fitness tips",
+        "weather today", "best restaurants near me", "how to cook pasta",
+        "latest news 2026", "movie reviews new releases", "travel deals europe",
+        "python tutorial beginners", "home improvement tips", "fitness workout plan",
+        "stock market today", "recipe for chocolate cake", "best laptops 2026",
+        "learn guitar online", "history of the internet", "climate change effects",
     ]
     for selector in search_selectors:
         try:
@@ -187,49 +235,145 @@ def interact_with_search(driver):
                 time.sleep(random.uniform(0.3, 0.8))
                 term = random.choice(search_terms)
                 print(f"      🔍 Searching: {term}")
+                # Type character by character (triggers autocomplete requests)
                 for char in term:
                     box.send_keys(char)
                     time.sleep(random.uniform(0.04, 0.12))
-                time.sleep(random.uniform(0.5, 1.0))
+                time.sleep(random.uniform(1.0, 2.0))
                 box.send_keys(Keys.ENTER)
-                time.sleep(random.uniform(2.0, 4.0))
+                time.sleep(random.uniform(3.0, 6.0))
+                # Click a search result if any
+                try:
+                    results = driver.find_elements(By.CSS_SELECTOR, "a[href]")
+                    clickable = [r for r in results if r.is_displayed() and r.size.get("height", 0) > 10]
+                    if clickable:
+                        chosen = random.choice(clickable[:10])
+                        print(f"      📎 Clicking result: {chosen.text[:50]}")
+                        driver.execute_script("arguments[0].click();", chosen)
+                        time.sleep(random.uniform(2.0, 4.0))
+                        driver.back()
+                        time.sleep(random.uniform(1.5, 3.0))
+                except:
+                    pass
                 return True
         except:
             continue
     return False
 
-def hover_elements(driver):
-    """Move mouse over random elements to trigger hover effects / preloads."""
-    from selenium.webdriver.common.action_chains import ActionChains
+def load_media_elements(driver):
+    """Scroll through the page to force-load images, videos, and iframes."""
+    print("      🖼️  Loading media elements...")
+    page_height = driver.execute_script("return document.body.scrollHeight")
+    viewport = driver.execute_script("return window.innerHeight")
+    position = 0
+    while position < page_height:
+        position += viewport
+        driver.execute_script(f"window.scrollTo(0, {position});")
+        time.sleep(random.uniform(0.3, 0.8))
+    # Click on any video play buttons
     try:
-        elements = driver.find_elements(By.CSS_SELECTOR, "a, button, img, div.card, article")
-        visible = [e for e in elements if e.is_displayed()][:30]
-        if visible:
-            target = random.choice(visible)
-            ActionChains(driver).move_to_element(target).perform()
-            time.sleep(random.uniform(0.5, 1.5))
+        play_btns = driver.find_elements(By.CSS_SELECTOR,
+            "button[aria-label*='lay'], button[class*='play'], [data-testid*='play']")
+        for btn in play_btns[:1]:
+            if btn.is_displayed():
+                print("      ▶️  Playing media...")
+                btn.click()
+                time.sleep(random.uniform(3.0, 8.0))
+                break
+    except:
+        pass
+    time.sleep(random.uniform(0.5, 1.5))
+
+def interact_with_forms(driver):
+    """Find and interact with forms (login, newsletter, contact) to trigger POST requests."""
+    try:
+        inputs = driver.find_elements(By.CSS_SELECTOR,
+            "input[type='text'], input[type='email'], input[type='tel']")
+        visible = [inp for inp in inputs if inp.is_displayed()]
+        if not visible:
+            return False
+        print("      📝 Interacting with form...")
+        for inp in visible[:3]:
+            try:
+                inp_type = inp.get_attribute("type") or ""
+                name = (inp.get_attribute("name") or inp.get_attribute("placeholder") or "").lower()
+                if "email" in name or inp_type == "email":
+                    inp.send_keys("testuser@example.com")
+                elif "name" in name:
+                    inp.send_keys("Test User")
+                elif "phone" in name or "tel" in name or inp_type == "tel":
+                    inp.send_keys("5551234567")
+                else:
+                    inp.send_keys("test query")
+                time.sleep(random.uniform(0.3, 0.8))
+            except:
+                continue
+        # Don't actually submit — just typing triggers validation/autocomplete traffic
+        return True
+    except:
+        return False
+
+def trigger_ajax_content(driver):
+    """Click buttons/tabs that load dynamic content via AJAX/fetch."""
+    ajax_selectors = [
+        "button:not([type='submit'])",
+        "[role='tab']",
+        "[data-toggle]",
+        ".tab, .accordion-header",
+        "details > summary",
+        "[class*='load-more'], [class*='show-more']",
+        "button[class*='more']",
+    ]
+    try:
+        for selector in ajax_selectors:
+            elements = driver.find_elements(By.CSS_SELECTOR, selector)
+            visible = [e for e in elements if e.is_displayed() and e.size.get("height", 0) > 0]
+            if visible:
+                chosen = random.choice(visible[:10])
+                text = chosen.text[:40] or chosen.get_attribute("aria-label") or "element"
+                print(f"      ⚡ Clicking dynamic element: {text}")
+                driver.execute_script("arguments[0].click();", chosen)
+                time.sleep(random.uniform(1.5, 3.5))
+                return True
+    except:
+        pass
+    return False
+
+def back_and_forward(driver):
+    """Navigate back and forward to re-trigger page loads."""
+    try:
+        print("      ↩️  Back/forward navigation...")
+        driver.back()
+        time.sleep(random.uniform(2.0, 4.0))
+        driver.forward()
+        time.sleep(random.uniform(2.0, 4.0))
     except:
         pass
 
 def perform_actions(driver, base_domain, num_actions):
-    """Perform a series of random human-like actions on the current page."""
+    """Perform a series of random actions, heavily weighted toward traffic-generating ones."""
+    # Weights: higher number = more likely to be picked
     action_pool = [
-        ("scroll", lambda: scroll_page(driver)),
-        ("scroll", lambda: scroll_page(driver)),        # weighted more
-        ("read",   lambda: read_pause(driver)),
-        ("read",   lambda: read_pause(driver)),          # weighted more
-        ("click",  lambda: click_internal_link(driver, base_domain)),
-        ("search", lambda: interact_with_search(driver)),
-        ("hover",  lambda: hover_elements(driver)),
+        ("click_any",    3, lambda: click_any_link(driver, base_domain)),
+        ("click_int",    3, lambda: click_internal_link(driver, base_domain)),
+        ("subpages",     3, lambda: navigate_subpages(driver, base_domain)),
+        ("search",       2, lambda: interact_with_search(driver)),
+        ("scroll_lazy",  2, lambda: scroll_page(driver)),
+        ("media",        2, lambda: load_media_elements(driver)),
+        ("ajax",         2, lambda: trigger_ajax_content(driver)),
+        ("back_fwd",     1, lambda: back_and_forward(driver)),
+        ("forms",        1, lambda: interact_with_forms(driver)),
     ]
+    weighted = []
+    for name, weight, fn in action_pool:
+        weighted.extend([(name, fn)] * weight)
 
     for action_num in range(1, num_actions + 1):
-        name, fn = random.choice(action_pool)
+        name, fn = random.choice(weighted)
         try:
             fn()
         except Exception:
             pass
-        # Small pause between actions
         time.sleep(random.uniform(0.3, 1.0))
 
 # --- TAB MANAGEMENT ---
@@ -268,15 +412,15 @@ def run(driver, num_sites, actions_per_site):
         print(f"🌐 [{idx}/{len(sites)}] Visiting: {domain}")
         print(f"{'='*55}")
 
-        if idx > 1:
-            open_new_tab(driver, url)
-        else:
-            try:
+        try:
+            if idx > 1:
+                open_new_tab(driver, url)
+            else:
                 driver.get(url)
                 time.sleep(random.uniform(3, 5))
-            except Exception as e:
-                print(f"   ⚠️  Page load error: {e}")
-                continue
+        except Exception as e:
+            print(f"   ⚠️  Page load error (skipping): {e}")
+            continue
 
         # Check if page loaded at all
         try:
@@ -307,8 +451,8 @@ if __name__ == "__main__":
                         help="Browser to use (default: chrome)")
     parser.add_argument("--num-sites", type=int, default=100,
                         help="Number of sites to visit (default: 100, max: 100)")
-    parser.add_argument("--actions-per-site", type=int, default=6,
-                        help="Approximate number of actions per site (default: 6)")
+    parser.add_argument("--actions-per-site", type=int, default=10,
+                        help="Approximate number of actions per site (default: 10)")
     args = parser.parse_args()
 
     if args.browser == "chrome" and not os.path.exists("/Applications/Google Chrome.app"):

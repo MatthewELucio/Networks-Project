@@ -34,10 +34,6 @@ def launch_browser():
     os.makedirs(os.path.dirname(sslkeylog_path), exist_ok=True)
     options.add_argument(f"--ssl-key-log-file={sslkeylog_path}")
 
-    # Use a unique debugging port so this can run alongside other Chrome instances
-    debug_port = random.randint(9400, 9599)
-    options.add_argument(f"--remote-debugging-port={debug_port}")
-
     try:
         driver = uc.Chrome(options=options, version_main=145)
         print(f"✅ Launched!")
