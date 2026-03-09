@@ -70,3 +70,6 @@ sslkeylogfile.txt
 networks-project-s26-firebase-adminsdk-*.json
 *.env
 flowlet_features_updated.json
+venv*
+chrome_profile*
+firefox_profile*
