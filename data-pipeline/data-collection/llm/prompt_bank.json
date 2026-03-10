@@ -237,5 +237,118 @@
       "Based on the analysis, what recommendations can you suggest to improve sales performance moving forward?"
     ],
     "chain_length": 6
+  },
+  {
+    "category": "document analysis",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      {
+        "text": "Please summarize the attached PDF document.",
+        "attachment": "pdf"
+      },
+      {
+        "text": "What are the main conclusions drawn in the document?",
+        "attachment": null
+      },
+      {
+        "text": "Can you highlight any recommendations made in the report?",
+        "attachment": null
+      },
+      {
+        "text": "What are the implications of the findings discussed in the paper?",
+        "attachment": null
+      }
+    ],
+    "chain_length": 4
+  },
+  {
+    "category": "data analysis",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm looking to analyze sales data from the last quarter to identify trends and insights. Can you help me get started?",
+      "What specific metrics should I focus on to understand the performance of our sales?",
+      "Could you help me identify any patterns in the sales data, such as seasonal trends or peak sales periods?",
+      "I have a dataset that includes sales by region. How can I visualize the geographic distribution of our sales?",
+      "Can you suggest some actionable recommendations based on the insights we've gathered from the sales analysis?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "coding assistance",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm trying to build a simple web application using Flask, can you help me get started with the basic structure and setup?"
+    ],
+    "chain_length": 1
+  },
+  {
+    "category": "conversations",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm looking to improve my conversation skills. Can you suggest some tips or techniques for engaging in small talk?"
+    ],
+    "chain_length": 1
+  },
+  {
+    "category": "image generation",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Can you help me create a digital artwork of a serene landscape during sunset?",
+      "I\u2019d like to incorporate a calm lake reflecting the vibrant colors of the sunset. Can you include that in the image?",
+      "Could you add some silhouettes of trees along the shoreline to enhance the atmosphere?"
+    ],
+    "chain_length": 3
+  },
+  {
+    "category": "image generation",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Can you help me generate an image of a serene mountain landscape during sunrise?",
+      "Could you add a small cabin by the lake in the foreground of the scene?"
+    ],
+    "chain_length": 2
+  },
+  {
+    "category": "document analysis",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      {
+        "text": "Can you summarize the key points from the attached PDF document?",
+        "attachment": "pdf"
+      },
+      {
+        "text": "What are the main conclusions or recommendations presented in the document?",
+        "attachment": null
+      },
+      {
+        "text": "Can you explain any complex terms or concepts mentioned in the report?",
+        "attachment": null
+      }
+    ],
+    "chain_length": 3
+  },
+  {
+    "category": "debugging help",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I'm having trouble debugging a Python script that's supposed to calculate the Fibonacci sequence. Can you help me identify any potential issues?"
+    ],
+    "chain_length": 1
+  },
+  {
+    "category": "research explanation",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Can you explain the significance of renewable energy sources in combating climate change?"
+    ],
+    "chain_length": 1
+  },
+  {
+    "category": "coding from scratch",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I want to build a simple to-do list application in Python from scratch. Can you help me get started?"
+    ],
+    "chain_length": 1
   }
 ]
