@@ -16,3 +16,4 @@ google-cloud-firestore>=2.0.0
 protobuf<=3.20.0
 undetected-chromedriver
 tqdm
+pymongo
