@@ -5,7 +5,6 @@ import os
 import subprocess
 import sys
 import select
-import platform
 import json
 from pathlib import Path
 from collections import defaultdict
@@ -28,25 +27,20 @@ except ImportError:
 TARGET_KEYWORDS = ["chatgpt", "claude", "gemini"]
 
 def get_tshark_path():
-    try:
-        uname = platform.uname().release.lower()
-        is_wsl = "microsoft" in uname or "wsl" in uname
-    except:
-        is_wsl = False
-    if is_wsl:
-        win_paths = ["/mnt/c/Program Files/Wireshark/tshark.exe", "/mnt/d/Program Files/Wireshark/tshark.exe"]
-        for p in win_paths:
-            if os.path.exists(p): return p, True
-    return "tshark", False
+    """Return the tshark binary path for macOS."""
+    # Homebrew Intel
+    if os.path.exists("/usr/local/bin/tshark"):
+        return "/usr/local/bin/tshark"
+    # Homebrew Apple Silicon
+    if os.path.exists("/opt/homebrew/bin/tshark"):
+        return "/opt/homebrew/bin/tshark"
+    # Wireshark.app bundled CLI
+    if os.path.exists("/Applications/Wireshark.app/Contents/MacOS/tshark"):
+        return "/Applications/Wireshark.app/Contents/MacOS/tshark"
+    # Fallback: rely on PATH
+    return "tshark"
 
-def wsl_to_windows_path(path_str):
-    if path_str.startswith("/mnt/"):
-        parts = path_str.split("/")
-        if len(parts) > 3:
-            return f"{parts[2].upper()}:\\{'\\'.join(parts[3:])}"
-    return path_str
-
-def build_command(tshark_bin, is_win_bin, network, interface, ssl_keys):
+def build_command(tshark_bin, network, interface, ssl_keys):
     cmd = [tshark_bin, "-l", "-n"]
     cmd.extend([
         "-T", "fields",
@@ -198,7 +192,7 @@ def main():
     Capture = mod.Capture
     Flowlet = mod.Flowlet
 
-    tshark_bin, is_win_bin = get_tshark_path()
+    tshark_bin = get_tshark_path()
     try:
         network = ipaddress.ip_network(args.ip_range, strict=False)
     except ValueError:
@@ -232,14 +226,23 @@ def main():
 
     manager = LiveFlowletManager(db, capture_id, Flowlet)
     
-    cmd = build_command(tshark_bin, is_win_bin, network, args.interface, args.ssl_keys)
+    cmd = build_command(tshark_bin, network, args.interface, args.ssl_keys)
 
     print(f"🚀 Starting Live Pipeline for ID {capture_id}...")
+    print(f"   Command: {' '.join(cmd)}")
     start_time = datetime.datetime.now().timestamp()
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
 
     try:
         while True:
+            # Check if tshark died
+            if proc.poll() is not None:
+                err = proc.stderr.read()
+                if err:
+                    print(f"❌ tshark exited with error:\n{err.strip()}")
+                else:
+                    print(f"❌ tshark exited with code {proc.returncode}")
+                break
             # Check Timeout
             if args.timeout and (datetime.datetime.now().timestamp() - start_time) > args.timeout:
                 print(f"⏰ Timeout of {args.timeout}s reached. Shutting down...")
