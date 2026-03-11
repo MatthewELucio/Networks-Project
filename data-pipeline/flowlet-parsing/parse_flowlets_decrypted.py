@@ -21,11 +21,19 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-# Graceful import
+# Set to True to use Firebase (cloud) by default when --db is used; False = local SQLite.
+# Can be overridden by the --cloud-db / --no-cloud-db command line argument.
+USE_CLOUD_DB = True
+
+# Import both backends; the active one is chosen in parse_directory() based on USE_CLOUD_DB or --cloud-db.
 try:
-    from database import init_database, get_db, Capture, Flowlet
+    import database as _db_local
 except ImportError:
-    pass
+    _db_local = None  # type: ignore[assignment]
+try:
+    import database_firebase as _db_cloud
+except ImportError:
+    _db_cloud = None  # type: ignore[assignment]
 
 # --- REGEX DEFINITIONS ---
 TS_LINE_RE = re.compile(r"^(?P<ts>\d{2}:\d{2}:\d{2}\.\d+)\s+(?P<family>IP6|IP)\b", re.IGNORECASE)
@@ -287,12 +295,9 @@ def extract_flowlet_features(
     threshold: float,
     source_file: str,
     llm_ip_map: Dict[str, str],
-    ground_truth_llm_map: Optional[Dict[str, str]] = None,
 ) -> List[Dict[str, Any]]:
     """Build feature dicts for all flowlets in the given flows."""
     flowlet_features = []
-    if ground_truth_llm_map is None:
-        ground_truth_llm_map = {}
 
     for flow_key, pkts in flows.items():
         src_ip, src_port, dst_ip, dst_port, proto = flow_key
@@ -302,18 +307,11 @@ def extract_flowlet_features(
         for idx, flowlet in enumerate(flowlets, start=1):
             stats = compute_packet_statistics(flowlet["pkts"])
             llm_name = None
-            ground_truth_llm = None
             
             # Check for LLM in regular llm_ip_map (from headers)
             for ip in (src_ip, dst_ip):
                 if ip and ip in llm_ip_map:
                     llm_name = llm_ip_map[ip]
-                    break
-            
-            # Check for ground truth from decrypted captures
-            for ip in (src_ip, dst_ip):
-                if ip and ip in ground_truth_llm_map:
-                    ground_truth_llm = ground_truth_llm_map[ip]
                     break
 
             # Determine direction for LLM traffic only
@@ -340,7 +338,6 @@ def extract_flowlet_features(
                 "flowlet_id": idx,
                 "traffic_class": "llm" if llm_name else "non_llm",
                 "llm_name": llm_name,
-                "ground_truth_llm": ground_truth_llm,
                 "source_file": source_file,
                 # Direction features (only for LLM traffic)
                 "outgoing": outgoing,
@@ -374,7 +371,8 @@ def process_capture_file(
     bidirectional: bool,
     llm_ip_map: Dict[str, str],
     db_session=None,
-    capture_id: Optional[int] = None,
+    capture_id: Optional[str] = None,
+    flowlet_cls=None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
     """Parse one capture file and return its flowlet feature dicts and LLM IP map."""
     with capture_path.open("r", encoding="utf-8", errors="replace") as f:
@@ -383,7 +381,6 @@ def process_capture_file(
     header_llm_map, start_idx = parse_llm_header(lines)
     file_llm_map = dict(llm_ip_map)
     # If we have LLM_IP headers, use them as ground truth
-    ground_truth_map = header_llm_map if header_llm_map else {}
     for ip, llm_name in header_llm_map.items():
         file_llm_map[ip] = llm_name
 
@@ -397,15 +394,13 @@ def process_capture_file(
         threshold=threshold,
         source_file=str(capture_path),
         llm_ip_map=file_llm_map,
-        ground_truth_llm_map=ground_truth_map,
     )
     
     # Save to database if session provided
-    if db_session and capture_id:
+    if db_session and capture_id and flowlet_cls is not None:
         try:
-            from database import Flowlet
             for feature in features:
-                flowlet = Flowlet(
+                flowlet = flowlet_cls(
                     capture_id=capture_id,
                     src_ip=feature["flow_key"]["src_ip"],
                     src_port=feature["flow_key"]["src_port"],
@@ -415,7 +410,6 @@ def process_capture_file(
                     flowlet_id=feature["flowlet_id"],
                     traffic_class=feature["traffic_class"],
                     llm_name=feature["llm_name"],
-                    ground_truth_llm=feature.get("ground_truth_llm"),
                     outgoing=feature["outgoing"],
                     direction_encoded=feature["direction_encoded"],
                     start_ts=feature["start_ts"],
@@ -444,19 +438,37 @@ def parse_directory(
     bidirectional: bool,
     use_db: bool = False,
     db_path: str = "data/networks_project.db",
+    use_cloud_db: Optional[bool] = None,
 ) -> List[Dict[str, Any]]:
     """Process all capture files in a directory and return combined flowlets."""
     llm_ip_map: Dict[str, str] = {}
     all_features: List[Dict[str, Any]] = []
-    
+
+    # Choose backend: CLI overrides global USE_CLOUD_DB when use_cloud_db is not None
+    cloud_db = use_cloud_db if use_cloud_db is not None else USE_CLOUD_DB
+
     db_session = None
+    Capture = None  # type: ignore[assignment]
+    Flowlet = None  # type: ignore[assignment]
     if use_db:
-        try:
-            init_database(db_path)
-            db_session = get_db()
-        except NameError:
-            print("Warning: database module missing, disabling DB.")
+        mod = _db_cloud if (cloud_db and _db_cloud is not None) else _db_local
+        if cloud_db and _db_cloud is None and _db_local is not None:
+            print("Warning: database_firebase not available, using local SQLite.")
+            mod = _db_local
+        if mod is None:
+            print("Warning: no database backend available, disabling DB.")
             use_db = False
+        else:
+            init_database = mod.init_database
+            get_db_session = mod.get_db_session
+            Capture = mod.Capture
+            Flowlet = mod.Flowlet
+            try:
+                init_database(db_path)
+                db_session = get_db_session()
+            except RuntimeError:
+                print("Warning: database not initialized, disabling DB.")
+                use_db = False
 
     files = sorted(input_dir.glob(pattern))
     if not files:
@@ -487,6 +499,7 @@ def parse_directory(
             llm_ip_map=llm_ip_map,
             db_session=db_session,
             capture_id=capture_id,
+            flowlet_cls=Flowlet,
         )
         
         llm_ip_map.update(file_llm_map)
@@ -542,12 +555,25 @@ def parse_args(argv=None):
     parser.add_argument(
         "--db",
         action="store_true",
-        help="Save to SQLite database instead of JSON file.",
+        help="Save to database instead of JSON file (local SQLite or Firebase).",
+    )
+    parser.add_argument(
+        "--cloud-db",
+        action="store_true",
+        default=None,
+        dest="cloud_db",
+        help="Use Firebase Cloud Firestore (requires --db). Overrides USE_CLOUD_DB.",
+    )
+    parser.add_argument(
+        "--no-cloud-db",
+        action="store_true",
+        dest="no_cloud_db",
+        help="Use local SQLite (requires --db). Overrides USE_CLOUD_DB.",
     )
     parser.add_argument(
         "--db-path",
         default="data/networks_project.db",
-        help="Path to SQLite database file (default: data/networks_project.db).",
+        help="Path to SQLite database file when using local DB (default: data/networks_project.db).",
     )
     return parser.parse_args(argv)
 
@@ -558,6 +584,9 @@ def main(argv=None):
     if not input_dir.is_dir():
         raise NotADirectoryError(f"Input path {input_dir} is not a directory")
 
+    # CLI overrides: --no-cloud-db -> False, --cloud-db -> True, neither -> None (use USE_CLOUD_DB)
+    use_cloud_db = False if getattr(args, "no_cloud_db", False) else getattr(args, "cloud_db", None)
+
     all_features = parse_directory(
         input_dir=input_dir,
         pattern=args.pattern,
@@ -565,12 +594,14 @@ def main(argv=None):
         bidirectional=args.bidirectional,
         use_db=args.db,
         db_path=args.db_path,
+        use_cloud_db=use_cloud_db,
     )
 
     if args.db:
         llm_flowlets = sum(1 for f in all_features if f["traffic_class"] == "llm")
+        db_desc = "Firebase" if (use_cloud_db if use_cloud_db is not None else USE_CLOUD_DB) else f"SQLite ({args.db_path})"
         print(
-            f"Processed {len(all_features)} flowlets ({llm_flowlets} tagged as LLM) and saved to database {args.db_path}"
+            f"Processed {len(all_features)} flowlets ({llm_flowlets} tagged as LLM) and saved to {db_desc}"
         )
     else:
         output_path = Path(args.output)

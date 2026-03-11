@@ -13,7 +13,8 @@ data-pipeline/
 │   └── pcap_to_txt.py
 ├── data-collection/                   # Automated data collection
 │   ├── llm/                          # LLM interaction automation
-│   │   ├── selenium_bot_llm.py
+│   │   ├── selenium_bot_llm_chrome.py
+│   │   ├── selenium_bot_llm_firefox.py
 │   │   ├── generate_prompt_bank.py
 │   │   ├── prepare_prompt_runner.py
 │   │   └── prompt_bank.json
@@ -54,8 +55,16 @@ python ip-capture-scripts/ip_range_capture_with_llm.py <IP_RANGE> -k /path/to/ss
 
 #### LLM Collection (data-collection/llm/)
 
-##### `selenium_bot_llm.py`
+##### `selenium_bot_llm_firefox.py`
 Selenium-based bot for automated LLM interaction and traffic capture.
+
+##### `selenium_bot_llm_chrome.py`
+Selenium-based bot for automated LLM interaction and traffic capture on Chrome (set ssl keys environment variable: SSLKEYLOGFILE) for chatgpt, gemini, or claude (requires logging in first).
+
+**Usage:**
+```bash
+python data-collection/llm/selenium_bot_llm_chrome.py --target <PROVIDER> --prompts <PROMPT_FILE> # (default is prompt_back.json)
+```
 
 ##### `generate_prompt_bank.py`
 Generates diverse prompts for LLM testing.
@@ -86,6 +95,8 @@ python flowlet-parsing/parse_flowlets_encrypted.py --extract-features \
     --captures-root ../captures \
     --features-output flowlet_features.json \
     --threshold 0.1
+
+python live_capture_to_db.py -o captures -k ~/mnt/c/Users/matth/Documents/sslkeys.txt -t 30 -i Wi-Fi 0.0.0.0/0 
 ```
 
 **Features:**
