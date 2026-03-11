@@ -576,7 +576,25 @@ def run_claude(driver):
 
             type_human_like(input_box, prompt_text)
             time.sleep(0.5)
-            input_box.send_keys(Keys.ENTER)
+
+            # Try clicking the send button first, fall back to ENTER
+            sent = False
+            for sel in [
+                "button[aria-label='Send Message']",
+                "button[aria-label='Send message']",
+                "button[aria-label='Send']",
+                "button[data-testid='send-button']",
+            ]:
+                btns = driver.find_elements(By.CSS_SELECTOR, sel)
+                for btn in btns:
+                    if btn.is_displayed() and btn.is_enabled():
+                        btn.click()
+                        sent = True
+                        break
+                if sent:
+                    break
+            if not sent:
+                input_box.send_keys(Keys.ENTER)
 
             wait_for_claude_response(driver)
             print(f"   ✅ Response received.")
