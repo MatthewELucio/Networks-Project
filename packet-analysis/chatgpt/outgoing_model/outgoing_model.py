@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""incoming_model.py
+"""outgoing_model.py
 
-Train classification models to distinguish LLM vs non-LLM incoming ChatGPT flowlets.
+Train classification models to distinguish LLM vs non-LLM outgoing ChatGPT flowlets.
 Uses MaMPF-inspired approach with Markov models and traditional ML classifiers.
 
-Only chatgpt flowlets with outgoing=False are treated as LLM examples; non-LLM
-flowlets are included regardless of direction.  Outgoing ChatGPT flowlets are
+Only chatgpt flowlets with outgoing=True are treated as LLM examples; non-LLM
+flowlets are included regardless of direction.  Incoming ChatGPT flowlets are
 excluded from training.
 
-Usage: python3 incoming_model.py <features.json> --output results.json
+Usage: python3 outgoing_model.py <features.json> --output results.json
 """
 import argparse
 import json
@@ -38,10 +38,10 @@ def load_flowlet_features(filepath: str) -> List[Dict[str, Any]]:
         return json.load(f)
 
 
-def filter_chatgpt_incoming(features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Filter to only incoming ChatGPT (llm) vs non-LLM flowlets.
+def filter_chatgpt_outgoing(features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Filter to only outgoing ChatGPT (llm) vs non-LLM flowlets.
 
-    - ChatGPT flowlets must have outgoing == False to be included.
+    - ChatGPT flowlets must have outgoing == True to be included.
     - Non-LLM flowlets are always included.
     """
     filtered = []
@@ -54,7 +54,7 @@ def filter_chatgpt_incoming(features: List[Dict[str, Any]]) -> List[Dict[str, An
             filtered.append(f)
         else:
             # treat only chatgpt sources as potential llm examples
-            if "chatgpt" in source.lower() and not outgoing:
+            if "chatgpt" in source.lower() and outgoing:
                 filtered.append(f)
     return filtered
 
@@ -217,7 +217,7 @@ def extract_ml_features(
     - Markov model log-likelihoods (MaMPF fingerprint)
     """
     features = []
-
+    
     # Statistical features
     features.append(flowlet.get("duration", 0.0))
     features.append(flowlet.get("packet_count", 0))
@@ -226,17 +226,17 @@ def extract_ml_features(
     features.append(flowlet.get("inter_packet_time_std", 0.0))
     features.append(flowlet.get("packet_size_mean", 0.0))
     features.append(flowlet.get("packet_size_std", 0.0))
-
+    
     # Direction feature (0 for non-LLM, +1 for outgoing LLM, -1 for incoming LLM)
     features.append(flowlet.get("direction_encoded", 0))
-
+    
     # Build sequences for Markov models
     inter_packet_times = flowlet.get("inter_packet_times", [])
     packet_sizes = flowlet.get("packet_sizes", [])
-
+    
     # Time gap sequence
     time_gap_seq = bucket_time_gaps(inter_packet_times)
-
+    
     # Packet size sequence (using blocks)
     size_block_seq = []
     if "llm" in block_mappings and packet_sizes:
@@ -246,7 +246,7 @@ def extract_ml_features(
             else:
                 # Find nearest block
                 size_block_seq.append(f"BLOCK_{size:.2f}")
-
+    
     # Compute log-likelihoods for each class's Markov models
     for class_name in ["llm", "non_llm"]:
         if class_name in markov_models:
@@ -260,7 +260,7 @@ def extract_ml_features(
                 features.append(ll_time)
             else:
                 features.append(-100.0)
-
+            
             # Size block model
             if "size_block" in markov_models[class_name] and size_block_seq:
                 ll_size = compute_sequence_log_likelihood(
@@ -274,7 +274,7 @@ def extract_ml_features(
         else:
             features.append(-100.0)
             features.append(-100.0)
-
+    
     return np.array(features)
 
 
@@ -293,65 +293,65 @@ def prepare_training_data(
     # Separate by class
     llm_flowlets = [f for f in features if f["traffic_class"] == "llm"]
     non_llm_flowlets = [f for f in features if f["traffic_class"] == "non_llm"]
-
+    
     print(f"LLM flowlets: {len(llm_flowlets)}")
     print(f"Non-LLM flowlets: {len(non_llm_flowlets)}")
-
+    
     # Build block mappings for packet sizes
     block_mappings = {}
     for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
         all_sizes = []
         for f in flowlets:
             all_sizes.extend(f.get("packet_sizes", []))
-
+    
         if all_sizes:
             blocks, mapping = build_power_law_blocks(all_sizes, coverage=0.9)
             block_mappings[class_name] = mapping
             print(f"{class_name}: {len(blocks)} packet size blocks")
-
+    
     # Build Markov models for each class
     markov_models = {}
     for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
         # Time gap sequences
         time_gap_sequences = []
         size_block_sequences = []
-
+    
         for f in flowlets:
             inter_packet_times = f.get("inter_packet_times", [])
             packet_sizes = f.get("packet_sizes", [])
-
+    
             if inter_packet_times:
                 time_gap_seq = bucket_time_gaps(inter_packet_times)
                 time_gap_sequences.append(time_gap_seq)
-
+    
             if packet_sizes and class_name in block_mappings:
                 size_seq = [block_mappings[class_name].get(s, f"BLOCK_{s:.2f}") for s in packet_sizes]
                 size_block_sequences.append(size_seq)
-
+    
         markov_models[class_name] = {
             "time_gap": build_markov_model(time_gap_sequences),
             "size_block": build_markov_model(size_block_sequences),
         }
         print(f"{class_name}: Built Markov models")
-
+    
     # Extract features for all flowlets
     X_list = []
     y_list = []
     groups = []
-
+    
     for f in features:
         feature_vec = extract_ml_features(f, markov_models, block_mappings)
         X_list.append(feature_vec)
         y_list.append(1 if f["traffic_class"] == "llm" else 0)
-
+        
         # Create group identifier from flow_key
         flow_key = f.get("flow_key", {})
         group_id = f"{flow_key.get('src_ip', '')}_{flow_key.get('src_port', '')}_{flow_key.get('dst_ip', '')}_{flow_key.get('dst_port', '')}_{flow_key.get('protocol', '')}"
         groups.append(group_id)
-
+    
     X = np.array(X_list)
     y = np.array(y_list)
-
+    
     return X, y, groups, markov_models, block_mappings
 
 
@@ -369,18 +369,18 @@ def train_and_evaluate_models(
         scaler: Fitted StandardScaler (used for SVM)
     """
     results = {}
-
+    
     # Scale features
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
-
+    
     # Random Forest
     print("Training Random Forest...")
     rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
     rf.fit(X_train, y_train)
     y_pred_rf = rf.predict(X_test)
-
+    
     results["random_forest"] = {
         "accuracy": float(accuracy_score(y_test, y_pred_rf)),
         "precision": float(precision_score(y_test, y_pred_rf, zero_division=0)),
@@ -389,13 +389,13 @@ def train_and_evaluate_models(
         "confusion_matrix": confusion_matrix(y_test, y_pred_rf).tolist(),
         "classification_report": classification_report(y_test, y_pred_rf, target_names=["non_llm", "llm"], output_dict=True),
     }
-
+    
     # SVM
     print("Training SVM...")
     svm = SVC(kernel="rbf", random_state=42, probability=True)
     svm.fit(X_train_scaled, y_train)
     y_pred_svm = svm.predict(X_test_scaled)
-
+    
     results["svm"] = {
         "accuracy": float(accuracy_score(y_test, y_pred_svm)),
         "precision": float(precision_score(y_test, y_pred_svm, zero_division=0)),
@@ -404,7 +404,7 @@ def train_and_evaluate_models(
         "confusion_matrix": confusion_matrix(y_test, y_pred_svm).tolist(),
         "classification_report": classification_report(y_test, y_pred_svm, target_names=["non_llm", "llm"], output_dict=True),
     }
-
+    
     # XGBoost
     print("Training XGBoost...")
     xgb_model = xgb.XGBClassifier(
@@ -415,7 +415,7 @@ def train_and_evaluate_models(
     )
     xgb_model.fit(X_train, y_train)
     y_pred_xgb = xgb_model.predict(X_test)
-
+    
     results["xgboost"] = {
         "accuracy": float(accuracy_score(y_test, y_pred_xgb)),
         "precision": float(precision_score(y_test, y_pred_xgb, zero_division=0)),
@@ -424,19 +424,19 @@ def train_and_evaluate_models(
         "confusion_matrix": confusion_matrix(y_test, y_pred_xgb).tolist(),
         "classification_report": classification_report(y_test, y_pred_xgb, target_names=["non_llm", "llm"], output_dict=True),
     }
-
+    
     trained_models = {
         "random_forest": rf,
         "svm": svm,
         "xgboost": xgb_model,
     }
-
+    
     return results, trained_models, scaler
 
 
 def main(argv=None):
     p = argparse.ArgumentParser(
-        description="Train classification models for incoming LLM vs non-LLM flowlets"
+        description="Train classification models for outgoing LLM vs non-LLM flowlets"
     )
     p.add_argument("input", help="JSON file with flowlet features")
     p.add_argument(
@@ -453,51 +453,51 @@ def main(argv=None):
     )
     p.add_argument(
         "--model-weights",
-        default="incoming_model_weights.pkl",
+        default="outgoing_model_weights.pkl",
         help="path to save trained model weights/artifacts (joblib format)",
     )
     args = p.parse_args(argv)
-
+    
     # Load features
     print(f"Loading features from {args.input}...")
     features = load_flowlet_features(args.input)
     print(f"Loaded {len(features)} flowlets")
-
-    # Filter to incoming chatgpt only
-    features = filter_chatgpt_incoming(features)
+    
+    # Filter to outgoing chatgpt only
+    features = filter_chatgpt_outgoing(features)
     print(f"Filtered to {len(features)} relevant flowlets")
-
+    
     # Prepare training data
     print("Preparing training data...")
     X, y, groups, markov_models, block_mappings = prepare_training_data(features)
     print(f"Feature matrix shape: {X.shape}")
     print(f"Class distribution: {np.bincount(y)}")
-
+    
     # Split data by groups (flows stay together)
     print("Splitting data by flows...")
     gss = GroupShuffleSplit(n_splits=1, test_size=args.test_size, random_state=42)
     train_idx, test_idx = next(gss.split(X, y, groups))
-
+    
     X_train, X_test = X[train_idx], X[test_idx]
     y_train, y_test = y[train_idx], y[test_idx]
-
+    
     print(f"Train set: {len(X_train)} flowlets")
     print(f"Test set: {len(X_test)} flowlets")
     print(f"Train class distribution: {np.bincount(y_train)}")
     print(f"Test class distribution: {np.bincount(y_test)}")
-
+    
     # Train and evaluate models
     print("\nTraining models...")
     results, trained_models, scaler = train_and_evaluate_models(
         X_train, X_test, y_train, y_test
     )
-
+    
     # Print results
     print("\n" + "=" * 60)
     print("RESULTS")
     print("=" * 60)
     for model_name, metrics in results.items():
-        print(f"\n{model_name.upper()}:")
+        print(f"\n{model_name.upper()}:" )
         print(f"  Accuracy:  {metrics['accuracy']:.4f}")
         print(f"  Precision: {metrics['precision']:.4f}")
         print(f"  Recall:    {metrics['recall']:.4f}")
@@ -506,7 +506,7 @@ def main(argv=None):
         cm = metrics['confusion_matrix']
         print(f"    [[TN={cm[0][0]}, FP={cm[0][1]}],")
         print(f"     [FN={cm[1][0]}, TP={cm[1][1]}]]")
-
+    
     # Save results
     output_data = {
         "dataset_info": {
@@ -519,10 +519,9 @@ def main(argv=None):
         },
         "models": results,
     }
-    
+    # Save summary of results
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2)
-    
     print(f"\nResults saved to {args.output}")
 
     # Save model artifacts for later use (classifier, scaler, Markov models, etc.)
