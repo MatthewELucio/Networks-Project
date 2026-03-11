@@ -11,6 +11,12 @@ from collections import defaultdict
 import statistics
 from typing import Optional, Union
 
+# USAGE: python3 data-pipeline/flowlet-parsing/live_capture_to_db_mac.py 
+# --cloud-db -t 30 -i en0 0.0.0.0/0
+
+#Captures on all, pushes to cloud db specified by root directory json file w/ 30 second timeout
+#on interface en0
+
 # Cloud DB: set True to use Firebase by default; overridden by --cloud-db / --no-cloud-db.
 USE_CLOUD_DB = True
 
