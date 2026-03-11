@@ -25,6 +25,7 @@ CATEGORIES = [
     "debugging help",
     "data analysis",
     "creative writing",
+    "document analysis",
 ]
 
 OUTPUT_PATH = Path(__file__).resolve().parent / "prompt_bank.json"
@@ -39,6 +40,16 @@ REQUEST_TEMPLATE = (
     "Generate {count} prompts for a human-style interaction in the \"{category}\" category. "
     "The first prompt should introduce the goal, and subsequent prompts should naturally follow. "
     "Each prompt should be phrased as a user query or instruction; assume the assistant will respond, but do not include any assistant text in your response. "
+    "Return exactly {count} distinct prompt strings encoded as a JSON array."
+)
+
+DOCUMENT_ANALYSIS_REQUEST_TEMPLATE = (
+    "Generate {count} prompts for a human-style interaction where the user has uploaded a PDF document "
+    "(such as a report, resume, research paper, meeting notes, or technical spec). "
+    "The first prompt should reference the attached document (e.g. 'Summarize this document', "
+    "'What are the key findings in the attached PDF?'). Subsequent prompts should ask follow-up "
+    "questions about the document's content without re-uploading it. "
+    "Each prompt should be phrased as a user query; do not include assistant text. "
     "Return exactly {count} distinct prompt strings encoded as a JSON array."
 )
 
@@ -124,9 +135,13 @@ def normalize_chain(raw_text: str) -> list[str]:
 
 
 def build_messages(category: str, prompt_count: int) -> list[dict]:
+    if category == "document analysis":
+        user_content = DOCUMENT_ANALYSIS_REQUEST_TEMPLATE.format(count=prompt_count)
+    else:
+        user_content = REQUEST_TEMPLATE.format(count=prompt_count, category=category)
     return [
         {"role": "system", "content": SYSTEM_MESSAGE},
-        {"role": "user", "content": REQUEST_TEMPLATE.format(count=prompt_count, category=category)},
+        {"role": "user", "content": user_content},
     ]
 
 
@@ -171,11 +186,21 @@ def main() -> None:
         if len(prompts) < 1:
             raise RuntimeError(f"OpenAI returned no prompts for chain #{idx + 1}")
 
+        # For document analysis chains, wrap prompts as objects and mark
+        # the first prompt with an attachment so the bot uploads a PDF.
+        if category == "document analysis":
+            wrapped = []
+            for pi, p in enumerate(prompts):
+                wrapped.append({"text": p, "attachment": "pdf" if pi == 0 else None})
+            entry_prompts = wrapped
+        else:
+            entry_prompts = prompts
+
         prompt_bank.append(
             {
                 "category": category,
                 "model": args.model,
-                "prompts": prompts,
+                "prompts": entry_prompts,
                 "chain_length": len(prompts),
             }
         )

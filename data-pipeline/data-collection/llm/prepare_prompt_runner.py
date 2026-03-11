@@ -21,6 +21,7 @@ class PreparedPrompt:
     model: str
     step_index: int
     text: str
+    attachment: str | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -29,6 +30,7 @@ class PreparedPrompt:
             "model": self.model,
             "step": self.step_index,
             "text": self.text,
+            "attachment": self.attachment,
         }
 
 
@@ -109,10 +111,15 @@ def build_prepared_prompts(chains: Iterable[dict]) -> list[PreparedPrompt]:
         prompts = entry.get("prompts", [])
         category = entry.get("category", "uncategorized")
         model = entry.get("model", "unknown")
-        for step_index, text in enumerate(prompts, start=1):
-            if not isinstance(text, str):
-                text = str(text)
-            prepared.append(PreparedPrompt(chain_id, category, model, step_index, text))
+        for step_index, item in enumerate(prompts, start=1):
+            # Support both plain strings and {text, attachment} objects
+            if isinstance(item, dict):
+                text = str(item.get("text", ""))
+                attachment = item.get("attachment")
+            else:
+                text = str(item)
+                attachment = None
+            prepared.append(PreparedPrompt(chain_id, category, model, step_index, text, attachment))
     return prepared
 
 
