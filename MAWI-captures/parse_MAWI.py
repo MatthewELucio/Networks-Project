@@ -27,6 +27,11 @@ from google.cloud import firestore
 
 DEFAULT_PROJECT_ID = "networks-project-s26"
 DEFAULT_COLLECTION = "parsed-flowlets"
+FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
+
+
+def threshold_suffix(threshold: float) -> str:
+    return f"{threshold:g}"
 
 FlowletDict = Dict[str, Any]
 
@@ -288,7 +293,6 @@ def process_single_flow(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("url")
-    parser.add_argument("--threshold", type=float, default=0.1)
     parser.add_argument("--max-packets", type=int, default=None)
     args = parser.parse_args()
 
@@ -310,25 +314,27 @@ def main():
         print("Extracting flowlets (multiprocessing)...")
 
         cpu_count = multiprocessing.cpu_count()
-        flowlet_features = []
-
-        with ProcessPoolExecutor(max_workers=cpu_count) as executor:
-            results = executor.map(
-                process_single_flow,
-                [
-                    (k, v, args.threshold, "non-llm", gz_path)
-                    for k, v in flows.items()
-                ],
-            )
-
-            for r in results:
-                flowlet_features.extend(r)
 
         capture_id = os.path.basename(args.url).replace(".pcap.gz", "")
-        print(f"Uploading {len(flowlet_features)} flowlets...")
 
         client = ParsedFlowletFirestore()
-        client.write_capture(capture_id, flowlet_features)
+        for threshold in FLOWLET_THRESHOLDS:
+            flowlet_features = []
+            with ProcessPoolExecutor(max_workers=cpu_count) as executor:
+                results = executor.map(
+                    process_single_flow,
+                    [
+                        (k, v, threshold, "non-llm", gz_path)
+                        for k, v in flows.items()
+                    ],
+                )
+
+                for r in results:
+                    flowlet_features.extend(r)
+
+            threshold_capture_id = f"{capture_id}_{threshold_suffix(threshold)}"
+            print(f"Uploading {len(flowlet_features)} flowlets for threshold {threshold_suffix(threshold)}...")
+            client.write_capture(threshold_capture_id, flowlet_features)
 
         print("Done.")
 

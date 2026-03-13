@@ -96,7 +96,11 @@ python flowlet-parsing/parse_flowlets_encrypted.py --extract-features \
     --features-output flowlet_features.json \
     --threshold 0.1
 
-python live_capture_to_db.py -o captures -k ~/mnt/c/Users/matth/Documents/sslkeys.txt -t 30 -i Wi-Fi 0.0.0.0/0 
+# Live capture to DB (creates 3 captures with suffixes _0.05, _0.1, _0.2)
+python flowlet-parsing/live_capture_to_db.py --cloud-db -k ~/mnt/c/Users/matth/Documents/sslkeys.txt -t 30 -i Wi-Fi -n my_capture 0.0.0.0/0
+
+# Resume an existing live capture run (IDs must be in threshold order: 0.05,0.1,0.2)
+python flowlet-parsing/live_capture_to_db.py --cloud-db -k ~/mnt/c/Users/matth/Documents/sslkeys.txt -t 30 -i Wi-Fi -n my_capture --capture-id id1,id2,id3 0.0.0.0/0
 ```
 
 **Features:**
