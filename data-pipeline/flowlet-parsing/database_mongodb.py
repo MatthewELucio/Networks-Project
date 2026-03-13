@@ -80,8 +80,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional, Type, TypeVar
 
+from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 
+
+# Load environment variables so MONGODB_URI can be read from a .env file
+load_dotenv()
 
 # Reuses the same dataclass shapes as database_firebase for maximum compatibility
 
