@@ -36,6 +36,9 @@ app.add_middleware(
 
 # Track running captures
 _running_captures: Dict[int, subprocess.Popen] = {}
+_running_capture_groups: Dict[int, List[int]] = {}
+
+FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
 
 # SSL keys config file
 SSL_CONFIG_FILE = Path("data/ssl_keys_config.json")
@@ -226,17 +229,32 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
         notes = f"IP: {capture_data.ip_range}, Interface: {capture_data.interface or 'default'}"
         if capture_data.use_ssl_decrypt:
             notes += " [Live Decrypted]"
-        
-        # We set file_path to 'LIVE' initially if decrypting
-        capture = Capture(
-            file_path=None, 
-            status="running",
-            notes=notes
-        )
-        db.add(capture)
-        db.commit()
-        db.refresh(capture)
-        capture_id = capture.id
+
+        if capture_data.use_ssl_decrypt:
+            run_name = f"LIVE_SESSION_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+            capture_ids = []
+            for threshold in FLOWLET_THRESHOLDS:
+                capture = Capture(
+                    file_path=f"{run_name}_{threshold:g}",
+                    status="running",
+                    notes=f"{notes} [threshold={threshold}]",
+                )
+                db.add(capture)
+                db.commit()
+                db.refresh(capture)
+                capture_ids.append(capture.id)
+            capture_id = capture_ids[0]
+        else:
+            capture = Capture(
+                file_path=None,
+                status="running",
+                notes=notes,
+            )
+            db.add(capture)
+            db.commit()
+            db.refresh(capture)
+            capture_id = capture.id
+            capture_ids = [capture_id]
     finally:
         db.close()
 
@@ -246,11 +264,12 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
         ssl_config = load_ssl_config()
         ssl_key_path = ssl_config.get("ssl_key_path")
         
-        # We call the new live script and pass the capture_id
+        # Call live pipeline and pass all threshold capture IDs in resume order.
         cmd = [
             "python3", "data-pipeline/flowlet-parsing/live_capture_to_db.py", 
             capture_data.ip_range,
-            "--capture-id", str(capture_id)
+            "-n", run_name,
+            "--capture-id", ",".join(str(i) for i in capture_ids)
         ]
         if ssl_key_path:
             cmd.extend(["-k", ssl_key_path])
@@ -277,6 +296,7 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
     try:
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         _running_captures[capture_id] = proc
+        _running_capture_groups[capture_id] = capture_ids
         
         # Pass use_ssl_decrypt as 'is_live' to monitor_capture
         background_tasks.add_task(
@@ -284,14 +304,15 @@ def start_capture(capture_data: CaptureStart, background_tasks: BackgroundTasks)
             capture_id, 
             proc, 
             capture_data.outdir or "captures", 
-            capture_data.use_ssl_decrypt
+            capture_data.use_ssl_decrypt,
+            capture_ids,
         )
         
         return {"id": capture_id, "status": "running"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str, is_live: bool):
+def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str, is_live: bool, capture_ids: Optional[List[int]] = None):
     """Monitor a running capture and update database when it completes."""
     
     stdout, stderr = proc.communicate() # This captures the error
@@ -304,30 +325,35 @@ def monitor_capture(capture_id: int, proc: subprocess.Popen, outdir: str, is_liv
     
     db = get_db_session()
     try:
-        capture = db.query(Capture).filter_by(id=capture_id).first()
-        if capture:
-            # If it's NOT live, find the generated file so the user can 'Parse' it later
-            if not is_live and proc.returncode == 0:
-                outdir_path = Path(outdir)
-                if outdir_path.exists():
-                    capture_files = sorted(
-                        list(outdir_path.glob("capture_*.txt")),
-                        key=lambda p: p.stat().st_mtime
-                    )
-                    if capture_files:
-                        capture.file_path = str(capture_files[-1])
-            
-            # If it IS live, we already have the data in the DB
-            if is_live:
-                capture.file_path = f"LIVE_SESSION_{capture_id}"
-
-            capture.status = "completed" if proc.returncode == 0 else "failed"
+        if is_live and capture_ids:
+            for cid in capture_ids:
+                capture = db.query(Capture).filter_by(id=cid).first()
+                if capture:
+                    capture.status = "completed" if proc.returncode == 0 else "failed"
             db.commit()
+        else:
+            capture = db.query(Capture).filter_by(id=capture_id).first()
+            if capture:
+                # If it's NOT live, find the generated file so the user can 'Parse' it later
+                if proc.returncode == 0:
+                    outdir_path = Path(outdir)
+                    if outdir_path.exists():
+                        capture_files = sorted(
+                            list(outdir_path.glob("capture_*.txt")),
+                            key=lambda p: p.stat().st_mtime
+                        )
+                        if capture_files:
+                            capture.file_path = str(capture_files[-1])
+
+                capture.status = "completed" if proc.returncode == 0 else "failed"
+                db.commit()
     finally:
         db.close()
     
     if capture_id in _running_captures:
         del _running_captures[capture_id]
+    if capture_id in _running_capture_groups:
+        del _running_capture_groups[capture_id]
 
 
 @app.post("/api/captures/{capture_id}/stop")

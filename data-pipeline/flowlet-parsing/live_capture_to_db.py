@@ -15,6 +15,12 @@ from typing import Optional, Union
 # Cloud DB: set True to use Firebase by default; overridden by --cloud-db / --no-cloud-db.
 USE_CLOUD_DB = True
 
+# USAGE:
+# New run (creates 3 capture docs: _0.05, _0.1, _0.2)
+# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture 0.0.0.0/0
+# Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
+# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture --capture-id id1,id2,id3 0.0.0.0/0
+
 try:
     import database as _db_local
 except ImportError:
@@ -26,6 +32,11 @@ except ImportError:
 
 # --- CONFIGURATION ---
 TARGET_KEYWORDS = ["chatgpt", "claude", "gemini"]
+FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
+
+
+def threshold_suffix(threshold: float) -> str:
+    return f"{threshold:g}"
 
 def get_tshark_path():
     try:
@@ -181,7 +192,10 @@ def main():
     p.add_argument("-i", "--interface", help="Network interface")
     p.add_argument("-k", "--ssl-keys", help="Path to SSLKEYLOGFILE")
     p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using Firebase).")
-    p.add_argument("--capture-id", help="Resume: Capture ID (int for SQLite, doc ID string for Firebase). Omit to create new.")
+    p.add_argument(
+        "--capture-id",
+        help="Resume mode: comma-separated IDs for thresholds 0.05,0.1,0.2 (int IDs for SQLite, doc IDs for Firebase). Omit to create new.",
+    )
     p.add_argument("--cloud-db", action="store_true", default=None, help="Use Firebase Cloud Firestore.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
@@ -205,36 +219,52 @@ def main():
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
 
     init_database(args.db_path)
-    db = get_db_session()
+    db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}
 
-    # --- LOGIC FOR INDEPENDENT RUNS ---
+    # --- LOGIC FOR INDEPENDENT RUNS (one capture per threshold) ---
+    capture_ids = {}
     if args.capture_id:
-        # Resume existing capture: int for SQLite, string for Firebase (doc ID)
-        capture_id_arg = int(args.capture_id) if not use_cloud_db else args.capture_id
-        capture = db.query(Capture).get(capture_id_arg)
-        if not capture:
-            sys.exit(f"❌ Error: Capture ID {args.capture_id} not found.")
-        capture_id = capture.id if not use_cloud_db else (capture.id or capture.file_path)
-    else:
-        # Create new record
-        unique_name = args.name
-        capture = Capture(
-            file_path=unique_name,
-            status="active",
-            notes=f"Manual Run on {args.ip_range}",
-        )
-        db.add(capture)
-        db.commit()
-        if not use_cloud_db:
-            db.refresh(capture)
-        capture_id = capture.id
-        print(f"📝 Created new manual capture record (ID: {capture_id})")
+        # Resume existing captures: one ID per threshold in FLOWLET_THRESHOLDS order
+        raw_capture_ids = [capture_id.strip() for capture_id in args.capture_id.split(",") if capture_id.strip()]
+        if len(raw_capture_ids) != len(FLOWLET_THRESHOLDS):
+            sys.exit(
+                f"❌ Error: --capture-id must include exactly {len(FLOWLET_THRESHOLDS)} comma-separated IDs "
+                f"for thresholds {FLOWLET_THRESHOLDS}."
+            )
 
-    manager = LiveFlowletManager(db, capture_id, Flowlet)
+        for threshold, raw_capture_id in zip(FLOWLET_THRESHOLDS, raw_capture_ids):
+            db = db_sessions[threshold]
+            capture_id_arg = int(raw_capture_id) if not use_cloud_db else raw_capture_id
+            capture = db.query(Capture).get(capture_id_arg)
+            if not capture:
+                sys.exit(f"❌ Error: Capture ID {raw_capture_id} not found for threshold {threshold}.")
+            capture_ids[threshold] = capture.id if not use_cloud_db else (capture.id or capture.file_path)
+    else:
+        # Create one new record per threshold with suffix appended to name
+        for threshold in FLOWLET_THRESHOLDS:
+            db = db_sessions[threshold]
+            unique_name = f"{args.name}_{threshold_suffix(threshold)}"
+            capture = Capture(
+                file_path=unique_name,
+                status="active",
+                notes=f"Manual Run on {args.ip_range} (threshold={threshold})",
+            )
+            db.add(capture)
+            db.commit()
+            if not use_cloud_db:
+                db.refresh(capture)
+            capture_ids[threshold] = capture.id
+            print(f"📝 Created new manual capture record: {unique_name} (ID: {capture_ids[threshold]})")
+
+    managers = {
+        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold)
+        for threshold in FLOWLET_THRESHOLDS
+    }
     
     cmd = build_command(tshark_bin, is_win_bin, network, args.interface, args.ssl_keys)
 
-    print(f"🚀 Starting Live Pipeline for ID {capture_id}...")
+    print("🚀 Starting Live Pipeline for multi-threshold captures...")
+    print(f"   Threshold Capture IDs: {capture_ids}")
     start_time = datetime.datetime.now().timestamp()
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
 
@@ -276,33 +306,39 @@ def main():
                         'proto': proto, 'len': ip_len,
                         'names': names
                     }
-                    manager.process_packet(pkt)
+                    for manager in managers.values():
+                        manager.process_packet(pkt)
                 except (ValueError, IndexError):
                     continue
             
     except KeyboardInterrupt:
         print("\n🛑 Stopped by user. Flushing flows...")
     finally:
-        for key in list(manager.flows.keys()):
-            manager.flush_flowlet(key)
+        for manager in managers.values():
+            for key in list(manager.flows.keys()):
+                manager.flush_flowlet(key)
             
         try:
-            final_db = get_db_session()
-            final_capture = final_db.query(Capture).get(capture_id)
-            if final_capture:
-                # --- ADD THIS LINE ---
-                # This saves the mapping so the frontend knows which IPs belong to which LLM
-                final_capture.llm_ip_map = json.dumps(manager.llm_ip_map)
-                
-                final_capture.status = "completed"
-                final_db.commit()
-                print(f"✅ Saved LLM IP Map: {manager.llm_ip_map}")
-            final_db.close()
+            for threshold, manager in managers.items():
+                capture_id = capture_ids[threshold]
+                final_db = db_sessions[threshold]
+                final_capture = final_db.query(Capture).get(capture_id)
+                if final_capture:
+                    final_capture.llm_ip_map = json.dumps(manager.llm_ip_map)
+                    final_capture.status = "completed"
+                    final_db.commit()
+                    print(
+                        f"✅ Threshold {threshold_suffix(threshold)} saved LLM IP Map for capture {capture_id}: "
+                        f"{manager.llm_ip_map}"
+                    )
         except Exception as e:
             print(f"⚠️ Status/Map update failed: {e}")
+        finally:
+            for db in db_sessions.values():
+                db.close()
             
         proc.terminate()
-        print(f"✅ Capture {capture_id} finished.")
+        print("✅ Multi-threshold capture finished.")
 
 if __name__ == "__main__":
     main()

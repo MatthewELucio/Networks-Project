@@ -28,6 +28,11 @@ DEFAULT_PROJECT_ID = "networks-project-s26"
 # CHANGED: Collection name matches your firebase.py / live logic
 DEFAULT_COLLECTION = "parsed-flowlets" 
 MAWI_BASE_URL = "http://mawi.nezu.wide.ad.jp/mawi/samplepoint-F"
+FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
+
+
+def threshold_suffix(threshold: float) -> str:
+    return f"{threshold:g}"
 # ============================================================
 # Firestore Logic (Synchronized with live_capture_to_db.py style)
 # ============================================================
@@ -166,7 +171,7 @@ def generate_mawi_urls(start_str: str, end_str: str, step_days: int) -> List[str
         current += timedelta(days=step_days)
     return urls
 
-def process_pipeline(url_template, threshold, max_packets):
+def process_pipeline(url_template, max_packets):
     """
     Tries multiple timestamps (1400, 1359, 1401) to account for 
     sensor drift in the MAWI archive.
@@ -216,16 +221,17 @@ def process_pipeline(url_template, threshold, max_packets):
                 key = (p["src_ip"], p["src_port"], p["dst_ip"], p["dst_port"], p["proto"].upper())
                 flows[key].append(p)
             
-            flowlet_features = []
-            with ProcessPoolExecutor() as executor:
-                map_args = [(k, v, threshold) for k, v in flows.items()]
-                for r in executor.map(process_single_flow, map_args): 
-                    flowlet_features.extend(r)
-            
-            # Use the actual capture_id found (e.g. 202101021359) for Firestore
             client = ParsedFlowletFirestore()
-            client.write_capture(capture_id, flowlet_features)
-            print(f"✅ Success: {capture_id}")
+            for threshold in FLOWLET_THRESHOLDS:
+                flowlet_features = []
+                with ProcessPoolExecutor() as executor:
+                    map_args = [(k, v, threshold) for k, v in flows.items()]
+                    for r in executor.map(process_single_flow, map_args): 
+                        flowlet_features.extend(r)
+
+                threshold_capture_id = f"{capture_id}_{threshold_suffix(threshold)}"
+                client.write_capture(threshold_capture_id, flowlet_features)
+                print(f"✅ Success: {threshold_capture_id}")
             return True
         except Exception as e:
             print(f"❌ Error processing {capture_id}: {e}")
@@ -236,7 +242,6 @@ def main():
     parser.add_argument("--start", help="YYYY-MM-DD", required=True)
     parser.add_argument("--end", help="YYYY-MM-DD", required=True)
     parser.add_argument("--step-days", type=int, default=1)
-    parser.add_argument("--threshold", type=float, default=0.1)
     parser.add_argument("--max-packets", type=int, default=2000)
     parser.add_argument("--workers", type=int, default=8)
     args = parser.parse_args()
@@ -244,7 +249,7 @@ def main():
     urls = generate_mawi_urls(args.start, args.end, args.step_days)
 
     with ThreadPoolExecutor(max_workers=args.workers) as threads:
-        threads.map(lambda u: process_pipeline(u, args.threshold, args.max_packets), urls)
+        threads.map(lambda u: process_pipeline(u, args.max_packets), urls)
 
 if __name__ == "__main__":
     main()
