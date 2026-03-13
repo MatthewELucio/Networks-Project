@@ -19,7 +19,8 @@ USE_CLOUD_DB = True
 # New run (creates 3 capture docs: _0.05, _0.1, _0.2)
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture 0.0.0.0/0
 # Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
-# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture --capture-id id1,id2,id3 0.0.0.0/0
+
+# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture -k C:\Users\matth\Documents\sslkeys.txt 0.0.0.0/0
 
 try:
     import database as _db_local
