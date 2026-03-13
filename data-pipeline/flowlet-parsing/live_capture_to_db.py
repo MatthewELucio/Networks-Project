@@ -20,14 +20,14 @@ USE_CLOUD_DB = True
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture 0.0.0.0/0
 # Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
 
-# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture -k C:\Users\matth\Documents\sslkeys.txt 0.0.0.0/0
+# WSL Example: python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i Wi-Fi -n my_capture -k C:\Users\matth\Documents\sslkeys.txt 0.0.0.0/0
 
 try:
     import database as _db_local
 except ImportError:
     _db_local = None
 try:
-    import database_firebase as _db_cloud
+    import database_mongodb as _db_cloud
 except ImportError:
     _db_cloud = None
 
@@ -62,25 +62,34 @@ def build_command(tshark_bin, is_win_bin, network, interface, ssl_keys):
     cmd = [tshark_bin, "-l", "-n"]
     cmd.extend([
         "-T", "fields",
-        # MUST MATCH BATCH SCRIPT ORDER EXACTLY
-        "-e", "frame.time_epoch", "-e", "ip.dsfield", "-e", "ip.ttl", 
-        "-e", "ip.id", "-e", "ip.flags", "-e", "ip.proto", "-e", "ip.len", # 0-6
-        "-e", "ip.src", "-e", "tcp.srcport", "-e", "ip.dst", "-e", "tcp.dstport", # 7-10
-        "-e", "tcp.flags.str", "-e", "tcp.checksum", "-e", "tcp.seq", # 11-13
+        "-e", "frame.time_epoch", "-e", "ip.dsfield", "-e", "ip.ttl",     # 0-2
+        "-e", "ip.id", "-e", "ip.flags", "-e", "ip.proto", "-e", "ip.len", # 3-6
+        "-e", "ip.src",                                                   # 7
+        "-e", "tcp.srcport",                                              # 8
+        "-e", "ip.dst",                                                   # 9
+        "-e", "tcp.dstport",                                             # 10
+        "-e", "tcp.flags.str", "-e", "tcp.checksum", "-e", "tcp.seq",    # 11-13
         "-e", "tcp.ack", "-e", "tcp.window_size_value", "-e", "tcp.len", # 14-16
-        "-e", "tls.handshake.extensions_server_name", # 17
-        "-e", "http2.headers.authority", # 18
-        "-e", "dns.qry.name", # 19
+        "-e", "tls.handshake.extensions_server_name",                    # 17
+        "-e", "http2.headers.authority",                                 # 18
+        "-e", "dns.qry.name",                                            # 19
+        # --- NEW FIELDS START AT INDEX 20 ---
+        "-e", "udp.srcport",                                              # 20
+        "-e", "udp.dstport",                                              # 21
         "-E", "separator=/t", "-E", "occurrence=f"
     ])
+    
     if interface: cmd.extend(["-i", interface])
     if ssl_keys:
-        cmd.extend(["-o", f"tls.keylog_file:{ssl_keys}"])
+        # On Windows, ensures path is escaped correctly for Tshark
+        keys_path = wsl_to_windows_path(ssl_keys) if not is_win_bin else ssl_keys
+        cmd.extend(["-o", f"tls.keylog_file:{keys_path}"])
 
     is_ipv6 = isinstance(network, ipaddress.IPv6Network)
     proto = "ip6" if is_ipv6 else "ip"
     addr = network.network_address.compressed if is_ipv6 else network.network_address
     base_filter = f"{proto} host {addr}" if network.num_addresses == 1 else f"{proto} net {network.with_prefixlen}"
+    
     cmd.extend(["-f", base_filter])
     return cmd
 
@@ -179,8 +188,8 @@ class LiveFlowletManager:
             packet_size_mean=ps_mean,
             packet_size_std=ps_std,
             # Store raw sequences as JSON strings for Markov modeling
-            inter_packet_times=json.dumps(inter_packet_times),
-            packet_sizes=json.dumps(packet_sizes)
+            # inter_packet_times=json.dumps(inter_packet_times),
+            # packet_sizes=json.dumps(packet_sizes)
         )
         self.db.add(new_flowlet)
         self.db.commit()
@@ -219,7 +228,12 @@ def main():
     except ValueError:
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
 
-    init_database(args.db_path)
+    # init_database(args.db_path)
+    if use_cloud_db:
+        # Pass None so it forces the module to look at the MONGODB_URI env var
+        init_database(None) 
+    else:
+        init_database(args.db_path)
     db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}
 
     # --- LOGIC FOR INDEPENDENT RUNS (one capture per threshold) ---
@@ -284,32 +298,34 @@ def main():
                 
                 parts = line.strip().split('\t')
                 # Pad to 20 columns to match your batch logic and avoid IndexErrors
-                parts += [""] * (20 - len(parts)) 
+                parts += [""] * (22 - len(parts)) 
 
                 try:
-                    # 1. Map fields exactly like the batch script
                     epoch = parts[0]
                     src = parts[7]
-                    sport = parts[8]
                     dst = parts[9]
-                    dport = parts[10]
                     proto = parts[5]
                     ip_len = int(parts[6] or 0)
-                    
-                    # 2. Detection (Matches your exact batch logic)
-                    # Combine SNI, HTTP2 Authority, and DNS Query Name
+
+                    # COALESCE PORTS: Use TCP if available, otherwise UDP, otherwise 0
+                    # parts[8]=tcp_src, parts[20]=udp_src
+                    # parts[10]=tcp_dst, parts[21]=udp_dst
+                    sport = parts[8] or parts[20] or "0"
+                    dport = parts[10] or parts[21] or "0"
+
                     names = (parts[17] + parts[18] + parts[19]).lower()
                     
                     pkt = {
                         'ts': float(epoch),
-                        'src': src, 'sport': sport,
-                        'dst': dst, 'dport': dport,
+                        'src': src, 'sport': int(sport),
+                        'dst': dst, 'dport': int(dport),
                         'proto': proto, 'len': ip_len,
                         'names': names
                     }
+                    
                     for manager in managers.values():
                         manager.process_packet(pkt)
-                except (ValueError, IndexError):
+                except (ValueError, IndexError) as e:
                     continue
             
     except KeyboardInterrupt:
