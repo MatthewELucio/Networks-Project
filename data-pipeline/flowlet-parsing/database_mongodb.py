@@ -397,3 +397,40 @@ def close_db() -> None:
         _client.close()
     _client = None
 
+
+def main() -> None:
+    """Simple CLI to test MongoDB connectivity over the internet.
+
+    Usage:
+        python database_mongodb.py
+
+    Relies on ``MONGODB_URI`` unless a URI is hard-coded into this script.
+    Prints basic connection info and lists the first few capture IDs.
+    """
+    uri = os.getenv("MONGODB_URI")
+    if not uri:
+        print("MONGODB_URI is not set. Please export it before running this test.")
+        return
+
+    try:
+        init_database(uri=uri)
+        session = get_db_session()
+        db = session._db  # type: ignore[attr-defined]
+        print(f"Connected to MongoDB database: {db.name}")
+        print(f"Captures collection: {session._captures.full_name}")  # type: ignore[attr-defined]
+
+        # List a few capture IDs (document _id values)
+        print("Listing up to 5 captures (document _id):")
+        for doc in session._captures.find({}, {"_id": 1}).limit(5):  # type: ignore[attr-defined]
+            print(f" - {doc.get('_id')}")
+        session.close()
+        close_db()
+        print("MongoDB connectivity test succeeded.")
+    except Exception as exc:
+        print("MongoDB connectivity test FAILED.")
+        print(repr(exc))
+
+
+if __name__ == "__main__":
+    main()
+
