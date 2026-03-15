@@ -20,7 +20,7 @@ from typing import Optional, Union
 #Captures on all, pushes to cloud db specified by root directory json file w/ 30 second timeout
 #on interface en0
 
-# Cloud DB: set True to use Firebase by default; overridden by --cloud-db / --no-cloud-db.
+# Cloud DB: set True to use MongoDB by default; overridden by --cloud-db / --no-cloud-db.
 USE_CLOUD_DB = True
 
 try:
@@ -28,7 +28,7 @@ try:
 except ImportError:
     _db_local = None
 try:
-    import database_firebase as _db_cloud
+    import database_mongodb as _db_cloud
 except ImportError:
     _db_cloud = None
 
@@ -67,6 +67,8 @@ def build_command(tshark_bin, network, interface, ssl_keys):
         "-e", "tls.handshake.extensions_server_name", # 17
         "-e", "http2.headers.authority", # 18
         "-e", "dns.qry.name", # 19
+        "-e", "udp.srcport", # 20
+        "-e", "udp.dstport", # 21
         "-E", "separator=/t", "-E", "occurrence=f"
     ])
     if interface: cmd.extend(["-i", interface])
@@ -81,7 +83,7 @@ def build_command(tshark_bin, network, interface, ssl_keys):
     return cmd
 
 class LiveFlowletManager:
-    """Works with either SQLite session (capture_id int) or Firebase session (capture_id str)."""
+    """Works with either SQLite session (capture_id int) or cloud session (capture_id str)."""
     def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1):
         self.db = db_session
         self.capture_id = capture_id
@@ -175,8 +177,8 @@ class LiveFlowletManager:
             packet_size_mean=ps_mean,
             packet_size_std=ps_std,
             # Store raw sequences as JSON strings for Markov modeling
-            inter_packet_times=json.dumps(inter_packet_times),
-            packet_sizes=json.dumps(packet_sizes)
+            # inter_packet_times=json.dumps(inter_packet_times),
+            # packet_sizes=json.dumps(packet_sizes)
         )
         self.db.add(new_flowlet)
         self.db.commit()
@@ -185,22 +187,22 @@ class LiveFlowletManager:
 def main():
     p = argparse.ArgumentParser(description="Live packet sniffer and flowlet parser.")
     p.add_argument("ip_range", help="CIDR range to sniff")
-    p.add_argument("-n", "--name", required=True, help="Name for the capture document in Firebase / SQLite")
+    p.add_argument("-n", "--name", required=True, help="Name for the capture document in cloud DB / SQLite")
     p.add_argument("-i", "--interface", help="Network interface")
     p.add_argument("-k", "--ssl-keys", help="Path to SSLKEYLOGFILE")
-    p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using Firebase).")
+    p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using cloud DB).")
     p.add_argument(
         "--capture-id",
-        help="Resume mode: comma-separated IDs for thresholds 0.05,0.1,0.2 (int IDs for SQLite, doc IDs for Firebase). Omit to create new.",
+        help="Resume mode: comma-separated IDs for thresholds 0.05,0.1,0.2 (int IDs for SQLite, doc IDs for cloud DB). Omit to create new.",
     )
-    p.add_argument("--cloud-db", action="store_true", default=None, help="Use Firebase Cloud Firestore.")
+    p.add_argument("--cloud-db", action="store_true", default=None, help="Use MongoDB cloud database.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
     args = p.parse_args()
 
     use_cloud_db = False if args.no_cloud_db else (args.cloud_db if args.cloud_db is not None else USE_CLOUD_DB)
     if use_cloud_db and _db_cloud is None:
-        sys.exit("❌ Error: --cloud-db requested but database_firebase not available.")
+        sys.exit("❌ Error: --cloud-db requested but database_mongodb not available.")
     if not use_cloud_db and _db_local is None:
         sys.exit("❌ Error: database.py not found. Ensure it is in the same directory.")
     mod = _db_cloud if use_cloud_db else _db_local
@@ -215,7 +217,11 @@ def main():
     except ValueError:
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
 
-    init_database(args.db_path)
+    if use_cloud_db:
+        # Force cloud module to use MONGODB_URI from environment
+        init_database(None)
+    else:
+        init_database(args.db_path)
     db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}
 
     # --- LOGIC FOR INDEPENDENT RUNS (one capture per threshold) ---
@@ -289,15 +295,15 @@ def main():
                 
                 parts = line.strip().split('\t')
                 # Pad to 20 columns to match your batch logic and avoid IndexErrors
-                parts += [""] * (20 - len(parts)) 
+                parts += [""] * (22 - len(parts)) 
 
                 try:
                     # 1. Map fields exactly like the batch script
                     epoch = parts[0]
                     src = parts[7]
-                    sport = parts[8]
+                    sport = parts[8] or parts[20] or "0"
                     dst = parts[9]
-                    dport = parts[10]
+                    dport = parts[10] or parts[21] or "0"
                     proto = parts[5]
                     ip_len = int(parts[6] or 0)
                     
@@ -307,8 +313,8 @@ def main():
                     
                     pkt = {
                         'ts': float(epoch),
-                        'src': src, 'sport': sport,
-                        'dst': dst, 'dport': dport,
+                        'src': src, 'sport': int(sport),
+                        'dst': dst, 'dport': int(dport),
                         'proto': proto, 'len': ip_len,
                         'names': names
                     }
