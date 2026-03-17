@@ -237,118 +237,476 @@
       "Based on the analysis, what recommendations can you suggest to improve sales performance moving forward?"
     ],
     "chain_length": 6
-  },
+  }
+,
   {
-    "category": "document analysis",
+    "category": "system design",
     "model": "gpt-4o-mini",
     "prompts": [
-      {
-        "text": "Please summarize the attached PDF document.",
-        "attachment": "pdf"
-      },
-      {
-        "text": "What are the main conclusions drawn in the document?",
-        "attachment": null
-      },
-      {
-        "text": "Can you highlight any recommendations made in the report?",
-        "attachment": null
-      },
-      {
-        "text": "What are the implications of the findings discussed in the paper?",
-        "attachment": null
-      }
-    ],
-    "chain_length": 4
-  },
-  {
-    "category": "data analysis",
-    "model": "gpt-4o-mini",
-    "prompts": [
-      "I'm looking to analyze sales data from the last quarter to identify trends and insights. Can you help me get started?",
-      "What specific metrics should I focus on to understand the performance of our sales?",
-      "Could you help me identify any patterns in the sales data, such as seasonal trends or peak sales periods?",
-      "I have a dataset that includes sales by region. How can I visualize the geographic distribution of our sales?",
-      "Can you suggest some actionable recommendations based on the insights we've gathered from the sales analysis?"
+      "Design a high-level architecture for a URL shortening service that supports custom aliases.",
+      "Now add rate limiting, abuse detection, and analytics requirements to the design.",
+      "How would you shard the data model and cache reads for low-latency redirects?",
+      "What failure modes should we test and what metrics should we monitor in production?",
+      "Give a minimal implementation plan for an MVP in two weeks."
     ],
     "chain_length": 5
   },
   {
-    "category": "coding assistance",
+    "category": "database tuning",
     "model": "gpt-4o-mini",
     "prompts": [
-      "I'm trying to build a simple web application using Flask, can you help me get started with the basic structure and setup?"
+      "I have a Postgres table with 100 million rows and slow filter queries. Where do I start?",
+      "How do I evaluate whether I need a composite index versus separate indexes?",
+      "What query plan indicators suggest index-only scans are possible?",
+      "How can I safely test index changes in staging before production rollout?",
+      "List practical guardrails for vacuum, autovacuum, and bloat monitoring."
     ],
-    "chain_length": 1
+    "chain_length": 5
   },
   {
-    "category": "conversations",
+    "category": "python engineering",
     "model": "gpt-4o-mini",
     "prompts": [
-      "I'm looking to improve my conversation skills. Can you suggest some tips or techniques for engaging in small talk?"
+      "How should I structure a medium-sized Python project with CLI, API, and shared utilities?",
+      "What import patterns avoid circular dependencies while keeping modules cohesive?",
+      "Show a clean logging strategy with context IDs and structured JSON logs.",
+      "What are reliable patterns for retries and exponential backoff in Python services?",
+      "How would you add integration tests without making CI too slow?"
     ],
-    "chain_length": 1
+    "chain_length": 5
   },
   {
-    "category": "image generation",
+    "category": "ml experiment planning",
     "model": "gpt-4o-mini",
     "prompts": [
-      "Can you help me create a digital artwork of a serene landscape during sunset?",
-      "I\u2019d like to incorporate a calm lake reflecting the vibrant colors of the sunset. Can you include that in the image?",
-      "Could you add some silhouettes of trees along the shoreline to enhance the atmosphere?"
+      "Help me design an experiment to compare three classifiers under domain shift.",
+      "How do I separate model selection from final evaluation to avoid leakage?",
+      "Which metrics are best when false negatives are more costly than false positives?",
+      "How can I report confidence intervals and effect sizes clearly?",
+      "What should go into an experiment card for reproducibility?"
     ],
-    "chain_length": 3
+    "chain_length": 5
   },
   {
-    "category": "image generation",
+    "category": "network troubleshooting",
     "model": "gpt-4o-mini",
     "prompts": [
-      "Can you help me generate an image of a serene mountain landscape during sunrise?",
-      "Could you add a small cabin by the lake in the foreground of the scene?"
+      "Intermittent packet loss appears only under load. What should I inspect first?",
+      "How can I differentiate NIC, driver, kernel queue, and app-level bottlenecks?",
+      "What tcpdump and ss commands are most useful for this investigation?",
+      "How do I create a minimal synthetic load test to reproduce the issue?",
+      "What remediation steps should be prioritized if tail latency is the main pain point?"
     ],
-    "chain_length": 2
+    "chain_length": 5
   },
   {
-    "category": "document analysis",
+    "category": "security review",
     "model": "gpt-4o-mini",
     "prompts": [
-      {
-        "text": "Can you summarize the key points from the attached PDF document?",
-        "attachment": "pdf"
-      },
-      {
-        "text": "What are the main conclusions or recommendations presented in the document?",
-        "attachment": null
-      },
-      {
-        "text": "Can you explain any complex terms or concepts mentioned in the report?",
-        "attachment": null
-      }
+      "Give me a concise threat model for a web dashboard that proxies backend requests.",
+      "What are common SSRF and request smuggling pitfalls in proxy-style services?",
+      "How should session IDs be generated, rotated, and scoped to reduce abuse?",
+      "What logging fields are essential for incident response without leaking secrets?",
+      "Suggest a practical checklist for a pre-release security review."
     ],
-    "chain_length": 3
+    "chain_length": 5
   },
   {
-    "category": "debugging help",
+    "category": "frontend reliability",
     "model": "gpt-4o-mini",
     "prompts": [
-      "I'm having trouble debugging a Python script that's supposed to calculate the Fibonacci sequence. Can you help me identify any potential issues?"
+      "My single-page app sometimes freezes while streaming API responses. How do I debug this?",
+      "What patterns keep streamed UI updates responsive without blocking rendering?",
+      "How should I handle cancellation and stale responses when users submit rapidly?",
+      "Give a strategy for resilient error states and retry UX in streaming chat views.",
+      "What telemetry should I capture for client-side performance regressions?"
     ],
-    "chain_length": 1
+    "chain_length": 5
   },
   {
-    "category": "research explanation",
+    "category": "api design",
     "model": "gpt-4o-mini",
     "prompts": [
-      "Can you explain the significance of renewable energy sources in combating climate change?"
+      "Design a versioned REST API for task management with pagination and filtering.",
+      "How should idempotency keys be implemented for create operations?",
+      "What response envelope works well for partial failures in batch endpoints?",
+      "How can I evolve the API schema without breaking existing clients?",
+      "List API contract tests that should run in CI on every commit."
     ],
-    "chain_length": 1
+    "chain_length": 5
   },
   {
-    "category": "coding from scratch",
+    "category": "devops automation",
     "model": "gpt-4o-mini",
     "prompts": [
-      "I want to build a simple to-do list application in Python from scratch. Can you help me get started?"
+      "I want a deployment pipeline with build, test, security scan, and staged rollout.",
+      "How do I add rollback criteria based on canary error budgets?",
+      "What secrets management pattern is safest for CI runners?",
+      "How can I parallelize tests while preserving deterministic outcomes?",
+      "What artifacts should be retained for auditability and incident analysis?"
     ],
-    "chain_length": 1
+    "chain_length": 5
+  },
+  {
+    "category": "data engineering",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Help me build a robust ETL pipeline for daily event ingestion from JSON logs.",
+      "How do I handle schema drift without dropping data quality guarantees?",
+      "What partitioning strategy should I use for cost-efficient query performance?",
+      "How should late-arriving events and deduplication be handled in batch processing?",
+      "What data quality checks should fail the pipeline automatically?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "benchmarking",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I need a fair benchmark plan for latency and throughput across four service profiles.",
+      "How can I control for warm-up effects and caching artifacts?",
+      "What sample size is minimally acceptable for p95 latency comparisons?",
+      "How should I visualize distributions to avoid misleading averages?",
+      "What conclusions are valid versus overclaimed in benchmark reports?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "linux debugging",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "A Linux process gradually increases memory usage over 12 hours. Where should I start?",
+      "How do I distinguish memory leak versus cache growth versus fragmentation?",
+      "Which tools should I use first: smem, pmap, perf, or heap profilers?",
+      "How can I capture useful diagnostics in production with minimal disruption?",
+      "What remediation options are safe before a full root-cause fix lands?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "qa planning",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Create a QA strategy for a dashboard with streaming responses and container controls.",
+      "What test matrix should cover browsers, network faults, and backend outages?",
+      "How should flaky tests be triaged without masking real regressions?",
+      "What release gate criteria should block deployment automatically?",
+      "How can exploratory testing findings be converted into regression tests?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "documentation",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How do I structure technical documentation for a mixed ML and networking project?",
+      "What belongs in architecture docs versus runbooks versus experiment notes?",
+      "How can I keep docs synchronized with evolving scripts and env variables?",
+      "Give a template for post-experiment summaries that future teammates can reuse.",
+      "What anti-patterns make engineering documentation hard to trust?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "prompt engineering",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I want to design robust prompts for multi-step coding tasks. What structure helps most?",
+      "How do I force explicit assumptions and uncertainty handling in model outputs?",
+      "What prompting pattern reduces hallucinations in technical Q&A?",
+      "How should I request concise versus detailed output without ambiguity?",
+      "Give a rubric for evaluating prompt quality over repeated runs."
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "long context reasoning",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How can I summarize long technical threads without losing critical constraints?",
+      "What strategy helps preserve decisions, risks, and action items over many iterations?",
+      "How should I represent unresolved questions so they remain visible later?",
+      "What structure is best for writing concise status updates during long tasks?",
+      "How can I avoid repetition while keeping collaborators aligned?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "performance optimization",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "A service has good average latency but poor p99. How should I prioritize investigation?",
+      "What code and infrastructure patterns commonly cause long-tail spikes?",
+      "How do I correlate GC events, I/O waits, and queue depth with latency outliers?",
+      "Which optimizations usually improve p99 without harming throughput?",
+      "How should I validate improvements are real and not measurement noise?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "distributed systems",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How would you design leader election for a distributed job scheduler?",
+      "What consistency model is enough for scheduling correctness without overpaying on latency?",
+      "How should failover behave if the leader dies during an in-flight batch dispatch?",
+      "What telemetry would reveal split-brain risks before user-visible failures?",
+      "How can you test partition tolerance and clock-skew scenarios in CI?",
+      "What are pragmatic defaults for retries, idempotency, and duplicate suppression?"
+    ],
+    "chain_length": 6
+  },
+  {
+    "category": "stream processing",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "I want to process clickstream events in near real time. Which architecture should I start with?",
+      "How do watermarking and event-time windows affect late data handling?",
+      "What does exactly-once actually mean in practical pipeline design?",
+      "How should I implement dead-letter queues without losing observability?",
+      "What replay strategy is safest when schemas evolve midstream?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "prompt chain reasoning",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Give me a framework for solving ambiguous technical requests without overbuilding.",
+      "How do I decide when to ask clarification versus taking initiative?",
+      "What structure should progress updates follow in long-running tasks?",
+      "How can I keep outputs concise but still auditably correct?",
+      "What signs indicate I should switch from exploration to implementation?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "algorithms",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Compare Dijkstra, A*, and Bellman-Ford for shortest-path use cases.",
+      "When does A* outperform Dijkstra in practice and why?",
+      "What heuristic pitfalls can make A* degrade to exhaustive search?",
+      "How would you benchmark these algorithms on sparse vs dense graphs?",
+      "What implementation mistakes most often cause correctness bugs?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "linux performance",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "My CPU usage is low but latency is high. Which kernel signals should I inspect?",
+      "How do scheduler wait times differ from I/O wait in root-cause analysis?",
+      "What perf + eBPF probes are highest value for a first pass?",
+      "How can cgroup throttling masquerade as application slowness?",
+      "What one-page incident summary format helps future responders most?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "observability",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Define an observability baseline for a small microservice platform.",
+      "Which RED and USE metrics should be mandatory on day one?",
+      "How should tracing sampling be tuned during incidents versus normal operation?",
+      "What dashboard anti-patterns make teams miss slow burns?",
+      "How can alerting be tied to user impact instead of noisy infrastructure thresholds?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "privacy engineering",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How do I assess privacy risk for metadata-heavy telemetry pipelines?",
+      "What data minimization patterns reduce exposure without killing debuggability?",
+      "How should retention windows differ for raw versus aggregated logs?",
+      "What are practical controls for pseudonymization and reversible access workflows?",
+      "How can teams validate that privacy controls stay effective over time?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "adversarial testing",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Design a red-team style test plan for a network obfuscation proxy.",
+      "How do I separate attack effectiveness from dataset leakage artifacts?",
+      "What baseline controls are non-negotiable for fair adversarial comparison?",
+      "How should adaptive attacker retraining be included in evaluations?",
+      "What report language avoids overstating security guarantees?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "incident response",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Create a first-hour incident response checklist for partial API outage.",
+      "What communication cadence should be used for engineers vs stakeholders?",
+      "How do I decide between rollback, feature flags, and traffic shedding quickly?",
+      "What evidence should be preserved for postmortem integrity?",
+      "How should action items be prioritized to reduce recurrence probability?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "code review",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "What is an efficient checklist for reviewing backend service pull requests?",
+      "How can reviewers balance correctness, security, and maintainability concerns?",
+      "What comments are high-value versus noise during code review?",
+      "How should test coverage concerns be raised constructively?",
+      "When should a PR be split versus approved with follow-up tasks?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "container operations",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How can I optimize Docker image size without harming reproducibility?",
+      "What base-image and package pinning strategy is safest in CI?",
+      "How should health checks be defined for stream-oriented services?",
+      "What common volume mount mistakes lead to hard-to-debug runtime issues?",
+      "How can I audit and rotate container credentials safely?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "query optimization",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "A dashboard query takes 20 seconds under load. How should I triage it?",
+      "What plan regressions occur after schema or statistics changes?",
+      "How do covering indexes compare to materialized views for this case?",
+      "When is denormalization justified despite maintenance complexity?",
+      "How should improvements be benchmarked to avoid cherry-picking?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "reliability engineering",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How should I define SLOs for a streaming conversational API?",
+      "What error budget policy is realistic for early-stage systems?",
+      "How can brownout mechanisms protect core functionality during overload?",
+      "What chaos experiments provide the most insight with least risk?",
+      "How should reliability goals be tied to release criteria?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "data visualization",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "What chart types best compare latency distributions across techniques?",
+      "How can I avoid misleading audiences with over-aggregated metrics?",
+      "When should I use log scales for byte and duration axes?",
+      "What annotation strategy keeps plots readable in conference papers?",
+      "How do I present uncertainty clearly without clutter?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "benchmark methodology",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How do I design fair A/B benchmark runs for changing network profiles?",
+      "What randomization strategy reduces ordering effects across long experiments?",
+      "How should warmup, cooldown, and cache invalidation be handled?",
+      "What statistical test is appropriate for non-normal latency distributions?",
+      "How should outliers be treated and reported transparently?",
+      "What reproducibility metadata is essential in benchmark artifacts?"
+    ],
+    "chain_length": 6
+  },
+  {
+    "category": "secure coding",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "What secure coding checklist should be used for Python web services?",
+      "How do I harden request parsing against malformed payload attacks?",
+      "What response sanitization is needed before logging user-supplied content?",
+      "How should dependency scanning findings be prioritized in small teams?",
+      "What controls prevent accidental secret exposure in stack traces?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "team processes",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How can a small research engineering team run faster without losing quality?",
+      "What meeting rituals actually improve execution instead of creating overhead?",
+      "How should ownership be defined for shared scripts and experiment pipelines?",
+      "What lightweight process catches regressions early?",
+      "How should success be measured for weekly engineering cycles?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "edge case debugging",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "A bug only appears after hours of runtime. What debugging strategy should I use?",
+      "How can I collect diagnostics over time without huge performance overhead?",
+      "What patterns help isolate race conditions in async pipelines?",
+      "How should I design a minimal reproducer for flaky timing bugs?",
+      "When should I add temporary instrumentation versus formal tracing?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "architectural tradeoffs",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "Help me evaluate monolith versus microservices for a latency-sensitive tool.",
+      "What hidden operational costs usually appear after splitting services?",
+      "How do service boundaries affect data consistency and debugging speed?",
+      "When is modular monolith the better long-term choice?",
+      "How should migration milestones be sequenced to reduce risk?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "testing strategy",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How do I build a layered test strategy for API + frontend + pipeline scripts?",
+      "Which tests should run per commit versus nightly?",
+      "How can I keep end-to-end tests stable in dynamic environments?",
+      "What fixtures and synthetic datasets are worth maintaining?",
+      "How should test failures be triaged to avoid alert fatigue?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "capacity planning",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How should I estimate capacity needs for bursty conversational traffic?",
+      "What signals show we are near saturation before hard failures occur?",
+      "How can admission control preserve critical workloads under spikes?",
+      "When is vertical scaling better than horizontal scaling?",
+      "What forecasting method works with limited historical data?"
+    ],
+    "chain_length": 5
+  },
+  {
+    "category": "governance",
+    "model": "gpt-4o-mini",
+    "prompts": [
+      "How do we implement lightweight change governance for research systems?",
+      "What metadata should be mandatory for experiments that influence decisions?",
+      "How should approvals differ for code, configs, and data artifacts?",
+      "What retention policy balances reproducibility and storage cost?",
+      "How can governance stay practical for a small team?"
+    ],
+    "chain_length": 5
   }
 ]
