@@ -525,6 +525,45 @@ def main(argv=None):
     
     print(f"\nResults saved to {args.output}")
 
+    # Save model artifacts for downstream inference/evaluation.
+    model_weights_path = Path(args.model_weights)
+    if model_weights_path.suffix.lower() != ".pkl":
+        model_weights_path = model_weights_path.with_suffix(".pkl")
+        print(f"Adjusted model artifact path to use .pkl: {model_weights_path}")
+
+    model_artifacts = {
+        "models": trained_models,
+        "scaler": scaler,
+        "markov_models": markov_models,
+        "block_mappings": block_mappings,
+        "feature_dim": int(X.shape[1]),
+        "labels": {"non_llm": 0, "llm": 1},
+        "training_metadata": {
+            "input_file": str(args.input),
+            "test_size": args.test_size,
+            "train_size": len(X_train),
+            "test_size_count": len(X_test),
+        },
+    }
+
+    # Single bundle .pkl that contains all models and preprocessing artifacts.
+    joblib.dump(model_artifacts, model_weights_path)
+    print(f"Model artifacts saved to {model_weights_path}")
+
+    # Save each classifier separately as .pkl as well.
+    for model_name, model in trained_models.items():
+        per_model_path = model_weights_path.with_name(
+            f"{model_weights_path.stem}_{model_name}.pkl"
+        )
+        joblib.dump(model, per_model_path)
+        print(f"Saved {model_name} model to {per_model_path}")
+
+    scaler_path = model_weights_path.with_name(
+        f"{model_weights_path.stem}_scaler.pkl"
+    )
+    joblib.dump(scaler, scaler_path)
+    print(f"Saved scaler to {scaler_path}")
+
 
 if __name__ == "__main__":
     main()
