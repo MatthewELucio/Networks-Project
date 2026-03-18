@@ -421,6 +421,7 @@ def process_pipeline(url_template, max_packets, flowlets_per_doc):
                         pass
             return False
         
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start", help="YYYY-MM-DD", required=True)
     parser.add_argument("--end", help="YYYY-MM-DD", required=True)
