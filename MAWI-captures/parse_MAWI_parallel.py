@@ -323,7 +323,7 @@ def generate_mawi_urls(start_str: str, end_str: str, step_days: int) -> List[str
         current += timedelta(days=step_days)
     return urls
 
-def process_pipeline(url_template, max_packets, chunk_size):
+def process_pipeline(url_template, max_packets, flowlets_per_doc):
     """
     Tries multiple timestamps (1400, 1359, 1401) to account for 
     sensor drift in the MAWI archive.
@@ -372,7 +372,7 @@ def process_pipeline(url_template, max_packets, chunk_size):
                 threshold: ThresholdCaptureWriter(
                     capture_id=f"{capture_id}_{threshold_suffix(threshold)}",
                     threshold=threshold,
-                    batch_size=5000,
+                    batch_size=flowlets_per_doc,
                 )
                 for threshold in FLOWLET_THRESHOLDS
             }
@@ -381,19 +381,20 @@ def process_pipeline(url_template, max_packets, chunk_size):
                 for threshold in FLOWLET_THRESHOLDS
             }
 
+
             parsed_packets = 0
             last_ts = None
+            flowlet_counts = {threshold: 0 for threshold in FLOWLET_THRESHOLDS}
 
             for parsed_packets, packet in enumerate(iter_pcap_gz_packets(gz_path, max_packets), start=1):
                 last_ts = packet["ts"]
                 for threshold in FLOWLET_THRESHOLDS:
                     processors[threshold].process_packet(packet)
 
-                if parsed_packets % chunk_size == 0:
-                    for threshold in FLOWLET_THRESHOLDS:
-                        processors[threshold].flush_inactive(last_ts)
-                        writers[threshold].flush()
-                    print(f"  -> Processed {parsed_packets:,} packets for {capture_id}")
+                # No packet-based chunking; flowlet-based chunking is handled in writer.flush()
+
+            # After all packets, flush all remaining flowlets
+
 
             if parsed_packets == 0:
                 print(f"❌ No packets parsed for {capture_id}")
@@ -420,23 +421,22 @@ def process_pipeline(url_template, max_packets, chunk_size):
                         pass
             return False
         
-def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start", help="YYYY-MM-DD", required=True)
     parser.add_argument("--end", help="YYYY-MM-DD", required=True)
     parser.add_argument("--step-days", type=int, default=1)
     parser.add_argument("--max-packets", type=int, default=2000)
     parser.add_argument("--workers", type=int, default=8)
-    parser.add_argument("--chunk-size", type=int, default=100000)
+    parser.add_argument("--flowlets-per-doc", type=int, default=1000, help="Number of flowlets per Mongo document part")
     args = parser.parse_args()
 
-    if args.chunk_size <= 0:
-        raise ValueError("--chunk-size must be > 0")
+    if args.flowlets_per_doc <= 0:
+        raise ValueError("--flowlets-per-doc must be > 0")
 
     urls = generate_mawi_urls(args.start, args.end, args.step_days)
 
     with ThreadPoolExecutor(max_workers=args.workers) as threads:
-        threads.map(lambda u: process_pipeline(u, args.max_packets, args.chunk_size), urls)
+        threads.map(lambda u: process_pipeline(u, args.max_packets, args.flowlets_per_doc), urls)
 
 if __name__ == "__main__":
     main()
