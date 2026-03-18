@@ -2,6 +2,8 @@
 import argparse
 import tempfile
 import os
+import sys
+import importlib.util
 import requests
 import gzip
 import dpkt
@@ -15,18 +17,29 @@ import statistics
 import json
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 
-# Import Firestore and dotenv
-from google.cloud import firestore
-from dotenv import load_dotenv
+# Import MongoDB backend used by live capture pipeline
+DB_MODULE_DIR = Path(__file__).resolve().parents[1] / "data-pipeline" / "flowlet-parsing"
+if str(DB_MODULE_DIR) not in sys.path:
+    sys.path.append(str(DB_MODULE_DIR))
 
-# Load credentials from .env if present
-load_dotenv()
+DB_MODULE_PATH = DB_MODULE_DIR / "database_mongodb.py"
+
+if DB_MODULE_PATH.exists():
+    _db_spec = importlib.util.spec_from_file_location("database_mongodb", DB_MODULE_PATH)
+    if _db_spec and _db_spec.loader:
+        _db_cloud = importlib.util.module_from_spec(_db_spec)
+        sys.modules[_db_spec.name] = _db_cloud
+        _db_spec.loader.exec_module(_db_cloud)
+    else:
+        _db_cloud = None
+else:
+    _db_cloud = None
 
 # --- CONFIGURATION ---
-DEFAULT_PROJECT_ID = "networks-project-s26"
-# CHANGED: Collection name matches your firebase.py / live logic
-DEFAULT_COLLECTION = "parsed-flowlets" 
+DEFAULT_DB_NAME = "networks_project"
+DEFAULT_COLLECTION = "captures"
 MAWI_BASE_URL = "http://mawi.nezu.wide.ad.jp/mawi/samplepoint-F"
 FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
 
@@ -34,47 +47,69 @@ FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
 def threshold_suffix(threshold: float) -> str:
     return f"{threshold:g}"
 # ============================================================
-# Firestore Logic (Synchronized with live_capture_to_db.py style)
+# MongoDB Logic (Synchronized with live_capture_to_db_mac.py style)
 # ============================================================
 
-class ParsedFlowletFirestore:
-    def __init__(self, project_id=DEFAULT_PROJECT_ID, collection_name=DEFAULT_COLLECTION):
-        self._client = firestore.Client(project=project_id)
-        self.collection_name = collection_name
+class ParsedFlowletMongoDB:
+    def __init__(self, db_name=DEFAULT_DB_NAME, collection_name=DEFAULT_COLLECTION):
+        if _db_cloud is None:
+            raise RuntimeError(
+                "database_mongodb.py is not available. "
+                "Ensure data-pipeline/flowlet-parsing/database_mongodb.py exists and is importable."
+            )
+
+        _db_cloud.init_database(None, db_name=db_name, collection=collection_name)
+        self._db = _db_cloud.get_db_session()
+        self._Capture = _db_cloud.Capture
+        self._Flowlet = _db_cloud.Flowlet
 
     def write_capture(self, capture_id: str, flowlets: List[Dict[str, Any]]) -> None:
-        doc_ref = self._client.collection(self.collection_name).document(capture_id)
-        
-        # 1. Prepare the base document with metadata
-        # Matching the structure expected by your React frontend
-        payload = {
-            "capture_id": capture_id,
-            "file_path": f"MAWI_{capture_id}",
-            "created_at": datetime.now().isoformat(),
-            "status": "completed",
-            "notes": "Parallel MAWI Import",
-            "llm_ip_map": json.dumps({}), # Usually empty for MAWI
-            "flow_count": len(flowlets)
-        }
+        print(f"  -> Preparing MongoDB payload for {len(flowlets)} flowlets...")
 
-        # 2. Add flowlets as top-level fields (flowlet_000001, etc.)
-        # This matches the "document-per-capture" style of your live script
-        print(f"  -> Preparing payload for {len(flowlets)} flowlets...")
+        capture = self._Capture(
+            file_path=capture_id,
+            status="completed",
+            llm_ip_map=json.dumps({}),
+            notes="Parallel MAWI Import",
+        )
+        self._db.add(capture)
+        self._db.commit()
+
         for idx, flowlet in enumerate(flowlets, start=1):
-            key = f"flowlet_{idx:06d}"
-            payload[key] = flowlet
+            outgoing = flowlet.get("outgoing")
+            direction_encoded = 1 if outgoing is True else (-1 if outgoing is False else 0)
+            traffic_class = (flowlet.get("traffic_class") or "non_llm").replace("-", "_")
 
-        # 3. Write the large document
-        # NOTE: Firestore has a 1MB limit. If flow_count is very high, 
-        # this will fail. We use a try-except to catch that.
-        try:
-            print(f"  -> Uploading document to {self.collection_name}/{capture_id}...")
-            doc_ref.set(payload)
-        except Exception as e:
-            if "too large" in str(e).lower():
-                print(f"❌ Error: Document {capture_id} exceeds 1MB Firestore limit. Reduce --max-packets.")
-            else:
-                raise e
+            self._db.add(
+                self._Flowlet(
+                    capture_id=capture.id,
+                    src_ip=flowlet.get("src_ip"),
+                    src_port=flowlet.get("src_port"),
+                    dst_ip=flowlet.get("dst_ip"),
+                    dst_port=flowlet.get("dst_port"),
+                    protocol=flowlet.get("protocol"),
+                    flowlet_id=flowlet.get("flowlet_id") or idx,
+                    traffic_class=traffic_class,
+                    llm_name=flowlet.get("llm_name"),
+                    outgoing=outgoing,
+                    direction_encoded=direction_encoded,
+                    start_ts=flowlet.get("start_ts", 0.0),
+                    end_ts=flowlet.get("end_ts", 0.0),
+                    duration=flowlet.get("duration", 0.0),
+                    packet_count=flowlet.get("packet_count", 0),
+                    total_bytes=flowlet.get("total_bytes", 0),
+                    inter_packet_time_mean=flowlet.get("inter_packet_time_mean"),
+                    inter_packet_time_std=flowlet.get("inter_packet_time_std"),
+                    packet_size_mean=flowlet.get("packet_size_mean"),
+                    packet_size_std=flowlet.get("packet_size_std"),
+                )
+            )
+
+        self._db.commit()
+        print(f"  -> Uploaded MongoDB document to {DEFAULT_DB_NAME}/{DEFAULT_COLLECTION}/{capture_id}")
+
+    def close(self):
+        self._db.close()
 
 # --- Parsing Helpers ---
 def download_file(url, out_path):
@@ -221,7 +256,7 @@ def process_pipeline(url_template, max_packets):
                 key = (p["src_ip"], p["src_port"], p["dst_ip"], p["dst_port"], p["proto"].upper())
                 flows[key].append(p)
             
-            client = ParsedFlowletFirestore()
+            client = ParsedFlowletMongoDB()
             for threshold in FLOWLET_THRESHOLDS:
                 flowlet_features = []
                 with ProcessPoolExecutor() as executor:
@@ -232,6 +267,7 @@ def process_pipeline(url_template, max_packets):
                 threshold_capture_id = f"{capture_id}_{threshold_suffix(threshold)}"
                 client.write_capture(threshold_capture_id, flowlet_features)
                 print(f"✅ Success: {threshold_capture_id}")
+            client.close()
             return True
         except Exception as e:
             print(f"❌ Error processing {capture_id}: {e}")
