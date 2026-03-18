@@ -149,49 +149,63 @@ def parse_pcap_gz_to_packets(gz_path, max_packets=None):
             except: continue
     return packets
 
-def process_single_flow(args):
-    flow_key, pkts, threshold = args
-    pkts_sorted = sorted(pkts, key=lambda x: x["ts"])
-    src, sport, dst, dport, proto = flow_key
-    
+def split_flowlets_for_threshold(pkts_sorted, threshold):
     flowlets = []
-    if not pkts_sorted: return []
+    if not pkts_sorted:
+        return flowlets
+
     curr = {"start_ts": pkts_sorted[0]["ts"], "end_ts": pkts_sorted[0]["ts"], "pkts": [pkts_sorted[0]]}
     for p in pkts_sorted[1:]:
         if p["ts"] - curr["end_ts"] > threshold:
             flowlets.append(curr)
             curr = {"start_ts": p["ts"], "end_ts": p["ts"], "pkts": [p]}
         else:
-            curr["end_ts"] = p["ts"]; curr["pkts"].append(p)
+            curr["end_ts"] = p["ts"]
+            curr["pkts"].append(p)
     flowlets.append(curr)
+    return flowlets
 
-    results = []
-    for idx, fl in enumerate(flowlets, start=1):
-        psizes = [p["length"] for p in fl["pkts"]]
-        ipts = [fl["pkts"][i]["ts"] - fl["pkts"][i-1]["ts"] for i in range(1, len(fl["pkts"]))]
-        
-        # Structure exactly like database.py/live_capture_to_db.py
-        results.append({
-            "src_ip": src, 
-            "src_port": sport, 
-            "dst_ip": dst, 
-            "dst_port": dport, 
-            "protocol": proto,
-            "flowlet_id": idx, 
-            "traffic_class": "non-llm", 
-            "llm_name": None,
-            "outgoing": (dport == 443),
-            "start_ts": fl["start_ts"], 
-            "end_ts": fl["end_ts"],
-            "duration": fl["end_ts"] - fl["start_ts"],
-            "packet_count": len(psizes), 
-            "total_bytes": sum(psizes),
-            "inter_packet_time_mean": statistics.mean(ipts) if ipts else 0.0,
-            "inter_packet_time_std": statistics.stdev(ipts) if len(ipts) > 1 else 0.0,
-            "packet_size_mean": statistics.mean(psizes),
-            "packet_size_std": statistics.stdev(psizes) if len(psizes) > 1 else 0.0,
-        })
-    return results
+
+def process_single_flow(args):
+    flow_key, pkts, thresholds = args
+    pkts_sorted = sorted(pkts, key=lambda x: x["ts"])
+    src, sport, dst, dport, proto = flow_key
+
+    if not pkts_sorted:
+        return {threshold: [] for threshold in thresholds}
+
+    results_by_threshold = {}
+    for threshold in thresholds:
+        flowlets = split_flowlets_for_threshold(pkts_sorted, threshold)
+
+        threshold_results = []
+        for idx, fl in enumerate(flowlets, start=1):
+            psizes = [p["length"] for p in fl["pkts"]]
+            ipts = [fl["pkts"][i]["ts"] - fl["pkts"][i-1]["ts"] for i in range(1, len(fl["pkts"]))]
+
+            threshold_results.append({
+                "src_ip": src,
+                "src_port": sport,
+                "dst_ip": dst,
+                "dst_port": dport,
+                "protocol": proto,
+                "flowlet_id": idx,
+                "traffic_class": "non-llm",
+                "llm_name": None,
+                "outgoing": (dport == 443),
+                "start_ts": fl["start_ts"],
+                "end_ts": fl["end_ts"],
+                "duration": fl["end_ts"] - fl["start_ts"],
+                "packet_count": len(psizes),
+                "total_bytes": sum(psizes),
+                "inter_packet_time_mean": statistics.mean(ipts) if ipts else 0.0,
+                "inter_packet_time_std": statistics.stdev(ipts) if len(ipts) > 1 else 0.0,
+                "packet_size_mean": statistics.mean(psizes),
+                "packet_size_std": statistics.stdev(psizes) if len(psizes) > 1 else 0.0,
+            })
+        results_by_threshold[threshold] = threshold_results
+
+    return results_by_threshold
 
 def generate_mawi_urls(start_str: str, end_str: str, step_days: int) -> List[str]:
     fmt = "%Y-%m-%d"
@@ -256,16 +270,17 @@ def process_pipeline(url_template, max_packets):
                 key = (p["src_ip"], p["src_port"], p["dst_ip"], p["dst_port"], p["proto"].upper())
                 flows[key].append(p)
             
+            threshold_flowlets = {threshold: [] for threshold in FLOWLET_THRESHOLDS}
+            with ProcessPoolExecutor() as executor:
+                map_args = [(k, v, tuple(FLOWLET_THRESHOLDS)) for k, v in flows.items()]
+                for flow_result in executor.map(process_single_flow, map_args):
+                    for threshold in FLOWLET_THRESHOLDS:
+                        threshold_flowlets[threshold].extend(flow_result.get(threshold, []))
+
             client = ParsedFlowletMongoDB()
             for threshold in FLOWLET_THRESHOLDS:
-                flowlet_features = []
-                with ProcessPoolExecutor() as executor:
-                    map_args = [(k, v, threshold) for k, v in flows.items()]
-                    for r in executor.map(process_single_flow, map_args): 
-                        flowlet_features.extend(r)
-
                 threshold_capture_id = f"{capture_id}_{threshold_suffix(threshold)}"
-                client.write_capture(threshold_capture_id, flowlet_features)
+                client.write_capture(threshold_capture_id, threshold_flowlets[threshold])
                 print(f"✅ Success: {threshold_capture_id}")
             client.close()
             return True
