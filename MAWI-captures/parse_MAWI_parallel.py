@@ -73,7 +73,7 @@ class ThresholdCaptureWriter:
         self._start_new_doc()
 
     def _start_new_doc(self):
-        self.capture_id = f"{self.base_capture_id}_part_{self.part}" if self.part > 1 else self.base_capture_id
+        self.capture_id = f"{self.base_capture_id}_part_{self.part}"
         self._capture = self._Capture(
             file_path=self.capture_id,
             status="active",
