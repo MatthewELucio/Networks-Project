@@ -184,6 +184,7 @@ def main():
     p.add_argument("--cloud-db", action="store_true", default=None, help="Use Firebase Cloud Firestore.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
+    p.add_argument("--threshold", type=float, default=0.1, help="Flowlet split threshold in seconds (default: 0.1).")
     args = p.parse_args()
 
     use_cloud_db = False if args.no_cloud_db else (args.cloud_db if args.cloud_db is not None else USE_CLOUD_DB)
@@ -218,11 +219,15 @@ def main():
         # Create new record
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_name = f"MANUAL_LIVE_{args.interface or 'default'}_{timestamp}"
-        capture = Capture(
-            file_path=unique_name,
-            status="active",
-            notes=f"Manual Run on {args.ip_range}",
-        )
+        capture_kwargs = {
+            "file_path": unique_name,
+            "status": "active",
+            "notes": f"Manual Run on {args.ip_range}",
+        }
+        # New backends (e.g. MongoDB) may support top-level capture threshold.
+        if hasattr(Capture, "__annotations__") and "threshold" in getattr(Capture, "__annotations__", {}):
+            capture_kwargs["threshold"] = args.threshold
+        capture = Capture(**capture_kwargs)
         db.add(capture)
         db.commit()
         if not use_cloud_db:
@@ -230,7 +235,7 @@ def main():
         capture_id = capture.id
         print(f"📝 Created new manual capture record (ID: {capture_id})")
 
-    manager = LiveFlowletManager(db, capture_id, Flowlet)
+    manager = LiveFlowletManager(db, capture_id, Flowlet, threshold=args.threshold)
     
     cmd = build_command(tshark_bin, is_win_bin, network, args.interface, args.ssl_keys)
 
