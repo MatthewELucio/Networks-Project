@@ -82,7 +82,7 @@ def get_driver():
     options = uc.ChromeOptions()
     # options.add_argument("--headless") # DO NOT USE HEADLESS
     
-    driver = uc.Chrome(options=options, use_subprocess=True, version_main=144)
+    driver = uc.Chrome(options=options, use_subprocess=True, version_main=146)
     return driver
 
 # def run_bot(target_name, prompt_bank_path):
