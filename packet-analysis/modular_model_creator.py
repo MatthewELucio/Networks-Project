@@ -12,6 +12,9 @@ Examples:
     python packet-analysis/modular_model_creator.py flowlet_features.json \
         --llm-sources chatgpt --direction incoming
 
+    python packet-analysis/modular_model_creator.py captures/chatgpt_ipv4 \
+        --llm-sources chatgpt --direction both
+
     python packet-analysis/modular_model_creator.py flowlet_features.json \
         --llm-sources chatgpt,claude,gemini --direction both \
         --output multi_llm_results.json --model-weights multi_llm_weights.pkl
@@ -31,6 +34,33 @@ from flowlet_models import (
     prepare_training_data,
     train_and_evaluate_models,
 )
+
+
+def load_features_from_path(input_path: str) -> Tuple[List[Dict[str, Any]], List[str]]:
+    """Load flowlet features from a JSON file or a directory of JSON files."""
+    resolved_path = Path(input_path)
+
+    if resolved_path.is_file():
+        features = load_flowlet_features(str(resolved_path))
+        return features, [str(resolved_path)]
+
+    if resolved_path.is_dir():
+        json_files = sorted(path for path in resolved_path.glob("*.json") if path.is_file())
+        if not json_files:
+            raise ValueError(f"No JSON files found in directory: {resolved_path}")
+
+        merged_features: List[Dict[str, Any]] = []
+        loaded_sources: List[str] = []
+
+        for json_file in json_files:
+            file_features = load_flowlet_features(str(json_file))
+            merged_features.extend(file_features)
+            loaded_sources.append(str(json_file))
+            print(f"Loaded {len(file_features)} flowlets from {json_file}")
+
+        return merged_features, loaded_sources
+
+    raise ValueError(f"Input path is not a file or directory: {resolved_path}")
 
 
 def parse_llm_sources(raw_sources: str) -> List[str]:
@@ -126,7 +156,10 @@ def main(argv=None):
     parser = argparse.ArgumentParser(
         description="Train modular LLM vs non-LLM flowlet classifiers"
     )
-    parser.add_argument("input", help="JSON file with flowlet features")
+    parser.add_argument(
+        "input",
+        help="JSON file with flowlet features, or a directory containing JSON files",
+    )
     parser.add_argument(
         "--llm-sources",
         default="chatgpt",
@@ -163,7 +196,7 @@ def main(argv=None):
     llm_sources = parse_llm_sources(args.llm_sources)
 
     print(f"Loading features from {args.input}...")
-    features = load_flowlet_features(args.input)
+    features, input_sources = load_features_from_path(args.input)
     print(f"Loaded {len(features)} flowlets")
 
     print("Applying modular filter...")
@@ -228,6 +261,7 @@ def main(argv=None):
             "llm_sources": llm_sources if llm_sources else ["all"],
             "direction": args.direction,
             "filter_stats": filter_stats,
+            "input_sources": input_sources,
         },
         "models": results,
     }
@@ -250,7 +284,7 @@ def main(argv=None):
         "feature_dim": int(X.shape[1]),
         "labels": {"non_llm": 0, "llm": 1},
         "training_metadata": {
-            "input_file": str(args.input),
+            "input_sources": input_sources,
             "test_size": args.test_size,
             "train_size": len(X_train),
             "test_size_count": len(X_test),
