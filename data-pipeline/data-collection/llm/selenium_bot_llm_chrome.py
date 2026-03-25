@@ -12,7 +12,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Example usage: python .\selenium_bot_llm_chrome.py --target chatgpt
+# Example usage: 
+# cd data-pipeline\data-collection\llm
+# python .\selenium_bot_llm_chrome.py --target chatgpt
 
 # --- CONFIGURATION ---
 # Set SSL Keylog file for Wireshark decryption
