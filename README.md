@@ -51,12 +51,6 @@ The front-end provides a web-based interface for managing packet captures and an
    ```
    The front-end runs on `http://localhost:5173` (Vite default port).
 
-3. **Or with Docker:**
-
-  ```bash
-  docker compose down
-  docker compose up --build
-  ```
 
 #### Features
 
@@ -248,10 +242,6 @@ The API server provides the following endpoints:
 
 See the API server code (`api_server.py`) for detailed request/response formats.
 
-
-# 🔐 Setting Up SSL Decryption
-
-To allow the application to analyze encrypted HTTPS traffic (e.g., traffic to LLMs like ChatGPT), you must configure your browser to log its SSL/TLS keys to a file that our Docker container can read.
 
 ### Step 1: Set the Environment Variable
 You need to tell your browser where to save the keys. We will set this to be **inside this project folder**.
