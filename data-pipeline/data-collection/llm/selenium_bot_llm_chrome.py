@@ -67,6 +67,26 @@ def load_prompt_bank(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
+
+def inject_spelling_mistakes(text, rate=0.07):
+    """Randomly swap, drop, or duplicate characters at a low rate."""
+    chars = list(text)
+    i = 0
+    while i < len(chars):
+        if random.random() < rate:
+            action = random.choice(["swap", "drop", "dup"])
+            if action == "swap" and i < len(chars) - 1:
+                chars[i], chars[i+1] = chars[i+1], chars[i]
+                i += 1
+            elif action == "drop":
+                del chars[i]
+                continue
+            elif action == "dup":
+                chars.insert(i, chars[i])
+                i += 1
+        i += 1
+    return ''.join(chars)
+
 def random_sleep(min_s=1.5, max_s=4.0):
     time.sleep(random.uniform(min_s, max_s))
 
@@ -173,6 +193,9 @@ def run_bot(target_name, prompt_bank_path):
     scenarios = load_prompt_bank(prompt_bank_path)
     print(f"📂 Loaded {len(scenarios)} scenarios from {prompt_bank_path}")
 
+    # Randomize chain order so runs aren't deterministic
+    random.shuffle(scenarios)
+
     if not scenarios:
         print("❌ Error: Prompt bank is empty.")
         return
@@ -200,6 +223,8 @@ def run_bot(target_name, prompt_bank_path):
             scenario = scenarios[scenario_index]
             category = scenario.get("category", "Unknown")
             prompts = scenario.get("prompts", [])
+            # Randomize prompt order within the scenario
+            random.shuffle(prompts)
             
             print(f"\n🎭 Starting Scenario {scenario_index + 1}/{len(scenarios)}: '{category}'")
 
@@ -215,8 +240,10 @@ def run_bot(target_name, prompt_bank_path):
                     )
                     input_box.click()
                     
+                    # Occasionally inject spelling mistakes (no extra delays added)
+                    prompt_to_send = inject_spelling_mistakes(prompt) if random.random() < 0.25 else prompt
                     # Type Prompt
-                    type_like_human(input_box, prompt)
+                    type_like_human(input_box, prompt_to_send)
                     random_sleep(0.5, 1.5)
 
                     # Submit
