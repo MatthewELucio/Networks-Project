@@ -20,6 +20,7 @@ SAMPLE_PDFS_DIR = os.path.join(SCRIPT_DIR, "sample_pdfs")
 def load_prompt_chains():
     with open(PROMPT_BANK_PATH, "r") as f:
         chains = json.load(f)
+    # Randomize chain order to avoid deterministic runs
     random.shuffle(chains)
     return chains
 
@@ -51,6 +52,24 @@ def type_human_like(element, text):
         element.send_keys(char)
         time.sleep(random.uniform(0.05, 0.15))
 
+def inject_spelling_mistakes(text, rate=0.07):
+    """Randomly swap, drop, or duplicate characters at a low rate."""
+    chars = list(text)
+    i = 0
+    while i < len(chars):
+        if random.random() < rate:
+            action = random.choice(["swap", "drop", "dup"])
+            if action == "swap" and i < len(chars) - 1:
+                chars[i], chars[i+1] = chars[i+1], chars[i]
+                i += 1
+            elif action == "drop":
+                del chars[i]
+                continue
+            elif action == "dup":
+                chars.insert(i, chars[i])
+                i += 1
+        i += 1
+    return ''.join(chars)
 def wait_for_login(driver, site_name):
     """Pause and let the user log in manually before proceeding."""
     input(f"\n🔑 Log in to {site_name} in the browser, then press ENTER here to continue...")
@@ -451,6 +470,8 @@ def run_chatgpt(driver):
         if chain_idx > 1:
             open_new_tab(driver, "https://chatgpt.com")
 
+        # Randomize prompt order within the chain
+        random.shuffle(prompts)
         for i, prompt_item in enumerate(prompts, 1):
             prompt_text = get_prompt_text(prompt_item)
             attachment = get_prompt_attachment(prompt_item)
@@ -478,7 +499,9 @@ def run_chatgpt(driver):
                     input_box = driver.find_element(By.TAG_NAME, "textarea")
                     driver.execute_script("arguments[0].click();", input_box)
 
-            type_human_like(input_box, prompt_text)
+            # Occasionally inject spelling mistakes (no extra delays added)
+            prompt_to_send = inject_spelling_mistakes(prompt_text) if random.random() < 0.25 else prompt_text
+            type_human_like(input_box, prompt_to_send)
             time.sleep(random.uniform(0.5, 1.5))
 
             try:
@@ -509,6 +532,8 @@ def run_gemini(driver):
         if chain_idx > 1:
             open_new_tab(driver, "https://gemini.google.com/app")
 
+        # Randomize prompt order within the chain
+        random.shuffle(prompts)
         for i, prompt_item in enumerate(prompts, 1):
             prompt_text = get_prompt_text(prompt_item)
             attachment = get_prompt_attachment(prompt_item)
@@ -529,7 +554,8 @@ def run_gemini(driver):
                 print("❌ Input not found. Are you logged in?")
                 break
 
-            type_human_like(input_box, prompt_text)
+            prompt_to_send = inject_spelling_mistakes(prompt_text) if random.random() < 0.25 else prompt_text
+            type_human_like(input_box, prompt_to_send)
             time.sleep(1)
             input_box.send_keys(Keys.ENTER)
 
@@ -554,6 +580,8 @@ def run_claude(driver):
         if chain_idx > 1:
             open_new_tab(driver, "https://claude.ai/chats")
 
+        # Randomize prompt order within the chain
+        random.shuffle(prompts)
         for i, prompt_item in enumerate(prompts, 1):
             prompt_text = get_prompt_text(prompt_item)
             attachment = get_prompt_attachment(prompt_item)
@@ -574,7 +602,8 @@ def run_claude(driver):
                 print("❌ Input not found. Are you logged in?")
                 break
 
-            type_human_like(input_box, prompt_text)
+            prompt_to_send = inject_spelling_mistakes(prompt_text) if random.random() < 0.25 else prompt_text
+            type_human_like(input_box, prompt_to_send)
             time.sleep(0.5)
 
             # Try clicking the send button first, fall back to ENTER

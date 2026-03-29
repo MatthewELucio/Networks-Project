@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """incoming_model.py
 
-Train classification models to distinguish LLM vs non-LLM incoming ChatGPT flowlets.
+Train classification models to distinguish LLM vs non-LLM incoming Gemini flowlets.
 Uses MaMPF-inspired approach with Markov models and traditional ML classifiers.
 
-Only chatgpt flowlets with outgoing=False are treated as LLM examples; non-LLM
-flowlets are included regardless of direction.  Outgoing ChatGPT flowlets are
+Only gemini flowlets with outgoing=False are treated as LLM examples; non-LLM
+flowlets are included regardless of direction. Outgoing Gemini flowlets are
 excluded from training.
 
 Usage: python3 incoming_model.py <features.json> --output results.json
@@ -38,10 +38,10 @@ def load_flowlet_features(filepath: str) -> List[Dict[str, Any]]:
         return json.load(f)
 
 
-def filter_chatgpt_incoming(features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Filter to only incoming ChatGPT (llm) vs non-LLM flowlets.
+def filter_gemini_incoming(features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Filter to only incoming Gemini (llm) vs non-LLM flowlets.
 
-    - ChatGPT flowlets must have outgoing == False to be included.
+    - Gemini flowlets must have outgoing == False to be included.
     - Non-LLM flowlets are always included.
     """
     filtered = []
@@ -53,8 +53,8 @@ def filter_chatgpt_incoming(features: List[Dict[str, Any]]) -> List[Dict[str, An
         if traffic_class == "non_llm":
             filtered.append(f)
         else:
-            # treat only chatgpt sources as potential llm examples
-            if "chatgpt" in source.lower() and not outgoing:
+            llm_name = str(f.get("llm_name", "")).lower()
+            if ("gemini" in source.lower() or llm_name == "gemini") and not outgoing:
                 filtered.append(f)
     return filtered
 
@@ -463,8 +463,8 @@ def main(argv=None):
     features = load_flowlet_features(args.input)
     print(f"Loaded {len(features)} flowlets")
 
-    # Filter to incoming chatgpt only
-    features = filter_chatgpt_incoming(features)
+    # Filter to incoming gemini only
+    features = filter_gemini_incoming(features)
     print(f"Filtered to {len(features)} relevant flowlets")
 
     # Prepare training data
