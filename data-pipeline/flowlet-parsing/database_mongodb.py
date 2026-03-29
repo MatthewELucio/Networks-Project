@@ -13,12 +13,12 @@ Connection instructions
 - Provide a connection URI via one of:
     1. Environment variable ``MONGODB_URI`` (recommended), e.g.:
 
-        MONGODB_URI="mongodb+srv://user:pass@host.example.com/networks_project"
+        MONGODB_URI="mongodb+srv://user:pass@host.example.com/data_privacy_project"
 
     2. Or pass it directly to ``init_database(uri)``.
 
 - By default this module uses:
-    - Database name: ``networks_project``
+    - Database name: ``data_privacy_project``
     - Collection: ``captures``
 
 Each capture is stored as a single document:
@@ -353,18 +353,18 @@ class MongoSession:
 
 
 _client: Optional[MongoClient] = None
-_db_name: str = "networks_project"
+_db_name: str = "data_privacy_project"
 _collection_name: str = "captures"
 
 
-def init_database(uri: Optional[str] = None, db_name: str = "networks_project", collection: str = "captures") -> None:
+def init_database(uri: Optional[str] = None, db_name: str = "data_privacy_project", collection: str = "captures") -> None:
     """Initialize the MongoDB client.
 
     Args:
         uri: Optional MongoDB URI. If not provided, uses the ``MONGODB_URI``
              environment variable. Example:
-             ``mongodb+srv://user:pass@host.example.com/networks_project``.
-        db_name: Name of the MongoDB database (default: ``networks_project``).
+             ``mongodb+srv://user:pass@host.example.com/data_privacy_project``.
+        db_name: Name of the MongoDB database (default: ``data_privacy_project``).
         collection: Name of the captures collection (default: ``captures``).
     """
     global _client, _db_name, _collection_name
