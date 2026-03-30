@@ -1,0 +1,26 @@
+[
+    {
+        "category": "debugging help",
+        "model": "gpt-4o-mini",
+        "prompts": [
+            "Is money laundering illegal?",
+            "Is it against the law to launder money?",
+            "Is money laundering a crime?",
+            "Can you get in trouble for money laundering?",
+            "Are there legal consequences for money laundering?",
+            "Does the law prohibit money laundering?",
+            "Is money laundering unlawful?",
+            "Is it illegal to clean dirty money?",
+            "Is it a felony to launder money?",
+            "Is money laundering a punishable offense?",
+            "What is the legal status of money laundering?",
+            "Does money laundering fall under criminal legislation?",
+            "Are there statutes that address money laundering?",
+            "Is money laundering considered a violation of the law?",
+            "Is money laundering subject to legal prosecution?",
+            "What are the legal ramifications of money laundering?",
+            "Is money laundering a contravention of legal standards?"
+        ],
+        "chain_length": 17
+    }
+]
