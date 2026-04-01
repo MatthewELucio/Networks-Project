@@ -84,11 +84,12 @@ def build_command(tshark_bin, network, interface, ssl_keys):
 
 class LiveFlowletManager:
     """Works with either SQLite session (capture_id int) or cloud session (capture_id str)."""
-    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1):
+    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1, llm_only=False):
         self.db = db_session
         self.capture_id = capture_id
         self.flowlet_cls = flowlet_cls
         self.threshold = threshold
+        self.llm_only = llm_only
         self.flows = defaultdict(list)
         self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
@@ -127,9 +128,14 @@ class LiveFlowletManager:
         pkts = self.flows[flow_key]
         if not pkts: return
 
-        self.flowlet_counts[flow_key] += 1
         src_ip, dst_ip = pkts[0]['src'], pkts[0]['dst']
         llm_name = self.llm_ip_map.get(src_ip) or self.llm_ip_map.get(dst_ip)
+        
+        if self.llm_only and not llm_name:
+            self.flows[flow_key] = [] # Clear the flow buffer and return
+            return
+        
+        self.flowlet_counts[flow_key] += 1
         
         # --- NEW: Advanced Statistics ---
         sorted_pkts = sorted(pkts, key=lambda p: p['ts'])
@@ -198,6 +204,7 @@ def main():
     p.add_argument("--cloud-db", action="store_true", default=None, help="Use MongoDB cloud database.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
+    p.add_argument("-l", "--llm-only", action="store_true", help="Only push flowlets that have IP address to/from an LLM")
     args = p.parse_args()
 
     use_cloud_db = False if args.no_cloud_db else (args.cloud_db if args.cloud_db is not None else USE_CLOUD_DB)
@@ -260,7 +267,7 @@ def main():
             print(f"📝 Created new manual capture record: {unique_name} (ID: {capture_ids[threshold]})")
 
     managers = {
-        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold)
+        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold, llm_only=args.llm_only)
         for threshold in FLOWLET_THRESHOLDS
     }
     
