@@ -254,20 +254,69 @@ You need to tell your browser where to save the keys. We will set this to be **i
     * *Example:* `C:\Users\You\Documents\Networks-Project\data\sslkeylogfile.txt`
 5.  Click **OK** to save.
 
-#### 🍎/🐧 For Mac & Linux Users
-Run the following command in your terminal **inside the project root directory**:
+#### Mac Users
+
+1. Set the SSLKEYLOGFILE environment variable
+
+Chrome logs TLS session keys to a file when `SSLKEYLOGFILE` is set in the environment. This is the **only** mechanism Chrome supports — the `--ssl-key-log-file` CLI flag does not exist and is silently ignored.
+
+Add this to your shell profile (`~/.zshrc` or `~/.bashrc`):
 
 ```bash
-# Add this to your shell profile (.zshrc or .bashrc) to make it permanent
-export SSLKEYLOGFILE=$(pwd)/data/sslkeylogfile.txt
+export SSLKEYLOGFILE="/Users/<you>/Desktop/networks-project/sslkeylogfile.txt"
 ```
 
-### Step 2: Restart Browser
-Completely quit Chrome/Edge (ensure it is not running in the background) and reopen it.
+Then reload:
 
-### Step 3: Verify
-Visit a website. Check your project folder in data for a file named sslkeylogfile.txt.
+```bash
+source ~/.zshrc
+```
 
+> **Why this matters:** `live_capture_to_db_mac.py` passes this path to tshark's `tls.keylog_file` option so it can decrypt TLS traffic in real time. Without it, tshark sees only encrypted bytes and cannot extract SNI/HTTP2 hostnames.
+
+2. Verify your network interface
+
+Find the interface carrying your actual traffic (usually `en0` on MacBooks):
+
+```bash
+tshark -D
+```
+
+Look for the one with your local IP (e.g. `192.168.x.x` or a UVA `172.x.x.x` address). You'll pass this as `-i en0` (or whatever it is) to the capture script.
+
+3. Disable Secure DNS in your normal Chrome profile
+
+Secure DNS (DNS-over-HTTPS) encrypts DNS queries inside HTTPS, meaning tshark cannot see DNS responses and cannot map LLM hostnames to IP addresses.
+
+In Chrome, go to:
+
+```
+chrome://settings/security
+```
+
+Set **"Use secure DNS"** to **Off**.
+
+> **Why this matters:** The primary LLM detection mechanism relies on reading `dns.resp.name` and `dns.a` fields from plain UDP DNS responses. Without this, the LLM IP map stays empty even when you browse to Gemini or ChatGPT.
+
+4. Disable Secure DNS in the undetected-chromedriver profile
+
+The Selenium bot creates its own separate Chrome profile at:
+
+```
+data-pipeline/data-collection/llm/chrome_profile/
+```
+
+This profile has its **own** DNS settings independent of your normal Chrome. After running the bot for the first time (so the profile is created), open that Chrome instance manually and go to:
+
+```
+chrome://settings/security
+```
+
+Set **"Use secure DNS"** to **Off** in that profile too.
+
+> **This is a separate step from step 3.** The bot's Chrome profile and your normal Chrome profile do not share settings. Forgetting this step is the most common reason DNS-based LLM detection silently fails when running the bot.
+
+---
 
 
 # 
