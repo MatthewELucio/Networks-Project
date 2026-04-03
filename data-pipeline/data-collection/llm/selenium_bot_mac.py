@@ -32,10 +32,12 @@ def launch_browser():
     options = uc.ChromeOptions()
     options.add_argument(f"--user-data-dir={PROFILE_PATH}")
 
-    # Enable TLS key logging for packet decryption
-    sslkeylog_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "sslkeylogfile.txt")
+    # Set SSLKEYLOGFILE in the *environment* — this is the only way Chrome
+    # honours TLS key logging. The --ssl-key-log-file flag does not exist.
+    sslkeylog_path = os.environ.get("SSLKEYLOGFILE") or os.path.join(SCRIPT_DIR, "data", "sslkeylogfile.txt")
     os.makedirs(os.path.dirname(sslkeylog_path), exist_ok=True)
-    options.add_argument(f"--ssl-key-log-file={sslkeylog_path}")
+    os.environ["SSLKEYLOGFILE"] = sslkeylog_path
+    print(f"   SSLKEYLOGFILE: {sslkeylog_path}")
 
     try:
         driver = uc.Chrome(options=options, version_main=145)
