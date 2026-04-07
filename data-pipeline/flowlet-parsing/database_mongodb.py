@@ -75,19 +75,36 @@ from __future__ import annotations
 import json
 import os
 import sys
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional, Type, TypeVar
 
 from dotenv import load_dotenv
-from pymongo import MongoClient, UpdateOne
+from pymongo import MongoClient
 
 
 # Load environment variables so MONGODB_URI can be read from a .env file
 load_dotenv()
 
 # Reuses the same dataclass shapes as database_firebase for maximum compatibility
+
+
+_THRESHOLD_SUFFIX_RE = re.compile(r"(-?\d+(?:\.\d+)?)\s*$")
+
+
+def _extract_threshold_from_title(title: str) -> Optional[float]:
+    """Extract numeric suffix from capture title, e.g. 'matthew_capture_0.05' -> 0.05."""
+    if not title:
+        return None
+    m = _THRESHOLD_SUFFIX_RE.search(str(title))
+    if not m:
+        return None
+    try:
+        return float(m.group(1))
+    except ValueError:
+        return None
 
 
 @dataclass
@@ -98,6 +115,7 @@ class Capture:
     file_path: Optional[str] = None
     created_at: Optional[datetime] = None
     status: str = "completed"
+    threshold: Optional[float] = None
     llm_ip_map: Optional[str] = None  # JSON string of {ip: llm_name}
     notes: Optional[str] = None
 
@@ -107,6 +125,7 @@ class Capture:
             "file_path": self.file_path,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "status": self.status,
+            "threshold": self.threshold,
             "llm_ip_map": json.loads(self.llm_ip_map) if self.llm_ip_map else {},
             "notes": self.notes,
         }
@@ -235,11 +254,17 @@ def _doc_to_capture_from_mongo(doc: Dict[str, Any]) -> Capture:
     llm_map = doc.get("llm_ip_map")
     if isinstance(llm_map, dict):
         llm_map = json.dumps(llm_map)
+    threshold = doc.get("threshold")
+    try:
+        threshold = float(threshold) if threshold is not None else None
+    except (TypeError, ValueError):
+        threshold = None
     return Capture(
         id=str(doc.get("_id")),
         file_path=doc.get("file_path") or str(doc.get("_id")),
         created_at=created,
         status=doc.get("status", "completed"),
+        threshold=threshold,
         llm_ip_map=llm_map,
         notes=doc.get("notes"),
     )
@@ -294,10 +319,14 @@ class MongoSession:
                 llm = json.loads(llm)
             except Exception:
                 llm = None
+        threshold = cap.threshold
+        if threshold is None:
+            threshold = _extract_threshold_from_title(cap.file_path or cap.id or "")
         return {
             "file_path": cap.file_path,
             "created_at": cap.created_at.isoformat() if cap.created_at else None,
             "status": cap.status,
+            "threshold": threshold,
             "llm_ip_map": llm,
             "notes": cap.notes,
         }
