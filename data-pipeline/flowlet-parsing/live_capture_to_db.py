@@ -55,7 +55,8 @@ def wsl_to_windows_path(path_str):
     if path_str.startswith("/mnt/"):
         parts = path_str.split("/")
         if len(parts) > 3:
-            return f"{parts[2].upper()}:\\{'\\'.join(parts[3:])}"
+            tail = "\\".join(parts[3:])
+            return f"{parts[2].upper()}:\\{tail}"
     return path_str
 
 def build_command(tshark_bin, is_win_bin, network, interface, ssl_keys):
