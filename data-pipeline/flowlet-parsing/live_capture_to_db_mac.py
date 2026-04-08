@@ -83,10 +83,16 @@ def build_command(tshark_bin, network, interface, ssl_keys):
         "-e", "tls.handshake.extensions_server_name",  # 17
         "-e", "http2.headers.authority",        # 18
         "-e", "dns.qry.name",                   # 19
-        "-e", "dns.resp.name",                  # 20  NEW: DNS response hostname
-        "-e", "dns.a",                          # 21  NEW: DNS resolved IPv4 address(es)
-        "-e", "udp.srcport",                    # 22  (shifted from 20)
-        "-e", "udp.dstport",                    # 23  (shifted from 21)
+        "-e", "dns.resp.name",                  # 20
+        "-e", "dns.a",                          # 21  DNS resolved IPv4 address(es)
+        "-e", "udp.srcport",                    # 22
+        "-e", "udp.dstport",                    # 23
+        # --- IPv6 fields ---
+        "-e", "ipv6.src",                       # 24
+        "-e", "ipv6.dst",                       # 25
+        "-e", "ipv6.plen",                      # 26
+        "-e", "ipv6.nxt",                       # 27
+        "-e", "dns.aaaa",                       # 28  DNS resolved IPv6 address(es)
         "-E", "separator=/t", "-E", "occurrence=f"
     ])
     if interface:
@@ -94,29 +100,46 @@ def build_command(tshark_bin, network, interface, ssl_keys):
     if ssl_keys:
         cmd.extend(["-o", f"tls.keylog_file:{ssl_keys}"])
 
+    # --- Build BPF capture filter that covers both IPv4 and IPv6 ---
     is_ipv6 = isinstance(network, ipaddress.IPv6Network)
-    proto = "ip6" if is_ipv6 else "ip"
-    addr = network.network_address.compressed if is_ipv6 else network.network_address
-    base_filter = f"{proto} host {addr}" if network.num_addresses == 1 else f"{proto} net {network.with_prefixlen}"
+    is_ipv4 = isinstance(network, ipaddress.IPv4Network)
+
+    if network.prefixlen == 0:
+        # 0.0.0.0/0 or ::/0 — capture all IP traffic
+        base_filter = "ip or ip6"
+    elif is_ipv4:
+        v4 = f"ip host {network.network_address}" if network.num_addresses == 1 else f"ip net {network.with_prefixlen}"
+        base_filter = f"({v4}) or ip6"
+    elif is_ipv6:
+        v6 = f"ip6 host {network.network_address.compressed}" if network.num_addresses == 1 else f"ip6 net {network.with_prefixlen}"
+        base_filter = f"({v6}) or ip"
+    else:
+        base_filter = "ip or ip6"
+
     cmd.extend(["-f", base_filter])
     return cmd
 
 # --- Field index constants (keep in sync with build_command) ---
-F_EPOCH    = 0
-F_PROTO    = 5
-F_IP_LEN   = 6
-F_SRC      = 7
-F_TCP_SPORT = 8
-F_DST      = 9
-F_TCP_DPORT = 10
-F_SNI      = 17
-F_HTTP2    = 18
-F_DNS_QRY  = 19
-F_DNS_RESP = 20
-F_DNS_A    = 21
-F_UDP_SPORT = 22
-F_UDP_DPORT = 23
-TOTAL_FIELDS = 24
+F_EPOCH      = 0
+F_PROTO      = 5
+F_IP_LEN     = 6
+F_SRC        = 7
+F_TCP_SPORT  = 8
+F_DST        = 9
+F_TCP_DPORT  = 10
+F_SNI        = 17
+F_HTTP2      = 18
+F_DNS_QRY    = 19
+F_DNS_RESP   = 20
+F_DNS_A      = 21
+F_UDP_SPORT  = 22
+F_UDP_DPORT  = 23
+F_IPV6_SRC   = 24
+F_IPV6_DST   = 25
+F_IPV6_PLEN  = 26
+F_IPV6_NXT   = 27
+F_DNS_AAAA   = 28
+TOTAL_FIELDS = 29
 
 
 class LiveFlowletManager:
@@ -131,18 +154,20 @@ class LiveFlowletManager:
         self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
 
+    def _is_private(self, addr):
+        """Check if an IPv4 or IPv6 address is private."""
+        try:
+            return ipaddress.ip_address(addr).is_private
+        except ValueError:
+            return False
+
     def process_packet(self, pkt):
         # --- DNS A-record mapping (fires even when TLS sessions are reused) ---
-        # This is the primary detection path: Chrome reuses TLS connections so
-        # SNI/HTTP2 only appear in the initial handshake. DNS responses fire on
-        # every new lookup (typically every few minutes per TTL), giving us a
-        # reliable way to map LLM server IPs even mid-capture.
         dns_resp_name = pkt.get('dns_resp_name', '')
         dns_resolved_ip = pkt.get('dns_resolved_ip', '')
         if dns_resp_name and dns_resolved_ip:
             for kw in TARGET_KEYWORDS:
                 if kw in dns_resp_name:
-                    # tshark returns multiple A records as comma-separated values
                     for ip in dns_resolved_ip.split(','):
                         ip = ip.strip()
                         if ip and ip not in self.llm_ip_map:
@@ -151,7 +176,6 @@ class LiveFlowletManager:
                     break
 
         # --- SNI / HTTP2 detection (fallback for fresh TLS handshakes) ---
-        # Only fires on the initial ClientHello or first HTTP/2 request per connection.
         detected_name = None
         for kw in TARGET_KEYWORDS:
             if kw in pkt['names']:
@@ -159,11 +183,10 @@ class LiveFlowletManager:
                 break
 
         if detected_name:
-            # Map the remote (non-private) IP to the LLM name
-            if pkt['dst'] not in self.llm_ip_map and not ipaddress.ip_address(pkt['dst']).is_private:
+            if pkt['dst'] not in self.llm_ip_map and not self._is_private(pkt['dst']):
                 self.llm_ip_map[pkt['dst']] = detected_name
                 print(f"🔥 [SNI/HTTP2] {detected_name} mapped to {pkt['dst']}")
-            elif pkt['src'] not in self.llm_ip_map and not ipaddress.ip_address(pkt['src']).is_private:
+            elif pkt['src'] not in self.llm_ip_map and not self._is_private(pkt['src']):
                 self.llm_ip_map[pkt['src']] = detected_name
                 print(f"🔥 [SNI/HTTP2] {detected_name} mapped to {pkt['src']}")
 
@@ -350,10 +373,15 @@ def main():
 
                 try:
                     epoch  = parts[F_EPOCH]
-                    src    = parts[F_SRC]
-                    dst    = parts[F_DST]
-                    proto  = parts[F_PROTO]
-                    ip_len = int(parts[F_IP_LEN] or 0)
+
+                    # Coalesce IPv4 / IPv6 fields
+                    src    = parts[F_SRC] or parts[F_IPV6_SRC]
+                    dst    = parts[F_DST] or parts[F_IPV6_DST]
+                    proto  = parts[F_PROTO] or parts[F_IPV6_NXT]
+                    ip_len = int(parts[F_IP_LEN] or parts[F_IPV6_PLEN] or 0)
+
+                    if not src or not dst:
+                        continue  # skip packets with no IP layer
 
                     # TCP ports fall back to UDP ports
                     sport = parts[F_TCP_SPORT] or parts[F_UDP_SPORT] or "0"
@@ -364,7 +392,10 @@ def main():
 
                     # DNS response fields (primary detection path)
                     dns_resp_name  = parts[F_DNS_RESP].lower()
-                    dns_resolved_ip = parts[F_DNS_A]   # may be comma-separated
+                    # Combine A (IPv4) and AAAA (IPv6) DNS responses
+                    dns_a    = parts[F_DNS_A]
+                    dns_aaaa = parts[F_DNS_AAAA]
+                    dns_resolved_ip = ",".join(filter(None, [dns_a, dns_aaaa]))
 
                     pkt = {
                         'ts':            float(epoch),
