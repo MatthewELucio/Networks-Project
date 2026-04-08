@@ -38,6 +38,8 @@ from pymongo import MongoClient
 
 DEFAULT_DB_NAME = "networks_project"
 DEFAULT_COLLECTION = "captures"
+FLOWLETS_FIELD_NAME = "flowlets"
+FLOWLET_PACKET_COUNT_FIELD_NAME = "packet_count"
 
 
 def _banner(title: str) -> None:
@@ -79,6 +81,18 @@ def _parse_float(value: Optional[str], field_name: str) -> Optional[float]:
         return float(s)
     except ValueError as exc:
         raise ValueError(f"Invalid {field_name}: {value!r}. Must be numeric.") from exc
+
+
+def _parse_int(value: Optional[str], field_name: str) -> Optional[int]:
+    if value is None:
+        return None
+    s = str(value).strip()
+    if not s:
+        return None
+    try:
+        return int(s)
+    except ValueError as exc:
+        raise ValueError(f"Invalid {field_name}: {value!r}. Must be an integer.") from exc
 
 
 def _connect_client(uri: Optional[str] = None) -> MongoClient:
@@ -144,6 +158,9 @@ def _interactive_inputs() -> argparse.Namespace:
     end_raw = input("End date (YYYY-MM-DD or ISO, optional): ").strip() or None
     thr_min_raw = input("Minimum threshold (optional): ").strip() or None
     thr_max_raw = input("Maximum threshold (optional): ").strip() or None
+    flowlet_packets_lte_raw = input(
+        f"Exclude flowlets with {FLOWLET_PACKET_COUNT_FIELD_NAME} <= N (optional): "
+    ).strip() or None
 
     db_name = input(f"Mongo DB name [{DEFAULT_DB_NAME}]: ").strip() or DEFAULT_DB_NAME
     collection = input(f"Collection name [{DEFAULT_COLLECTION}]: ").strip() or DEFAULT_COLLECTION
@@ -154,6 +171,7 @@ def _interactive_inputs() -> argparse.Namespace:
         end_date=end_raw,
         threshold_min=thr_min_raw,
         threshold_max=thr_max_raw,
+        flowlet_packets_lte=flowlet_packets_lte_raw,
         db_name=db_name,
         collection=collection,
         uri=None,
@@ -166,6 +184,7 @@ def _coerce_args(args: argparse.Namespace) -> argparse.Namespace:
     args.end_date = _parse_iso_date(args.end_date)
     args.threshold_min = _parse_float(args.threshold_min, "threshold_min")
     args.threshold_max = _parse_float(args.threshold_max, "threshold_max")
+    args.flowlet_packets_lte = _parse_int(args.flowlet_packets_lte, "flowlet_packets_lte")
     return args
 
 
@@ -176,10 +195,44 @@ def _confirm_plan(args: argparse.Namespace, query: Dict[str, Any]) -> bool:
     print(f"Database:         {args.db_name}")
     print(f"Collection:       {args.collection}")
     print(f"Query filter:     {json.dumps(query, indent=2)}")
+    if args.flowlet_packets_lte is not None:
+        print(
+            f"Post-export filter: exclude flowlets where {FLOWLET_PACKET_COUNT_FIELD_NAME} <= {args.flowlet_packets_lte}"
+        )
     if args.yes:
         return True
     ans = input("\nProceed? [y/N]: ").strip().lower()
     return ans in {"y", "yes"}
+
+
+def _apply_flowlet_packet_filter(
+    doc: Dict[str, Any], *, exclude_packet_count_lte: Optional[int]
+) -> Tuple[Dict[str, Any], int, int]:
+    """Return (possibly) filtered doc, flowlets_kept, flowlets_removed."""
+    if exclude_packet_count_lte is None:
+        flowlets = doc.get(FLOWLETS_FIELD_NAME)
+        if isinstance(flowlets, list):
+            return doc, len(flowlets), 0
+        return doc, 0, 0
+
+    flowlets = doc.get(FLOWLETS_FIELD_NAME)
+    if not isinstance(flowlets, list):
+        return doc, 0, 0
+
+    kept = [
+        f
+        for f in flowlets
+        if not isinstance(f, dict)
+        or f.get(FLOWLET_PACKET_COUNT_FIELD_NAME) is None
+        or f.get(FLOWLET_PACKET_COUNT_FIELD_NAME) > exclude_packet_count_lte
+    ]
+    removed = len(flowlets) - len(kept)
+    if removed == 0:
+        return doc, len(flowlets), 0
+
+    new_doc = dict(doc)
+    new_doc[FLOWLETS_FIELD_NAME] = kept
+    return new_doc, len(kept), removed
 
 
 def create_snapshot(args: argparse.Namespace) -> None:
@@ -204,13 +257,21 @@ def create_snapshot(args: argparse.Namespace) -> None:
         cursor = coll.find(query, no_cursor_timeout=True)
 
         total = 0
+        flowlets_kept_total = 0
+        flowlets_removed_total = 0
         for doc in cursor:
             capture_id = str(doc.get("_id", f"capture_{total+1}"))
             filename = _sanitize_filename(capture_id) + ".json"
             target = captures_dir / filename
+
+            doc_to_write, flowlets_kept, flowlets_removed = _apply_flowlet_packet_filter(
+                doc, exclude_packet_count_lte=args.flowlet_packets_lte
+            )
             with target.open("w", encoding="utf-8") as f:
-                json.dump(doc, f, indent=2, default=str)
+                json.dump(doc_to_write, f, indent=2, default=str)
             total += 1
+            flowlets_kept_total += flowlets_kept
+            flowlets_removed_total += flowlets_removed
             if total % 100 == 0:
                 print(f"Saved {total} captures...")
 
@@ -219,7 +280,14 @@ def create_snapshot(args: argparse.Namespace) -> None:
             "db_name": args.db_name,
             "collection": args.collection,
             "query": query,
+            "flowlet_filter": {
+                "exclude_packet_count_lte": args.flowlet_packets_lte,
+                "field": FLOWLET_PACKET_COUNT_FIELD_NAME,
+                "array_field": FLOWLETS_FIELD_NAME,
+            },
             "captures_exported": total,
+            "flowlets_kept_total": flowlets_kept_total,
+            "flowlets_removed_total": flowlets_removed_total,
             "captures_dir": str(captures_dir),
         }
         with (out_dir / "manifest.json").open("w", encoding="utf-8") as f:
@@ -244,6 +312,10 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--end-date", help="Inclusive end date (YYYY-MM-DD or ISO datetime).")
     p.add_argument("--threshold-min", help="Minimum capture threshold (numeric).")
     p.add_argument("--threshold-max", help="Maximum capture threshold (numeric).")
+    p.add_argument(
+        "--flowlet-packets-lte",
+        help=f"Exclude flowlets where {FLOWLET_PACKET_COUNT_FIELD_NAME} <= this integer (applied before writing JSON).",
+    )
     p.add_argument("--db-name", default=DEFAULT_DB_NAME, help=f"Mongo database name (default: {DEFAULT_DB_NAME}).")
     p.add_argument(
         "--collection",
