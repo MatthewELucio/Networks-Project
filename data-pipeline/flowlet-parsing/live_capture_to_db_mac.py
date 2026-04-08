@@ -56,31 +56,91 @@ def get_tshark_path():
 
 def build_command(tshark_bin, network, interface, ssl_keys):
     cmd = [tshark_bin, "-l", "-n"]
+    if not ssl_keys:
+        ssl_keys = os.environ.get("SSLKEYLOGFILE")
+    if ssl_keys:
+        ssl_keys = os.path.abspath(ssl_keys)
     cmd.extend([
         "-T", "fields",
-        # MUST MATCH BATCH SCRIPT ORDER EXACTLY
-        "-e", "frame.time_epoch", "-e", "ip.dsfield", "-e", "ip.ttl", 
-        "-e", "ip.id", "-e", "ip.flags", "-e", "ip.proto", "-e", "ip.len", # 0-6
-        "-e", "ip.src", "-e", "tcp.srcport", "-e", "ip.dst", "-e", "tcp.dstport", # 7-10
-        "-e", "tcp.flags.str", "-e", "tcp.checksum", "-e", "tcp.seq", # 11-13
-        "-e", "tcp.ack", "-e", "tcp.window_size_value", "-e", "tcp.len", # 14-16
-        "-e", "tls.handshake.extensions_server_name", # 17
-        "-e", "http2.headers.authority", # 18
-        "-e", "dns.qry.name", # 19
-        "-e", "udp.srcport", # 20
-        "-e", "udp.dstport", # 21
+        # MUST MATCH FIELD INDEX CONSTANTS BELOW EXACTLY
+        "-e", "frame.time_epoch",               # 0
+        "-e", "ip.dsfield",                     # 1
+        "-e", "ip.ttl",                         # 2
+        "-e", "ip.id",                          # 3
+        "-e", "ip.flags",                       # 4
+        "-e", "ip.proto",                       # 5
+        "-e", "ip.len",                         # 6
+        "-e", "ip.src",                         # 7
+        "-e", "tcp.srcport",                    # 8
+        "-e", "ip.dst",                         # 9
+        "-e", "tcp.dstport",                    # 10
+        "-e", "tcp.flags.str",                  # 11
+        "-e", "tcp.checksum",                   # 12
+        "-e", "tcp.seq",                        # 13
+        "-e", "tcp.ack",                        # 14
+        "-e", "tcp.window_size_value",          # 15
+        "-e", "tcp.len",                        # 16
+        "-e", "tls.handshake.extensions_server_name",  # 17
+        "-e", "http2.headers.authority",        # 18
+        "-e", "dns.qry.name",                   # 19
+        "-e", "dns.resp.name",                  # 20
+        "-e", "dns.a",                          # 21  DNS resolved IPv4 address(es)
+        "-e", "udp.srcport",                    # 22
+        "-e", "udp.dstport",                    # 23
+        # --- IPv6 fields ---
+        "-e", "ipv6.src",                       # 24
+        "-e", "ipv6.dst",                       # 25
+        "-e", "ipv6.plen",                      # 26
+        "-e", "ipv6.nxt",                       # 27
+        "-e", "dns.aaaa",                       # 28  DNS resolved IPv6 address(es)
         "-E", "separator=/t", "-E", "occurrence=f"
     ])
-    if interface: cmd.extend(["-i", interface])
+    if interface:
+        cmd.extend(["-i", interface])
     if ssl_keys:
         cmd.extend(["-o", f"tls.keylog_file:{ssl_keys}"])
 
+    # --- Build BPF capture filter that covers both IPv4 and IPv6 ---
     is_ipv6 = isinstance(network, ipaddress.IPv6Network)
-    proto = "ip6" if is_ipv6 else "ip"
-    addr = network.network_address.compressed if is_ipv6 else network.network_address
-    base_filter = f"{proto} host {addr}" if network.num_addresses == 1 else f"{proto} net {network.with_prefixlen}"
+    is_ipv4 = isinstance(network, ipaddress.IPv4Network)
+
+    if network.prefixlen == 0:
+        # 0.0.0.0/0 or ::/0 — capture all IP traffic
+        base_filter = "ip or ip6"
+    elif is_ipv4:
+        v4 = f"ip host {network.network_address}" if network.num_addresses == 1 else f"ip net {network.with_prefixlen}"
+        base_filter = f"({v4}) or ip6"
+    elif is_ipv6:
+        v6 = f"ip6 host {network.network_address.compressed}" if network.num_addresses == 1 else f"ip6 net {network.with_prefixlen}"
+        base_filter = f"({v6}) or ip"
+    else:
+        base_filter = "ip or ip6"
+
     cmd.extend(["-f", base_filter])
     return cmd
+
+# --- Field index constants (keep in sync with build_command) ---
+F_EPOCH      = 0
+F_PROTO      = 5
+F_IP_LEN     = 6
+F_SRC        = 7
+F_TCP_SPORT  = 8
+F_DST        = 9
+F_TCP_DPORT  = 10
+F_SNI        = 17
+F_HTTP2      = 18
+F_DNS_QRY    = 19
+F_DNS_RESP   = 20
+F_DNS_A      = 21
+F_UDP_SPORT  = 22
+F_UDP_DPORT  = 23
+F_IPV6_SRC   = 24
+F_IPV6_DST   = 25
+F_IPV6_PLEN  = 26
+F_IPV6_NXT   = 27
+F_DNS_AAAA   = 28
+TOTAL_FIELDS = 29
+
 
 class LiveFlowletManager:
     """Works with either SQLite session (capture_id int) or cloud session (capture_id str)."""
@@ -94,8 +154,28 @@ class LiveFlowletManager:
         self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
 
+    def _is_private(self, addr):
+        """Check if an IPv4 or IPv6 address is private."""
+        try:
+            return ipaddress.ip_address(addr).is_private
+        except ValueError:
+            return False
+
     def process_packet(self, pkt):
-        # detection logic using pkt['names'] populated from indices 17, 18, 19
+        # --- DNS A-record mapping (fires even when TLS sessions are reused) ---
+        dns_resp_name = pkt.get('dns_resp_name', '')
+        dns_resolved_ip = pkt.get('dns_resolved_ip', '')
+        if dns_resp_name and dns_resolved_ip:
+            for kw in TARGET_KEYWORDS:
+                if kw in dns_resp_name:
+                    for ip in dns_resolved_ip.split(','):
+                        ip = ip.strip()
+                        if ip and ip not in self.llm_ip_map:
+                            self.llm_ip_map[ip] = kw.upper()
+                            print(f"🔥 [DNS] {kw.upper()} mapped to {ip}")
+                    break
+
+        # --- SNI / HTTP2 detection (fallback for fresh TLS handshakes) ---
         detected_name = None
         for kw in TARGET_KEYWORDS:
             if kw in pkt['names']:
@@ -103,20 +183,18 @@ class LiveFlowletManager:
                 break
 
         if detected_name:
-            # Check the remote IP (non-private) to map the LLM server
-            # We check dst (request) and src (response) like the batch script
-            if pkt['dst'] not in self.llm_ip_map and not ipaddress.ip_address(pkt['dst']).is_private:
+            if pkt['dst'] not in self.llm_ip_map and not self._is_private(pkt['dst']):
                 self.llm_ip_map[pkt['dst']] = detected_name
-                print(f"🔥 [DETECTION] {detected_name} mapped to {pkt['dst']}")
-            elif pkt['src'] not in self.llm_ip_map and not ipaddress.ip_address(pkt['src']).is_private:
+                print(f"🔥 [SNI/HTTP2] {detected_name} mapped to {pkt['dst']}")
+            elif pkt['src'] not in self.llm_ip_map and not self._is_private(pkt['src']):
                 self.llm_ip_map[pkt['src']] = detected_name
-                print(f"🔥 [DETECTION] {detected_name} mapped to {pkt['src']}")
+                print(f"🔥 [SNI/HTTP2] {detected_name} mapped to {pkt['src']}")
 
-        # Group packets into flows (Bidirectional)
+        # Group packets into flows (bidirectional)
         a = f"{pkt['src']}:{pkt['sport']}"
         b = f"{pkt['dst']}:{pkt['dport']}"
         flow_key = tuple(sorted([a, b]) + [pkt['proto']])
-        
+
         if self.flows[flow_key]:
             last_ts = self.flows[flow_key][-1]['ts']
             if (pkt['ts'] - last_ts) > self.threshold:
@@ -126,18 +204,18 @@ class LiveFlowletManager:
 
     def flush_flowlet(self, flow_key):
         pkts = self.flows[flow_key]
-        if not pkts: return
+        if not pkts:
+            return
 
         src_ip, dst_ip = pkts[0]['src'], pkts[0]['dst']
         llm_name = self.llm_ip_map.get(src_ip) or self.llm_ip_map.get(dst_ip)
-        
+
         if self.llm_only and not llm_name:
-            self.flows[flow_key] = [] # Clear the flow buffer and return
+            self.flows[flow_key] = []
             return
-        
+
         self.flowlet_counts[flow_key] += 1
-        
-        # --- NEW: Advanced Statistics ---
+
         sorted_pkts = sorted(pkts, key=lambda p: p['ts'])
         inter_packet_times = [
             sorted_pkts[i]['ts'] - sorted_pkts[i-1]['ts'] for i in range(1, len(sorted_pkts))
@@ -149,7 +227,6 @@ class LiveFlowletManager:
         ps_mean = statistics.mean(packet_sizes) if packet_sizes else 0.0
         ps_std = statistics.stdev(packet_sizes) if len(packet_sizes) > 1 else 0.0
 
-        # --- NEW: Direction Encoding ---
         outgoing = None
         direction_encoded = 0
         if llm_name:
@@ -162,8 +239,7 @@ class LiveFlowletManager:
 
         start_ts, end_ts = sorted_pkts[0]['ts'], sorted_pkts[-1]['ts']
         total_bytes = sum(packet_sizes)
-        
-        # --- SAVE TO DB (Matches full feature set) ---
+
         new_flowlet = self.flowlet_cls(
             capture_id=self.capture_id,
             src_ip=src_ip, src_port=pkts[0]['sport'],
@@ -182,9 +258,6 @@ class LiveFlowletManager:
             inter_packet_time_std=ipt_std,
             packet_size_mean=ps_mean,
             packet_size_std=ps_std,
-            # Store raw sequences as JSON strings for Markov modeling
-            # inter_packet_times=json.dumps(inter_packet_times),
-            # packet_sizes=json.dumps(packet_sizes)
         )
         self.db.add(new_flowlet)
         self.db.commit()
@@ -225,23 +298,20 @@ def main():
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
 
     if use_cloud_db:
-        # Force cloud module to use MONGODB_URI from environment
         init_database(None)
     else:
         init_database(args.db_path)
     db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}
 
-    # --- LOGIC FOR INDEPENDENT RUNS (one capture per threshold) ---
+    # --- Create or resume captures (one per threshold) ---
     capture_ids = {}
     if args.capture_id:
-        # Resume existing captures: one ID per threshold in FLOWLET_THRESHOLDS order
         raw_capture_ids = [capture_id.strip() for capture_id in args.capture_id.split(",") if capture_id.strip()]
         if len(raw_capture_ids) != len(FLOWLET_THRESHOLDS):
             sys.exit(
                 f"❌ Error: --capture-id must include exactly {len(FLOWLET_THRESHOLDS)} comma-separated IDs "
                 f"for thresholds {FLOWLET_THRESHOLDS}."
             )
-
         for threshold, raw_capture_id in zip(FLOWLET_THRESHOLDS, raw_capture_ids):
             db = db_sessions[threshold]
             capture_id_arg = int(raw_capture_id) if not use_cloud_db else raw_capture_id
@@ -250,7 +320,6 @@ def main():
                 sys.exit(f"❌ Error: Capture ID {raw_capture_id} not found for threshold {threshold}.")
             capture_ids[threshold] = capture.id if not use_cloud_db else (capture.id or capture.file_path)
     else:
-        # Create one new record per threshold with suffix appended to name
         for threshold in FLOWLET_THRESHOLDS:
             db = db_sessions[threshold]
             unique_name = f"{args.name}_{threshold_suffix(threshold)}"
@@ -270,7 +339,7 @@ def main():
         threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold, llm_only=args.llm_only)
         for threshold in FLOWLET_THRESHOLDS
     }
-    
+
     cmd = build_command(tshark_bin, network, args.interface, args.ssl_keys)
 
     print("🚀 Starting Live Pipeline for multi-threshold captures...")
@@ -281,7 +350,6 @@ def main():
 
     try:
         while True:
-            # Check if tshark died
             if proc.poll() is not None:
                 err = proc.stderr.read()
                 if err:
@@ -289,54 +357,70 @@ def main():
                 else:
                     print(f"❌ tshark exited with code {proc.returncode}")
                 break
-            # Check Timeout
             if args.timeout and (datetime.datetime.now().timestamp() - start_time) > args.timeout:
                 print(f"⏰ Timeout of {args.timeout}s reached. Shutting down...")
                 break
 
-            # Non-blocking read check
             r, _, _ = select.select([proc.stdout], [], [], 1.0)
             if r:
                 line = proc.stdout.readline()
-                if not line: break
-                
+                if not line:
+                    break
+
                 parts = line.strip().split('\t')
-                # Pad to 20 columns to match your batch logic and avoid IndexErrors
-                parts += [""] * (22 - len(parts)) 
+                # Pad to TOTAL_FIELDS columns to avoid IndexErrors
+                parts += [""] * (TOTAL_FIELDS - len(parts))
 
                 try:
-                    # 1. Map fields exactly like the batch script
-                    epoch = parts[0]
-                    src = parts[7]
-                    sport = parts[8] or parts[20] or "0"
-                    dst = parts[9]
-                    dport = parts[10] or parts[21] or "0"
-                    proto = parts[5]
-                    ip_len = int(parts[6] or 0)
-                    
-                    # 2. Detection (Matches your exact batch logic)
-                    # Combine SNI, HTTP2 Authority, and DNS Query Name
-                    names = (parts[17] + parts[18] + parts[19]).lower()
-                    
+                    epoch  = parts[F_EPOCH]
+
+                    # Coalesce IPv4 / IPv6 fields
+                    src    = parts[F_SRC] or parts[F_IPV6_SRC]
+                    dst    = parts[F_DST] or parts[F_IPV6_DST]
+                    proto  = parts[F_PROTO] or parts[F_IPV6_NXT]
+                    ip_len = int(parts[F_IP_LEN] or parts[F_IPV6_PLEN] or 0)
+
+                    if not src or not dst:
+                        continue  # skip packets with no IP layer
+
+                    # TCP ports fall back to UDP ports
+                    sport = parts[F_TCP_SPORT] or parts[F_UDP_SPORT] or "0"
+                    dport = parts[F_TCP_DPORT] or parts[F_UDP_DPORT] or "0"
+
+                    # SNI + HTTP/2 authority + DNS query name (fallback detection)
+                    names = (parts[F_SNI] + parts[F_HTTP2] + parts[F_DNS_QRY]).lower()
+
+                    # DNS response fields (primary detection path)
+                    dns_resp_name  = parts[F_DNS_RESP].lower()
+                    # Combine A (IPv4) and AAAA (IPv6) DNS responses
+                    dns_a    = parts[F_DNS_A]
+                    dns_aaaa = parts[F_DNS_AAAA]
+                    dns_resolved_ip = ",".join(filter(None, [dns_a, dns_aaaa]))
+
                     pkt = {
-                        'ts': float(epoch),
-                        'src': src, 'sport': int(sport),
-                        'dst': dst, 'dport': int(dport),
-                        'proto': proto, 'len': ip_len,
-                        'names': names
+                        'ts':            float(epoch),
+                        'src':           src,
+                        'sport':         int(sport),
+                        'dst':           dst,
+                        'dport':         int(dport),
+                        'proto':         proto,
+                        'len':           ip_len,
+                        'names':         names,
+                        'dns_resp_name': dns_resp_name,
+                        'dns_resolved_ip': dns_resolved_ip,
                     }
                     for manager in managers.values():
                         manager.process_packet(pkt)
                 except (ValueError, IndexError):
                     continue
-            
+
     except KeyboardInterrupt:
         print("\n🛑 Stopped by user. Flushing flows...")
     finally:
         for manager in managers.values():
             for key in list(manager.flows.keys()):
                 manager.flush_flowlet(key)
-            
+
         try:
             for threshold, manager in managers.items():
                 capture_id = capture_ids[threshold]
@@ -355,7 +439,7 @@ def main():
         finally:
             for db in db_sessions.values():
                 db.close()
-            
+
         proc.terminate()
         print("✅ Multi-threshold capture finished.")
 

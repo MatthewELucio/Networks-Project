@@ -217,6 +217,7 @@ def main():
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
     p.add_argument("-l", "--llm-only", action="store_true", help="Only push flowlets that have IP address to/from an LLM")
+    p.add_argument("--threshold", type=float, default=0.1, help="Flowlet split threshold in seconds (default: 0.1).")
     args = p.parse_args()
 
     use_cloud_db = False if args.no_cloud_db else (args.cloud_db if args.cloud_db is not None else USE_CLOUD_DB)
@@ -263,24 +264,36 @@ def main():
                 sys.exit(f"❌ Error: Capture ID {raw_capture_id} not found for threshold {threshold}.")
             capture_ids[threshold] = capture.id if not use_cloud_db else (capture.id or capture.file_path)
     else:
-        # Create one new record per threshold with suffix appended to name
-        for threshold in FLOWLET_THRESHOLDS:
-            db = db_sessions[threshold]
-            unique_name = f"{args.name}_{threshold_suffix(threshold)}"
-            capture = Capture(
-                file_path=unique_name,
-                status="active",
-                notes=f"Manual Run on {args.ip_range} (threshold={threshold})",
-            )
-            db.add(capture)
-            db.commit()
-            if not use_cloud_db:
-                db.refresh(capture)
-            capture_ids[threshold] = capture.id
-            print(f"📝 Created new manual capture record: {unique_name} (ID: {capture_ids[threshold]})")
+        # Create new record
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        unique_name = f"MANUAL_LIVE_{args.interface or 'default'}_{timestamp}"
+        capture_kwargs = {
+            "file_path": unique_name,
+            "status": "active",
+            "notes": f"Manual Run on {args.ip_range}",
+        }
+        # New backends (e.g. MongoDB) may support top-level capture threshold.
+        if hasattr(Capture, "__annotations__") and "threshold" in getattr(Capture, "__annotations__", {}):
+            capture_kwargs["threshold"] = args.threshold
+        capture = Capture(**capture_kwargs)
+        capture_kwargs = {
+            "file_path": unique_name,
+            "status": "active",
+            "notes": f"Manual Run on {args.ip_range}",
+        }
+        # New backends (e.g. MongoDB) may support top-level capture threshold.
+        if hasattr(Capture, "__annotations__") and "threshold" in getattr(Capture, "__annotations__", {}):
+            capture_kwargs["threshold"] = args.threshold
+        capture = Capture(**capture_kwargs)
+        db.add(capture)
+        db.commit()
+        if not use_cloud_db:
+            db.refresh(capture)
+        capture_id = capture.id
+        print(f"📝 Created new manual capture record (ID: {capture_id})")
 
     managers = {
-        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold, llm_only=args.llm_only)
+        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=args.threshold, llm_only=args.llm_only)
         for threshold in FLOWLET_THRESHOLDS
     }
     

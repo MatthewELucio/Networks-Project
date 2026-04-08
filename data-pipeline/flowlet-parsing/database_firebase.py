@@ -28,6 +28,7 @@ class Capture:
     file_path: Optional[str] = None
     created_at: Optional[datetime] = None
     status: str = "completed"
+    threshold: Optional[float] = None
     llm_ip_map: Optional[str] = None  # JSON string of {ip: llm_name}
     notes: Optional[str] = None
 
@@ -37,6 +38,7 @@ class Capture:
             "file_path": self.file_path,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "status": self.status,
+            "threshold": self.threshold,
             "llm_ip_map": json.loads(self.llm_ip_map) if self.llm_ip_map else {},
             "notes": self.notes,
         }
@@ -167,6 +169,7 @@ def _doc_to_capture(doc_id: str, doc: Dict[str, Any]) -> Capture:
         file_path=doc.get("file_path") or doc_id,
         created_at=created,
         status=doc.get("status", "completed"),
+        threshold=doc.get("threshold"),
         llm_ip_map=llm_map,
         notes=doc.get("notes"),
     )
@@ -203,6 +206,7 @@ class FirebaseSession:
             "file_path": cap.file_path,
             "created_at": cap.created_at.isoformat() if cap.created_at else None,
             "status": cap.status,
+            "threshold": cap.threshold,
             "llm_ip_map": cap.llm_ip_map,
             "notes": cap.notes,
         }
