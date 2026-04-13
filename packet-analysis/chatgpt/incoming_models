@@ -1,0 +1,161 @@
+{
+  "dataset_info": {
+    "total_flowlets": 110012,
+    "train_size": 80056,
+    "test_size": 29956,
+    "feature_dim": 7,
+    "train_class_distribution": [
+      74516,
+      5540
+    ],
+    "test_class_distribution": [
+      27171,
+      2785
+    ],
+    "llm_sources": [
+      "chatgpt"
+    ],
+    "direction": "incoming",
+    "filter_stats": {
+      "kept_llm": 8325,
+      "kept_non_llm": 101687,
+      "skipped_llm_source": 28627,
+      "skipped_llm_direction": 9773,
+      "skipped_other": 0
+    },
+    "input_sources": [
+      "data\\snapshots\\snapshot_20260410_120411\\20260410_0.05.json"
+    ]
+  },
+  "models": {
+    "random_forest": {
+      "accuracy": 0.9527640539457871,
+      "precision": 0.9324494949494949,
+      "recall": 0.5303411131059246,
+      "f1": 0.6761272602426185,
+      "confusion_matrix": [
+        [
+          27064,
+          107
+        ],
+        [
+          1308,
+          1477
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.9538982095023263,
+          "recall": 0.9960619778440248,
+          "f1-score": 0.9745242424788002,
+          "support": 27171.0
+        },
+        "llm": {
+          "precision": 0.9324494949494949,
+          "recall": 0.5303411131059246,
+          "f1-score": 0.6761272602426185,
+          "support": 2785.0
+        },
+        "accuracy": 0.9527640539457871,
+        "macro avg": {
+          "precision": 0.9431738522259105,
+          "recall": 0.7632015454749748,
+          "f1-score": 0.8253257513607093,
+          "support": 29956.0
+        },
+        "weighted avg": {
+          "precision": 0.9519041291835375,
+          "recall": 0.9527640539457871,
+          "f1-score": 0.9467823678784609,
+          "support": 29956.0
+        }
+      }
+    },
+    "svm": {
+      "accuracy": 0.9072306048871679,
+      "precision": 0.875,
+      "recall": 0.0025134649910233393,
+      "f1": 0.005012531328320802,
+      "confusion_matrix": [
+        [
+          27170,
+          1
+        ],
+        [
+          2778,
+          7
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.907239214638707,
+          "recall": 0.999963196054617,
+          "f1-score": 0.9513471874507607,
+          "support": 27171.0
+        },
+        "llm": {
+          "precision": 0.875,
+          "recall": 0.0025134649910233393,
+          "f1-score": 0.005012531328320802,
+          "support": 2785.0
+        },
+        "accuracy": 0.9072306048871679,
+        "macro avg": {
+          "precision": 0.8911196073193535,
+          "recall": 0.5012383305228202,
+          "f1-score": 0.4781798593895408,
+          "support": 29956.0
+        },
+        "weighted avg": {
+          "precision": 0.904241944884107,
+          "recall": 0.9072306048871679,
+          "f1-score": 0.8633667488975162,
+          "support": 29956.0
+        }
+      }
+    },
+    "xgboost": {
+      "accuracy": 0.9489250901321938,
+      "precision": 0.882388787324802,
+      "recall": 0.5199281867145422,
+      "f1": 0.6543154089471306,
+      "confusion_matrix": [
+        [
+          26978,
+          193
+        ],
+        [
+          1337,
+          1448
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.9527812113720643,
+          "recall": 0.9928968385410916,
+          "f1-score": 0.9724254766968244,
+          "support": 27171.0
+        },
+        "llm": {
+          "precision": 0.882388787324802,
+          "recall": 0.5199281867145422,
+          "f1-score": 0.6543154089471306,
+          "support": 2785.0
+        },
+        "accuracy": 0.9489250901321938,
+        "macro avg": {
+          "precision": 0.9175849993484331,
+          "recall": 0.756412512627817,
+          "f1-score": 0.8133704428219775,
+          "support": 29956.0
+        },
+        "weighted avg": {
+          "precision": 0.946236849609091,
+          "recall": 0.9489250901321938,
+          "f1-score": 0.9428508826694878,
+          "support": 29956.0
+        }
+      }
+    }
+  }
+}

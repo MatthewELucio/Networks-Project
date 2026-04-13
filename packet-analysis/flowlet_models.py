@@ -202,8 +202,10 @@ def extract_ml_features(
     
     Combines:
     - Statistical features (mean, std, count, etc.)
-    - Direction features (0 for non-LLM, +1 for outgoing LLM, -1 for incoming LLM)
-    - Markov model log-likelihoods (MaMPF fingerprint)
+
+    Direction and Markov-model features are intentionally excluded to avoid
+    encoding label shortcuts and to keep the model focused on packet-level
+    statistics.
     """
     features = []
     
@@ -215,54 +217,6 @@ def extract_ml_features(
     features.append(flowlet.get("inter_packet_time_std", 0.0))
     features.append(flowlet.get("packet_size_mean", 0.0))
     features.append(flowlet.get("packet_size_std", 0.0))
-    
-    # Direction feature (0 for non-LLM, +1 for outgoing LLM, -1 for incoming LLM)
-    features.append(flowlet.get("direction_encoded", 0))
-    
-    # Build sequences for Markov models
-    inter_packet_times = flowlet.get("inter_packet_times", [])
-    packet_sizes = flowlet.get("packet_sizes", [])
-    
-    # Time gap sequence
-    time_gap_seq = bucket_time_gaps(inter_packet_times)
-    
-    # Packet size sequence (using blocks)
-    size_block_seq = []
-    if "llm" in block_mappings and packet_sizes:
-        for size in packet_sizes:
-            if size in block_mappings["llm"]:
-                size_block_seq.append(block_mappings["llm"][size])
-            else:
-                # Find nearest block
-                size_block_seq.append(f"BLOCK_{size:.2f}")
-    
-    # Compute log-likelihoods for each class's Markov models
-    for class_name in ["llm", "non_llm"]:
-        if class_name in markov_models:
-            # Time gap model
-            if "time_gap" in markov_models[class_name]:
-                ll_time = compute_sequence_log_likelihood(
-                    time_gap_seq, markov_models[class_name]["time_gap"]
-                )
-                # Clip to avoid infinity
-                ll_time = np.clip(ll_time, -100.0, 0.0)
-                features.append(ll_time)
-            else:
-                features.append(-100.0)
-            
-            # Size block model
-            if "size_block" in markov_models[class_name] and size_block_seq:
-                ll_size = compute_sequence_log_likelihood(
-                    size_block_seq, markov_models[class_name]["size_block"]
-                )
-                # Clip to avoid infinity
-                ll_size = np.clip(ll_size, -100.0, 0.0)
-                features.append(ll_size)
-            else:
-                features.append(-100.0)
-        else:
-            features.append(-100.0)
-            features.append(-100.0)
     
     return np.array(features)
 
@@ -276,52 +230,18 @@ def prepare_training_data(
         X: Feature matrix
         y: Labels (0=non_llm, 1=llm)
         groups: Flow identifiers for group-based splitting
-        markov_models: Trained Markov models per class
-        block_mappings: Block mappings per class
+        markov_models: Empty placeholder for backward compatibility
+        block_mappings: Empty placeholder for backward compatibility
     """
-    # Separate by class
     llm_flowlets = [f for f in features if f["traffic_class"] == "llm"]
     non_llm_flowlets = [f for f in features if f["traffic_class"] == "non_llm"]
-    
+
     print(f"LLM flowlets: {len(llm_flowlets)}")
     print(f"Non-LLM flowlets: {len(non_llm_flowlets)}")
-    
-    # Build block mappings for packet sizes
-    block_mappings = {}
-    for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
-        all_sizes = []
-        for f in flowlets:
-            all_sizes.extend(f.get("packet_sizes", []))
-        
-        if all_sizes:
-            blocks, mapping = build_power_law_blocks(all_sizes, coverage=0.9)
-            block_mappings[class_name] = mapping
-            print(f"{class_name}: {len(blocks)} packet size blocks")
-    
-    # Build Markov models for each class
-    markov_models = {}
-    for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
-        # Time gap sequences
-        time_gap_sequences = []
-        size_block_sequences = []
-        
-        for f in flowlets:
-            inter_packet_times = f.get("inter_packet_times", [])
-            packet_sizes = f.get("packet_sizes", [])
-            
-            if inter_packet_times:
-                time_gap_seq = bucket_time_gaps(inter_packet_times)
-                time_gap_sequences.append(time_gap_seq)
-            
-            if packet_sizes and class_name in block_mappings:
-                size_seq = [block_mappings[class_name].get(s, f"BLOCK_{s:.2f}") for s in packet_sizes]
-                size_block_sequences.append(size_seq)
-        
-        markov_models[class_name] = {
-            "time_gap": build_markov_model(time_gap_sequences),
-            "size_block": build_markov_model(size_block_sequences),
-        }
-        print(f"{class_name}: Built Markov models")
+
+    # No Markov features or block mappings are used in the simplified model.
+    markov_models: Dict[str, Any] = {}
+    block_mappings: Dict[str, Dict[float, str]] = {}
     
     # Extract features for all flowlets
     X_list = []

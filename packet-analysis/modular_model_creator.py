@@ -96,7 +96,7 @@ def filter_llm_and_non_llm(
     Rules:
     - Keep all `traffic_class == non_llm` flowlets.
     - For `traffic_class == llm`, keep only entries whose `source_file`
-      matches the requested provider list and direction.
+            or `llm_name` matches the requested provider list and direction.
     """
     filtered: List[Dict[str, Any]] = []
     stats = {
@@ -120,7 +120,10 @@ def filter_llm_and_non_llm(
             continue
 
         source = str(flowlet.get("source_file", "")).lower()
-        source_matches = (not llm_sources) or any(token in source for token in llm_sources)
+        llm_name = str(flowlet.get("llm_name", "")).lower()
+        source_matches = (not llm_sources) or any(
+            token in source or token in llm_name for token in llm_sources
+        )
         if not source_matches:
             stats["skipped_llm_source"] += 1
             continue
