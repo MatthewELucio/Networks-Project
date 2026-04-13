@@ -138,9 +138,14 @@ class LiveFlowletManager:
         pkts = self.flows[flow_key]
         if not pkts: return
 
-        self.flowlet_counts[flow_key] += 1
         src_ip, dst_ip = pkts[0]['src'], pkts[0]['dst']
         llm_name = self.llm_ip_map.get(src_ip) or self.llm_ip_map.get(dst_ip)
+        
+        if not llm_name:
+            self.flows[flow_key] = [] # Clear the flow buffer and return
+            return
+        
+        self.flowlet_counts[flow_key] += 1
         
         # --- NEW: Advanced Statistics ---
         sorted_pkts = sorted(pkts, key=lambda p: p['ts'])
