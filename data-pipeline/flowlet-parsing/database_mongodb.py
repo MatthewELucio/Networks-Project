@@ -100,6 +100,7 @@ class Capture:
     status: str = "completed"
     llm_ip_map: Optional[str] = None  # JSON string of {ip: llm_name}
     notes: Optional[str] = None
+    sensitivity: Optional[str] = "non-sensitive"  # Added sensitivity field
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -109,6 +110,7 @@ class Capture:
             "status": self.status,
             "llm_ip_map": json.loads(self.llm_ip_map) if self.llm_ip_map else {},
             "notes": self.notes,
+            "sensitivity": self.sensitivity, # Included in dict conversion
         }
 
 
@@ -242,6 +244,7 @@ def _doc_to_capture_from_mongo(doc: Dict[str, Any]) -> Capture:
         status=doc.get("status", "completed"),
         llm_ip_map=llm_map,
         notes=doc.get("notes"),
+        sensitivity=doc.get("sensitivity", "non-sensitive"), # Map from Mongo doc
     )
 
 
@@ -300,6 +303,7 @@ class MongoSession:
             "status": cap.status,
             "llm_ip_map": llm,
             "notes": cap.notes,
+            "sensitivity": cap.sensitivity, # Metadata for commit
         }
 
     def commit(self) -> None:

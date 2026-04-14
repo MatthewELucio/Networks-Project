@@ -194,6 +194,8 @@ def main():
     p = argparse.ArgumentParser(description="Live packet sniffer and flowlet parser.")
     p.add_argument("ip_range", help="CIDR range to sniff")
     p.add_argument("-n", "--name", required=True, help="Name for the capture document in cloud DB / SQLite")
+    p.add_argument("-s", "--sensitivity", choices=["sensitive", "non-sensitive"], default="non-sensitive", 
+                   help="Specify if the prompt bank used is sensitive or non-sensitive")
     p.add_argument("-i", "--interface", help="Network interface")
     p.add_argument("-k", "--ssl-keys", help="Path to SSLKEYLOGFILE")
     p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using cloud DB).")
@@ -257,6 +259,7 @@ def main():
                 file_path=unique_name,
                 status="active",
                 notes=f"Manual Run on {args.ip_range} (threshold={threshold})",
+                sensitivity=args.sensitivity, # NEW: Sensitivity passed to DB
             )
             db.add(capture)
             db.commit()

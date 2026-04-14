@@ -20,7 +20,7 @@ USE_CLOUD_DB = True
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture 0.0.0.0/0
 # Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
 
-# WSL Example: python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i Wi-Fi -n my_capture -k C:\Users\matth\Documents\sslkeys.txt 0.0.0.0/0
+# WSL Example: python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i Wi-Fi -n my_capture -k C:\Users\matth\Documents\sslkeys.txt -s sensitive 0.0.0.0/0
 
 try:
     import database as _db_local
@@ -95,11 +95,12 @@ def build_command(tshark_bin, is_win_bin, network, interface, ssl_keys):
 
 class LiveFlowletManager:
     """Works with either SQLite session (capture_id int) or cloud session (capture_id str)."""
-    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1):
+    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1, sensitivity="non-sensitive"):
         self.db = db_session
         self.capture_id = capture_id
         self.flowlet_cls = flowlet_cls
         self.threshold = threshold
+        self.sensitivity = sensitivity # Added sensitivity tracking
         self.flows = defaultdict(list)
         self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
@@ -204,6 +205,8 @@ def main():
     p = argparse.ArgumentParser(description="Live packet sniffer and flowlet parser.")
     p.add_argument("ip_range", help="CIDR range to sniff")
     p.add_argument("-n", "--name", required=True, help="Name for the capture document in cloud DB / SQLite")
+    p.add_argument("-s", "--sensitivity", choices=["sensitive", "non-sensitive"], default="non-sensitive", 
+                   help="Specify if the prompt bank used is sensitive or non-sensitive")
     p.add_argument("-i", "--interface", help="Network interface")
     p.add_argument("-k", "--ssl-keys", help="Path to SSLKEYLOGFILE")
     p.add_argument("--db-path", default="data/networks_project.db", help="SQLite path (ignored when using cloud DB).")
@@ -268,6 +271,7 @@ def main():
                 file_path=unique_name,
                 status="active",
                 notes=f"Manual Run on {args.ip_range} (threshold={threshold})",
+                sensitivity=args.sensitivity, # NEW: Sensitivity passed to DB
             )
             db.add(capture)
             db.commit()
