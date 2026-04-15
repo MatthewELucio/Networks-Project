@@ -16,6 +16,8 @@ from typing import Optional, Union
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db_mac.py --cloud-db -t 30 -i en0 -n my_capture 0.0.0.0/0
 # Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db_mac.py --cloud-db -t 30 -i en0 -n my_capture --capture-id id1,id2,id3 0.0.0.0/0
+# Optional custom document directory/collection (defaults to "captures")
+# python3 data-pipeline/flowlet-parsing/live_capture_to_db_mac.py --cloud-db --capture-dir my_new_dir -i en0 -n my_capture 0.0.0.0/0
 
 #Captures on all, pushes to cloud db specified by root directory json file w/ 30 second timeout
 #on interface en0
@@ -39,6 +41,25 @@ FLOWLET_THRESHOLDS = [0.05, 0.1, 0.2]
 
 def threshold_suffix(threshold: float) -> str:
     return f"{threshold:g}"
+
+
+def is_oversized_document_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return any(
+        token in message
+        for token in (
+            "too large",
+            "document too large",
+            "maximum bson object size",
+            "bsonobj size",
+            "request entity too large",
+            "entity too large",
+            "resulting document after update is larger than",
+            "document after update is larger than",
+            "exceeds the maximum size",
+            "size limit",
+        )
+    )
 
 def get_tshark_path():
     """Return the tshark binary path for macOS."""
@@ -144,12 +165,16 @@ TOTAL_FIELDS = 29
 
 class LiveFlowletManager:
     """Works with either SQLite session (capture_id int) or cloud session (capture_id str)."""
-    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, threshold=0.1, llm_only=False):
+    def __init__(self, db_session, capture_id: Union[int, str], flowlet_cls, capture_cls, threshold=0.1, llm_only=False, capture_notes=None):
         self.db = db_session
+        self.capture_base_id = capture_id
         self.capture_id = capture_id
         self.flowlet_cls = flowlet_cls
+        self.capture_cls = capture_cls
         self.threshold = threshold
         self.llm_only = llm_only
+        self.capture_notes = capture_notes
+        self.capture_part = 1
         self.flows = defaultdict(list)
         self.llm_ip_map = {}
         self.flowlet_counts = defaultdict(int)
@@ -260,8 +285,82 @@ class LiveFlowletManager:
             packet_size_std=ps_std,
         )
         self.db.add(new_flowlet)
-        self.db.commit()
+        self._commit_with_rotation()
         self.flows[flow_key] = []
+
+    def _capture_id_for_part(self, part_number):
+        if not isinstance(self.capture_base_id, str):
+            return self.capture_base_id
+        if part_number <= 1:
+            return self.capture_base_id
+        return f"{self.capture_base_id}_part_{part_number}"
+
+    def _part_notes(self, part_number):
+        if not self.capture_notes:
+            return None
+        if part_number <= 1:
+            return self.capture_notes
+        return f"{self.capture_notes} [part={part_number}]"
+
+    def _persist_capture_metadata(self, capture_id, status):
+        metadata = {"llm_ip_map": self.llm_ip_map}
+        if status:
+            metadata["status"] = status
+
+        captures_collection = getattr(self.db, "_captures", None)
+        if captures_collection is not None:
+            captures_collection.update_one({"_id": capture_id}, {"$set": metadata}, upsert=True)
+            return
+
+        firebase_client = getattr(self.db, "_client", None)
+        if firebase_client is not None and hasattr(firebase_client, "capture_ref"):
+            firebase_client.capture_ref(capture_id).set(metadata, merge=True)
+            return
+
+        capture = self.db.query(self.capture_cls).get(capture_id)
+        if not capture:
+            return
+        capture.llm_ip_map = json.dumps(self.llm_ip_map)
+        if hasattr(capture, "status") and status:
+            capture.status = status
+        self.db.commit()
+
+    def _rotate_capture(self):
+        if not isinstance(self.capture_base_id, str):
+            raise RuntimeError("Capture rotation is only supported for cloud capture IDs.")
+
+        if self.capture_part >= 1:
+            try:
+                self._persist_capture_metadata(self.capture_id, "completed")
+            except Exception:
+                pass
+
+        self.capture_part += 1
+        next_capture_id = self._capture_id_for_part(self.capture_part)
+        new_capture = self.capture_cls(
+            file_path=next_capture_id,
+            status="active",
+            notes=self._part_notes(self.capture_part),
+        )
+        if hasattr(new_capture, "llm_ip_map"):
+            new_capture.llm_ip_map = json.dumps(self.llm_ip_map)
+        self.db.add(new_capture)
+        self.capture_id = next_capture_id
+        flowlet_buffer = getattr(self.db, "_flowlets_buf", None)
+        if flowlet_buffer:
+            for flowlet in flowlet_buffer:
+                if hasattr(flowlet, "capture_id"):
+                    flowlet.capture_id = next_capture_id
+
+    def _commit_with_rotation(self):
+        while True:
+            try:
+                self.db.commit()
+                return
+            except Exception as exc:
+                if not is_oversized_document_error(exc):
+                    raise
+                self._rotate_capture()
 
 def main():
     p = argparse.ArgumentParser(description="Live packet sniffer and flowlet parser.")
@@ -276,6 +375,11 @@ def main():
     )
     p.add_argument("--cloud-db", action="store_true", default=None, help="Use MongoDB cloud database.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
+    p.add_argument(
+        "--capture-dir",
+        default="captures",
+        help="Cloud DB document directory/collection name (default: captures).",
+    )
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
     p.add_argument("-l", "--llm-only", action="store_true", help="Only push flowlets that have IP address to/from an LLM")
     args = p.parse_args()
@@ -298,7 +402,8 @@ def main():
         sys.exit(f"❌ Error: {args.ip_range} is not a valid IP range.")
 
     if use_cloud_db:
-        init_database(None)
+        init_database(None, collection=args.capture_dir)
+        print(f"☁️ Writing cloud capture documents to directory/collection: {args.capture_dir}")
     else:
         init_database(args.db_path)
     db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}
@@ -335,10 +440,18 @@ def main():
             capture_ids[threshold] = capture.id
             print(f"📝 Created new manual capture record: {unique_name} (ID: {capture_ids[threshold]})")
 
-    managers = {
-        threshold: LiveFlowletManager(db_sessions[threshold], capture_ids[threshold], Flowlet, threshold=threshold, llm_only=args.llm_only)
-        for threshold in FLOWLET_THRESHOLDS
-    }
+    managers = {}
+    for threshold in FLOWLET_THRESHOLDS:
+        capture_record = db_sessions[threshold].query(Capture).get(capture_ids[threshold])
+        managers[threshold] = LiveFlowletManager(
+            db_sessions[threshold],
+            capture_ids[threshold],
+            Flowlet,
+            Capture,
+            threshold=threshold,
+            llm_only=args.llm_only,
+            capture_notes=capture_record.notes if capture_record else None,
+        )
 
     cmd = build_command(tshark_bin, network, args.interface, args.ssl_keys)
 
@@ -423,7 +536,7 @@ def main():
 
         try:
             for threshold, manager in managers.items():
-                capture_id = capture_ids[threshold]
+                capture_id = manager.capture_id
                 final_db = db_sessions[threshold]
                 final_capture = final_db.query(Capture).get(capture_id)
                 if final_capture:

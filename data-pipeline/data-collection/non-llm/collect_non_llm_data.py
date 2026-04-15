@@ -78,7 +78,8 @@ def _launch_chrome(sslkeylog_path):
     try:
         # No user-data-dir — lets UC create a temp profile so it won't
         # conflict with other Chrome instances (e.g. the LLM bot)
-        driver = uc.Chrome(options=options, version_main=145)
+        # Let UC detect the local Chrome version and fetch a matching driver.
+        driver = uc.Chrome(options=options)
         time.sleep(2)
         driver.set_page_load_timeout(30)
         print("✅ Launched!")
