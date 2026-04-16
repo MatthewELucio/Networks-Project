@@ -1,0 +1,161 @@
+{
+  "dataset_info": {
+    "total_flowlets": 123590,
+    "train_size": 96790,
+    "test_size": 26800,
+    "feature_dim": 7,
+    "train_class_distribution": [
+      85270,
+      11520
+    ],
+    "test_class_distribution": [
+      22995,
+      3805
+    ],
+    "llm_sources": [
+      "chatgpt"
+    ],
+    "direction": "incoming",
+    "filter_stats": {
+      "kept_llm": 15325,
+      "kept_non_llm": 108265,
+      "skipped_llm_source": 49988,
+      "skipped_llm_direction": 4209,
+      "skipped_other": 0
+    },
+    "input_sources": [
+      "data\\snapshots\\snapshot_20260408_113157\\20260408"
+    ]
+  },
+  "models": {
+    "random_forest": {
+      "accuracy": 0.9744776119402985,
+      "precision": 0.9511419485400405,
+      "recall": 0.8646517739816032,
+      "f1": 0.9058370044052864,
+      "confusion_matrix": [
+        [
+          22826,
+          169
+        ],
+        [
+          515,
+          3290
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.977935821087357,
+          "recall": 0.9926505762122201,
+          "f1-score": 0.9852382596685083,
+          "support": 22995.0
+        },
+        "llm": {
+          "precision": 0.9511419485400405,
+          "recall": 0.8646517739816032,
+          "f1-score": 0.9058370044052864,
+          "support": 3805.0
+        },
+        "accuracy": 0.9744776119402985,
+        "macro avg": {
+          "precision": 0.9645388848136988,
+          "recall": 0.9286511750969116,
+          "f1-score": 0.9455376320368973,
+          "support": 26800.0
+        },
+        "weighted avg": {
+          "precision": 0.9741316910484563,
+          "recall": 0.9744776119402985,
+          "f1-score": 0.973965059061174,
+          "support": 26800.0
+        }
+      }
+    },
+    "svm": {
+      "accuracy": 0.882910447761194,
+      "precision": 0.8351758793969849,
+      "recall": 0.21839684625492772,
+      "f1": 0.34625,
+      "confusion_matrix": [
+        [
+          22831,
+          164
+        ],
+        [
+          2974,
+          831
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.88475101724472,
+          "recall": 0.992868014785823,
+          "f1-score": 0.9356967213114754,
+          "support": 22995.0
+        },
+        "llm": {
+          "precision": 0.8351758793969849,
+          "recall": 0.21839684625492772,
+          "f1-score": 0.34625,
+          "support": 3805.0
+        },
+        "accuracy": 0.882910447761194,
+        "macro avg": {
+          "precision": 0.8599634483208525,
+          "recall": 0.6056324305203753,
+          "f1-score": 0.6409733606557377,
+          "support": 26800.0
+        },
+        "weighted avg": {
+          "precision": 0.8777124575614874,
+          "recall": 0.882910447761194,
+          "f1-score": 0.8520084834536334,
+          "support": 26800.0
+        }
+      }
+    },
+    "xgboost": {
+      "accuracy": 0.9696268656716418,
+      "precision": 0.9155320922478466,
+      "recall": 0.8659658344283837,
+      "f1": 0.8900594273365748,
+      "confusion_matrix": [
+        [
+          22691,
+          304
+        ],
+        [
+          510,
+          3295
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.9780181888711693,
+          "recall": 0.9867797347249402,
+          "f1-score": 0.9823794267901983,
+          "support": 22995.0
+        },
+        "llm": {
+          "precision": 0.9155320922478466,
+          "recall": 0.8659658344283837,
+          "f1-score": 0.8900594273365748,
+          "support": 3805.0
+        },
+        "accuracy": 0.9696268656716418,
+        "macro avg": {
+          "precision": 0.946775140559508,
+          "recall": 0.926372784576662,
+          "f1-score": 0.9362194270633866,
+          "support": 26800.0
+        },
+        "weighted avg": {
+          "precision": 0.9691465620931193,
+          "recall": 0.9696268656716418,
+          "f1-score": 0.9692720537334433,
+          "support": 26800.0
+        }
+      }
+    }
+  }
+}
