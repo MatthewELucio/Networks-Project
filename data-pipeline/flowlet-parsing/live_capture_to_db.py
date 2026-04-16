@@ -19,6 +19,8 @@ USE_CLOUD_DB = True
 # New run (creates 3 capture docs: _0.05, _0.1, _0.2)
 # python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i eth0 -n my_capture 0.0.0.0/0
 # Resume run (must pass 3 IDs in threshold order 0.05,0.1,0.2)
+# Optional custom document directory/collection (defaults to "captures")
+# python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db --capture-dir my_new_dir -i eth0 -n my_capture 0.0.0.0/0
 
 # WSL Example: python3 data-pipeline/flowlet-parsing/live_capture_to_db.py --cloud-db -t 30 -i Wi-Fi -n my_capture -k C:\Users\matth\Documents\sslkeys.txt --llm-only 0.0.0.0/0
 
@@ -215,6 +217,11 @@ def main():
     )
     p.add_argument("--cloud-db", action="store_true", default=None, help="Use MongoDB cloud database.")
     p.add_argument("--no-cloud-db", action="store_true", dest="no_cloud_db", help="Use local SQLite (default).")
+    p.add_argument(
+        "--capture-dir",
+        default="captures",
+        help="Cloud DB document directory/collection name (default: captures).",
+    )
     p.add_argument("-t", "--timeout", type=int, help="Timeout in seconds")
     p.add_argument("-l", "--llm-only", action="store_true", help="Only push flowlets that have IP address to/from an LLM")
     args = p.parse_args()
@@ -239,7 +246,8 @@ def main():
     # init_database(args.db_path)
     if use_cloud_db:
         # Pass None so it forces the module to look at the MONGODB_URI env var
-        init_database(None) 
+        init_database(None, collection=args.capture_dir)
+        print(f"☁️ Writing cloud capture documents to directory/collection: {args.capture_dir}")
     else:
         init_database(args.db_path)
     db_sessions = {threshold: get_db_session() for threshold in FLOWLET_THRESHOLDS}

@@ -40,7 +40,8 @@ def launch_browser():
     print(f"   SSLKEYLOGFILE: {sslkeylog_path}")
 
     try:
-        driver = uc.Chrome(options=options, version_main=145)
+        # Let UC detect the local Chrome version and fetch a matching driver.
+        driver = uc.Chrome(options=options)
         print(f"✅ Launched!")
         return driver
     except Exception as e:
