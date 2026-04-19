@@ -1,0 +1,224 @@
+{
+  "llm": "gemini",
+  "direction": "both",
+  "filter_stats": {
+    "kept_llm": 69522,
+    "kept_non_llm": 108265,
+    "skipped_llm_direction": 0,
+    "skipped_llm_name": 0,
+    "skipped_other": 0
+  },
+  "dataset_info": {
+    "total_flowlets": 177787,
+    "llm_count": 69522,
+    "non_llm_count": 108265,
+    "feature_dim": 7,
+    "input_sources": [
+      "data\\snapshots\\snapshot_20260408_113157\\20260408"
+    ]
+  },
+  "correlation": {
+    "correlation_matrix": {
+      "duration": {
+        "duration": 1.0,
+        "packet_count": 0.21596529634509704,
+        "total_bytes": 0.10875093458872251,
+        "inter_packet_time_mean": 0.06668112529567888,
+        "inter_packet_time_std": 0.11954988593973292,
+        "packet_size_mean": 0.06386602134198303,
+        "packet_size_std": 0.09956705414352604,
+        "is_llm": -0.04008116052916728
+      },
+      "packet_count": {
+        "duration": 0.215965296345097,
+        "packet_count": 1.0,
+        "total_bytes": 0.979458694100904,
+        "inter_packet_time_mean": -0.026620037101815007,
+        "inter_packet_time_std": -0.001518836702703249,
+        "packet_size_mean": 0.13033028490634999,
+        "packet_size_std": 0.06760593195883673,
+        "is_llm": -0.019436239266039147
+      },
+      "total_bytes": {
+        "duration": 0.10875093458872251,
+        "packet_count": 0.979458694100904,
+        "total_bytes": 1.0,
+        "inter_packet_time_mean": -0.021436976860015874,
+        "inter_packet_time_std": -0.008449105423839524,
+        "packet_size_mean": 0.13141197486393086,
+        "packet_size_std": 0.05939213253600976,
+        "is_llm": -0.009496270553347418
+      },
+      "inter_packet_time_mean": {
+        "duration": 0.06668112529567889,
+        "packet_count": -0.026620037101815007,
+        "total_bytes": -0.021436976860015878,
+        "inter_packet_time_mean": 1.0,
+        "inter_packet_time_std": 0.37461071965548354,
+        "packet_size_mean": -0.13150333934500935,
+        "packet_size_std": -0.04091196078493791,
+        "is_llm": 0.03999614919336298
+      },
+      "inter_packet_time_std": {
+        "duration": 0.11954988593973291,
+        "packet_count": -0.0015188367027032489,
+        "total_bytes": -0.008449105423839524,
+        "inter_packet_time_mean": 0.3746107196554835,
+        "inter_packet_time_std": 1.0,
+        "packet_size_mean": 0.04683638475414855,
+        "packet_size_std": 0.18742615260848822,
+        "is_llm": -0.1821926017936094
+      },
+      "packet_size_mean": {
+        "duration": 0.06386602134198303,
+        "packet_count": 0.13033028490634999,
+        "total_bytes": 0.13141197486393086,
+        "inter_packet_time_mean": -0.13150333934500932,
+        "inter_packet_time_std": 0.04683638475414855,
+        "packet_size_mean": 1.0,
+        "packet_size_std": 0.6523069637160921,
+        "is_llm": 0.037620159528741585
+      },
+      "packet_size_std": {
+        "duration": 0.09956705414352603,
+        "packet_count": 0.06760593195883674,
+        "total_bytes": 0.059392132536009765,
+        "inter_packet_time_mean": -0.04091196078493792,
+        "inter_packet_time_std": 0.18742615260848822,
+        "packet_size_mean": 0.6523069637160921,
+        "packet_size_std": 1.0,
+        "is_llm": 0.1384188951878357
+      },
+      "is_llm": {
+        "duration": -0.04008116052916728,
+        "packet_count": -0.019436239266039147,
+        "total_bytes": -0.009496270553347416,
+        "inter_packet_time_mean": 0.03999614919336298,
+        "inter_packet_time_std": -0.18219260179360938,
+        "packet_size_mean": 0.037620159528741585,
+        "packet_size_std": 0.1384188951878357,
+        "is_llm": 1.0
+      }
+    },
+    "feature_names": [
+      "duration",
+      "packet_count",
+      "total_bytes",
+      "inter_packet_time_mean",
+      "inter_packet_time_std",
+      "packet_size_mean",
+      "packet_size_std",
+      "is_llm"
+    ],
+    "shape": [
+      8,
+      8
+    ]
+  },
+  "feature_importance": {
+    "rf": {
+      "duration": 0.1066068903345718,
+      "packet_count": 0.09287554220243026,
+      "total_bytes": 0.12670243046998414,
+      "inter_packet_time_mean": 0.08769879303275506,
+      "inter_packet_time_std": 0.11095801964487265,
+      "packet_size_mean": 0.196343212737357,
+      "packet_size_std": 0.2788151115780292
+    },
+    "xgb": {
+      "duration": 0.05094053968787193,
+      "packet_count": 0.3289555311203003,
+      "total_bytes": 0.056841567158699036,
+      "inter_packet_time_mean": 0.040436938405036926,
+      "inter_packet_time_std": 0.11562777310609818,
+      "packet_size_mean": 0.07707266509532928,
+      "packet_size_std": 0.33012494444847107
+    }
+  },
+  "statistical_tests": {
+    "duration": {
+      "llm_mean": 0.04167677730579946,
+      "llm_std": 0.14623394334824963,
+      "llm_median": 0.006919145584106445,
+      "non_llm_mean": 0.09072957795326833,
+      "non_llm_std": 0.7556581201865852,
+      "non_llm_median": 0.012206077575683594,
+      "mann_whitney_u": 3495810756.5,
+      "p_value": 1.0995007817227743e-141,
+      "cohens_d": -0.09013012553403162,
+      "significant": true
+    },
+    "packet_count": {
+      "llm_mean": 14.26357124363511,
+      "llm_std": 114.33127207075418,
+      "llm_median": 2.0,
+      "non_llm_mean": 26.355765944672793,
+      "non_llm_std": 378.03153476661714,
+      "non_llm_median": 4.0,
+      "mann_whitney_u": 2375641345.0,
+      "p_value": 0.0,
+      "cohens_d": -0.04329985017154904,
+      "significant": true
+    },
+    "total_bytes": {
+      "llm_mean": 10620.237823998159,
+      "llm_std": 119852.16546177202,
+      "llm_median": 339.0,
+      "non_llm_mean": 17634.606086916363,
+      "non_llm_std": 451781.9185267705,
+      "non_llm_median": 316.0,
+      "mann_whitney_u": 4004097565.0,
+      "p_value": 4.897344232805939e-115,
+      "cohens_d": -0.021222973016726945,
+      "significant": true
+    },
+    "inter_packet_time_mean": {
+      "llm_mean": 0.00937328055481831,
+      "llm_std": 0.01337156667868655,
+      "llm_median": 0.004018068313598633,
+      "non_llm_mean": 0.00827764002655688,
+      "non_llm_std": 0.013347562028636024,
+      "non_llm_median": 0.003268652948839911,
+      "mann_whitney_u": 4206645663.5,
+      "p_value": 0.0,
+      "cohens_d": 0.08201166273782932,
+      "significant": true
+    },
+    "inter_packet_time_std": {
+      "llm_mean": 0.0037096941738050393,
+      "llm_std": 0.008196719958687199,
+      "llm_median": 0.0,
+      "non_llm_mean": 0.007531416591914308,
+      "non_llm_std": 0.011099769644673296,
+      "non_llm_median": 0.0019277342196908672,
+      "mann_whitney_u": 2215025433.5,
+      "p_value": 0.0,
+      "cohens_d": -0.3916975105370417,
+      "significant": true
+    },
+    "packet_size_mean": {
+      "llm_mean": 222.0816140066557,
+      "llm_std": 221.6306051473006,
+      "llm_median": 153.0,
+      "non_llm_mean": 201.90740506650297,
+      "non_llm_std": 284.1694846521463,
+      "non_llm_median": 52.0,
+      "mann_whitney_u": 5272512194.0,
+      "p_value": 0.0,
+      "cohens_d": 0.07916861435313298,
+      "significant": true
+    },
+    "packet_size_std": {
+      "llm_mean": 179.49882644105824,
+      "llm_std": 174.8456066773438,
+      "llm_median": 128.3376711405259,
+      "non_llm_mean": 121.4610299916722,
+      "non_llm_std": 218.62914244726204,
+      "non_llm_median": 0.0,
+      "mann_whitney_u": 5626431469.5,
+      "p_value": 0.0,
+      "cohens_d": 0.2931918228734432,
+      "significant": true
+    }
+  }
+}
