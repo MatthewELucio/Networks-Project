@@ -1,0 +1,317 @@
+{
+  "overseer": {
+    "type": "stacked_xgboost",
+    "cv_folds": 5,
+    "experts": [
+      "chatgpt",
+      "claude",
+      "gemini"
+    ],
+    "meta_model_info": {
+      "feature_importances": [
+        0.019493738189339638,
+        0.01789962127804756,
+        0.00849845353513956,
+        0.5250648260116577,
+        0.007823529653251171,
+        0.4076262414455414,
+        0.00914553739130497,
+        0.0044480133801698685
+      ],
+      "feature_names": [
+        "p_chatgpt",
+        "p_claude",
+        "p_gemini",
+        "max_p",
+        "min_p",
+        "mean_p",
+        "std_p",
+        "spread_p"
+      ]
+    },
+    "train_metrics": {
+      "accuracy": 0.9965751186290017,
+      "precision": 0.9984725245350746,
+      "recall": 0.9915810231711479,
+      "f1": 0.9950148413121243,
+      "confusion_matrix": [
+        [
+          50090,
+          40
+        ],
+        [
+          222,
+          26147
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.9955875337891557,
+          "recall": 0.9992020746060243,
+          "f1-score": 0.9973915294398757,
+          "support": 50130.0
+        },
+        "llm": {
+          "precision": 0.9984725245350746,
+          "recall": 0.9915810231711479,
+          "f1-score": 0.9950148413121243,
+          "support": 26369.0
+        },
+        "accuracy": 0.9965751186290017,
+        "macro avg": {
+          "precision": 0.9970300291621151,
+          "recall": 0.995391548888586,
+          "f1-score": 0.996203185376,
+          "support": 76499.0
+        },
+        "weighted avg": {
+          "precision": 0.996581982356838,
+          "recall": 0.9965751186290017,
+          "f1-score": 0.9965722914205463,
+          "support": 76499.0
+        }
+      },
+      "roc_auc": 0.9999227659418516
+    },
+    "test_metrics": {
+      "accuracy": 0.8968074150360453,
+      "precision": 0.8664212076583211,
+      "recall": 0.842836676217765,
+      "f1": 0.8544662309368192,
+      "confusion_matrix": [
+        [
+          11533,
+          907
+        ],
+        [
+          1097,
+          5883
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.9131433095803642,
+          "recall": 0.9270900321543408,
+          "f1-score": 0.920063821300359,
+          "support": 12440.0
+        },
+        "llm": {
+          "precision": 0.8664212076583211,
+          "recall": 0.842836676217765,
+          "f1-score": 0.8544662309368192,
+          "support": 6980.0
+        },
+        "accuracy": 0.8968074150360453,
+        "macro avg": {
+          "precision": 0.8897822586193427,
+          "recall": 0.8849633541860529,
+          "f1-score": 0.887265026118589,
+          "support": 19420.0
+        },
+        "weighted avg": {
+          "precision": 0.8963502986938625,
+          "recall": 0.8968074150360453,
+          "f1-score": 0.8964865205414759,
+          "support": 19420.0
+        }
+      },
+      "roc_auc": 0.9648015747795722
+    }
+  },
+  "baselines": {
+    "max_probability_test": {
+      "accuracy": 0.8968589083419155,
+      "precision": 0.8931900774213936,
+      "recall": 0.8098853868194842,
+      "f1": 0.8495003381170636,
+      "confusion_matrix": [
+        [
+          11764,
+          676
+        ],
+        [
+          1327,
+          5653
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.8986326483843862,
+          "recall": 0.9456591639871382,
+          "f1-score": 0.9215463554110689,
+          "support": 12440.0
+        },
+        "llm": {
+          "precision": 0.8931900774213936,
+          "recall": 0.8098853868194842,
+          "f1-score": 0.8495003381170636,
+          "support": 6980.0
+        },
+        "accuracy": 0.8968589083419155,
+        "macro avg": {
+          "precision": 0.8959113629028899,
+          "recall": 0.8777722754033113,
+          "f1-score": 0.8855233467640662,
+          "support": 19420.0
+        },
+        "weighted avg": {
+          "precision": 0.8966764617045876,
+          "recall": 0.8968589083419155,
+          "f1-score": 0.895651339926406,
+          "support": 19420.0
+        }
+      },
+      "roc_auc": 0.9652814138236026
+    }
+  },
+  "individual_experts": {
+    "chatgpt": {
+      "accuracy": 0.7885684860968074,
+      "precision": 0.9199298655756867,
+      "recall": 0.4510028653295129,
+      "f1": 0.6052682176504518,
+      "confusion_matrix": [
+        [
+          12166,
+          274
+        ],
+        [
+          3832,
+          3148
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.7604700587573446,
+          "recall": 0.9779742765273312,
+          "f1-score": 0.8556157254377945,
+          "support": 12440.0
+        },
+        "llm": {
+          "precision": 0.9199298655756867,
+          "recall": 0.4510028653295129,
+          "f1-score": 0.6052682176504518,
+          "support": 6980.0
+        },
+        "accuracy": 0.7885684860968074,
+        "macro avg": {
+          "precision": 0.8401999621665157,
+          "recall": 0.714488570928422,
+          "f1-score": 0.7304419715441232,
+          "support": 19420.0
+        },
+        "weighted avg": {
+          "precision": 0.817783624750755,
+          "recall": 0.7885684860968074,
+          "f1-score": 0.7656350043072254,
+          "support": 19420.0
+        }
+      },
+      "roc_auc": 0.9159168478611375
+    },
+    "claude": {
+      "accuracy": 0.7674562306900103,
+      "precision": 0.9052631578947369,
+      "recall": 0.394269340974212,
+      "f1": 0.5493013972055888,
+      "confusion_matrix": [
+        [
+          12152,
+          288
+        ],
+        [
+          4228,
+          2752
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.7418803418803419,
+          "recall": 0.9768488745980708,
+          "f1-score": 0.8433032616238723,
+          "support": 12440.0
+        },
+        "llm": {
+          "precision": 0.9052631578947369,
+          "recall": 0.394269340974212,
+          "f1-score": 0.5493013972055888,
+          "support": 6980.0
+        },
+        "accuracy": 0.7674562306900103,
+        "macro avg": {
+          "precision": 0.8235717498875395,
+          "recall": 0.6855591077861414,
+          "f1-score": 0.6963023294147306,
+          "support": 19420.0
+        },
+        "weighted avg": {
+          "precision": 0.8006039286867516,
+          "recall": 0.7674562306900103,
+          "f1-score": 0.7376321486661165,
+          "support": 19420.0
+        }
+      },
+      "roc_auc": 0.9185009305410958
+    },
+    "gemini": {
+      "accuracy": 0.7505664263645726,
+      "precision": 0.9,
+      "recall": 0.344269340974212,
+      "f1": 0.49803108808290153,
+      "confusion_matrix": [
+        [
+          12173,
+          267
+        ],
+        [
+          4577,
+          2403
+        ]
+      ],
+      "classification_report": {
+        "non_llm": {
+          "precision": 0.7267462686567164,
+          "recall": 0.9785369774919614,
+          "f1-score": 0.834052757793765,
+          "support": 12440.0
+        },
+        "llm": {
+          "precision": 0.9,
+          "recall": 0.344269340974212,
+          "f1-score": 0.49803108808290153,
+          "support": 6980.0
+        },
+        "accuracy": 0.7505664263645726,
+        "macro avg": {
+          "precision": 0.8133731343283582,
+          "recall": 0.6614031592330867,
+          "f1-score": 0.6660419229383332,
+          "support": 19420.0
+        },
+        "weighted avg": {
+          "precision": 0.7890176921776288,
+          "recall": 0.7505664263645726,
+          "f1-score": 0.7132787488039696,
+          "support": 19420.0
+        }
+      },
+      "roc_auc": 0.8757854780309382
+    }
+  },
+  "dataset_info": {
+    "snapshot_dir": "/Users/taogroves/repositories/Networks-Project/data-pipeline/data/snapshots/snapshot_20260416_160351",
+    "total_flowlets": 95919,
+    "train_size": 76499,
+    "test_size": 19420,
+    "train_class_distribution": [
+      50130,
+      26369
+    ],
+    "test_class_distribution": [
+      12440,
+      6980
+    ]
+  },
+  "mode": "train",
+  "artifacts_dir": "/Users/taogroves/repositories/Networks-Project/packet-analysis/trained_overseers/overseer_stacked_20260416_161609"
+}
