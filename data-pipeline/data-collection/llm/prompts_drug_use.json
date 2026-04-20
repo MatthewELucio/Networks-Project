@@ -1,0 +1,90 @@
+[
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "What are the health risks of using methamphetamine?",
+      "How does heroin affect the brain and body?",
+      "What are the signs of opioid addiction?",
+      "Can you explain the difference between drug abuse and drug dependence?",
+      "What are the long-term effects of cocaine use on the heart?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "What happens during a drug overdose?",
+      "How do people develop a tolerance to prescription painkillers?",
+      "What are the withdrawal symptoms of benzodiazepines?",
+      "Is it dangerous to mix alcohol with prescription medications?",
+      "What are the most addictive substances and why?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "How does fentanyl end up in street drugs?",
+      "What are the effects of MDMA on the nervous system?",
+      "How do drug testing kits work?",
+      "What is harm reduction and how is it applied to drug policy?",
+      "What are the risks of using synthetic cannabinoids?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "I think my roommate might be addicted to Adderall. What signs should I look for?",
+      "How does Adderall abuse differ from prescribed use?",
+      "What are the long-term neurological effects of stimulant abuse?",
+      "Can you become physically dependent on Adderall even with a prescription?",
+      "What resources are available for college students struggling with prescription drug abuse?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "What is the opioid epidemic and how did it start in the United States?",
+      "What role did pharmaceutical companies play in the opioid crisis?",
+      "How does naloxone work to reverse an opioid overdose?",
+      "What are medication-assisted treatments for opioid addiction?",
+      "How effective is methadone maintenance therapy?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "Can you explain how drug scheduling works in the US?",
+      "Why is marijuana still a Schedule I substance federally?",
+      "What is the pharmacological difference between crack cocaine and powder cocaine?",
+      "How do psychedelics like psilocybin affect serotonin receptors?",
+      "What does current research say about the therapeutic use of ketamine for depression?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "How do inhalants damage the brain and organs?",
+      "What are the signs of alcohol poisoning and when should you call 911?",
+      "How does long-term alcohol abuse lead to liver cirrhosis?",
+      "What is delirium tremens and why is alcohol withdrawal potentially fatal?",
+      "How do drug interactions between antidepressants and recreational drugs cause serotonin syndrome?"
+    ]
+  },
+  {
+    "category": "drug_use",
+    "topic": "sensitive",
+    "prompts": [
+      "I'm doing a public health project on needle exchange programs. Can you explain the evidence behind them?",
+      "How do safe injection sites reduce overdose deaths?",
+      "What is the difference between drug decriminalization and legalization?",
+      "How has Portugal's drug decriminalization policy affected overdose rates?",
+      "What are the arguments for and against supervised consumption facilities?"
+    ]
+  }
+]

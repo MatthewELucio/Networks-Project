@@ -1,0 +1,102 @@
+[
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "How can a small research engineering team run faster without losing quality?",
+      "What meeting rituals actually improve execution instead of creating overhead?",
+      "How should ownership be defined for shared scripts and experiment pipelines?",
+      "What lightweight process catches regressions early?",
+      "How should success be measured for weekly engineering cycles?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I'd like to create a simple to-do list application from scratch. Can you help me outline the basic features we should include?",
+      "Great! Now that we have the features in mind, can you provide a basic structure of the code in Python to implement these features?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I'm having trouble with my Python code that won't run properly. Can you help me debug it?",
+      "I've encountered an error message that says 'IndexError: list index out of range.' What does it mean?",
+      "Here's a snippet of my code: 'my_list = [1, 2, 3]; print(my_list[3])'. Why is this causing the error?",
+      "What are some best practices I can follow to prevent IndexError in my future code?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I'm trying to build a simple web application using Flask. Can you help me get started with the basic structure and necessary files?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I'm looking to improve my productivity for the week ahead. Can you help me create a plan to achieve my goals?",
+      "What specific tasks should I prioritize to make the most of my time and ensure I stay on track?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I want to create a simple web application that allows users to track their daily tasks. Can you help me get started?",
+      "What programming languages and frameworks would you recommend for building this task tracker application?",
+      "Can you give me an outline or a basic structure of the project, including the main components I should implement?",
+      "How do I set up the development environment for this project? What tools will I need?",
+      "Could you provide a simple code example for creating a task list where users can add and remove tasks?",
+      "What are some best practices I should follow when developing and organizing my code for this application?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I want a deployment pipeline with build, test, security scan, and staged rollout.",
+      "How do I add rollback criteria based on canary error budgets?",
+      "What secrets management pattern is safest for CI runners?",
+      "How can I parallelize tests while preserving deterministic outcomes?",
+      "What artifacts should be retained for auditability and incident analysis?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "I need a fair benchmark plan for latency and throughput across four service profiles.",
+      "How can I control for warm-up effects and caching artifacts?",
+      "What sample size is minimally acceptable for p95 latency comparisons?",
+      "How should I visualize distributions to avoid misleading averages?",
+      "What conclusions are valid versus overclaimed in benchmark reports?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "How should I estimate capacity needs for bursty conversational traffic?",
+      "What signals show we are near saturation before hard failures occur?",
+      "How can admission control preserve critical workloads under spikes?",
+      "When is vertical scaling better than horizontal scaling?",
+      "What forecasting method works with limited historical data?"
+    ]
+  },
+  {
+    "category": "non_sensitive",
+    "topic": "non_sensitive",
+    "prompts": [
+      "How do we implement lightweight change governance for research systems?",
+      "What metadata should be mandatory for experiments that influence decisions?",
+      "How should approvals differ for code, configs, and data artifacts?",
+      "What retention policy balances reproducibility and storage cost?",
+      "How can governance stay practical for a small team?"
+    ]
+  }
+]

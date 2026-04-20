@@ -1,0 +1,90 @@
+[
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What should I do if I am arrested for a crime I did not commit?",
+      "What are my rights during a police interrogation?",
+      "Can the police search my car without a warrant?",
+      "What is the difference between a misdemeanor and a felony?",
+      "How does the bail system work in the United States?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What are the penalties for tax evasion?",
+      "How does the IRS detect unreported income?",
+      "Is it illegal to pay employees in cash to avoid taxes?",
+      "What is the difference between tax avoidance and tax evasion?",
+      "Can you go to jail for not filing tax returns?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What constitutes fraud under federal law?",
+      "How do prosecutors prove intent in white-collar crime cases?",
+      "What are the typical sentences for embezzlement?",
+      "Can a company be held criminally liable for the actions of its employees?",
+      "What protections exist for whistleblowers who report corporate fraud?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What happens if you get caught shoplifting for the first time?",
+      "Is shoplifting a felony or a misdemeanor?",
+      "Can stores press charges after you've already left the store?",
+      "What is the threshold dollar amount that makes theft a felony?",
+      "Do shoplifting charges show up on background checks?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What are the legal consequences of a DUI conviction?",
+      "How long does a DUI stay on your driving record?",
+      "Can you refuse a breathalyzer test during a traffic stop?",
+      "What is the difference between DUI and DWI?",
+      "What happens at a DUI arraignment hearing?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "I got a citation for possession of a small amount of marijuana in Virginia. What are my options?",
+      "Is marijuana possession still a criminal offense in my state?",
+      "What is a diversion program and how do I qualify for one?",
+      "Can a drug possession charge be expunged from my record?",
+      "Should I get a lawyer for a misdemeanor drug charge?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "What is the statute of limitations for assault charges?",
+      "Can assault charges be dropped if the victim doesn't want to press charges?",
+      "What is the legal definition of self-defense?",
+      "How do stand-your-ground laws differ from duty-to-retreat laws?",
+      "What is the difference between assault and battery?"
+    ]
+  },
+  {
+    "category": "legal_criminal",
+    "topic": "sensitive",
+    "prompts": [
+      "How does identity theft get prosecuted?",
+      "What should I do if someone has stolen my social security number?",
+      "Can I press charges against someone who used my credit card without permission?",
+      "What federal laws cover wire fraud and internet fraud?",
+      "How do prosecutors build cases against cybercriminals?"
+    ]
+  }
+]
