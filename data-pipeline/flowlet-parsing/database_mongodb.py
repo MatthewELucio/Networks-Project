@@ -147,10 +147,18 @@ class Flowlet:
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to a dict similar to database_firebase.Flowlet.to_dict()."""
-        # For Mongo we default to empty arrays for the long sequences; callers may
-        # still include them explicitly via inter_packet_times/packet_sizes if needed.
         flowlet_uuid = self.id or f"{self.capture_id}_{self.flowlet_id}_{self.src_ip}_{self.src_port}"
-        
+
+        def _parse_json_array(val):
+            if val is None:
+                return []
+            if isinstance(val, list):
+                return val
+            try:
+                return json.loads(val)
+            except (TypeError, ValueError):
+                return []
+
         return {
             "id": flowlet_uuid,
             "capture_id": self.capture_id,
@@ -175,6 +183,8 @@ class Flowlet:
             "inter_packet_time_std": self.inter_packet_time_std,
             "packet_size_mean": self.packet_size_mean,
             "packet_size_std": self.packet_size_std,
+            "inter_packet_times": _parse_json_array(self.inter_packet_times),
+            "packet_sizes": _parse_json_array(self.packet_sizes),
             "model_llm_prediction": self.model_llm_prediction,
             "model_llm_confidence": self.model_llm_confidence,
             "ground_truth_llm": self.ground_truth_llm,

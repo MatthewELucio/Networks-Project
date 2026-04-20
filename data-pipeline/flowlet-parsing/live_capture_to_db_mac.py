@@ -182,9 +182,8 @@ class LiveFlowletManager:
             inter_packet_time_std=ipt_std,
             packet_size_mean=ps_mean,
             packet_size_std=ps_std,
-            # Store raw sequences as JSON strings for Markov modeling
-            # inter_packet_times=json.dumps(inter_packet_times),
-            # packet_sizes=json.dumps(packet_sizes)
+            inter_packet_times=json.dumps(inter_packet_times),
+            packet_sizes=json.dumps(packet_sizes),
         )
         self.db.add(new_flowlet)
         self.db.commit()
