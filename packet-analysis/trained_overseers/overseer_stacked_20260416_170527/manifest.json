@@ -1,0 +1,72 @@
+{
+  "type": "stacked_xgboost",
+  "experts": [
+    "chatgpt",
+    "claude",
+    "gemini",
+    "all_llm"
+  ],
+  "meta_kind": "xgboost",
+  "cv_folds": 5,
+  "random_state": 42,
+  "test_size": 0.2,
+  "snapshot_dir": "/Users/taogroves/repositories/Networks-Project/data-pipeline/data/snapshots/snapshot_20260416_160351",
+  "dataset_info": {
+    "snapshot_dir": "/Users/taogroves/repositories/Networks-Project/data-pipeline/data/snapshots/snapshot_20260416_160351",
+    "total_flowlets": 95919,
+    "train_size": 76499,
+    "test_size": 19420,
+    "train_class_distribution": [
+      50130,
+      26369
+    ],
+    "test_class_distribution": [
+      12440,
+      6980
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.8976828012358393,
+    "precision": 0.8663242846661775,
+    "recall": 0.8458452722063037,
+    "f1": 0.8559623051830373,
+    "confusion_matrix": [
+      [
+        11529,
+        911
+      ],
+      [
+        1076,
+        5904
+      ]
+    ],
+    "classification_report": {
+      "non_llm": {
+        "precision": 0.9146370487901626,
+        "recall": 0.9267684887459807,
+        "f1-score": 0.9206628069474945,
+        "support": 12440.0
+      },
+      "llm": {
+        "precision": 0.8663242846661775,
+        "recall": 0.8458452722063037,
+        "f1-score": 0.8559623051830373,
+        "support": 6980.0
+      },
+      "accuracy": 0.8976828012358393,
+      "macro avg": {
+        "precision": 0.8904806667281701,
+        "recall": 0.8863068804761423,
+        "f1-score": 0.8883125560652658,
+        "support": 19420.0
+      },
+      "weighted avg": {
+        "precision": 0.8972723168856613,
+        "recall": 0.8976828012358393,
+        "f1-score": 0.8974079407108357,
+        "support": 19420.0
+      }
+    },
+    "roc_auc": 0.9646985645712601
+  }
+}

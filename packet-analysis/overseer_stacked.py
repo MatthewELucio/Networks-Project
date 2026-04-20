@@ -6,10 +6,14 @@ provider-specific flowlet classifiers (ChatGPT, Claude, Gemini) instead
 of falling back to a fixed rule like ``max``. This is a classic
 *stacking* ensemble:
 
-    level 0: three expert classifiers, each producing P(llm | x).
+    level 0: three (optionally four) expert classifiers, each producing
+             P(llm | x). The three per-provider experts are always
+             included. An optional ``all_llm`` expert, trained on every
+             LLM provider at once, can be added via
+             ``--with-all-llm-expert``.
     level 1: a meta-learner (gradient-boosted trees by default) whose
-             inputs are the three expert probabilities plus a few
-             interaction features (max, min, mean, std, spread).
+             inputs are the expert probabilities plus a few interaction
+             features (max, min, mean, std, spread).
 
 Out-of-fold predictions (GroupKFold on flow 5-tuples) are used to train
 the meta-learner so it never sees expert probabilities produced on the
@@ -29,7 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import joblib
 import numpy as np
@@ -40,6 +44,7 @@ from overseer_common import (
     DEFAULT_MODELS_ROOT,
     DEFAULT_SNAPSHOTS_ROOT,
     EXPERT_PROVIDERS,
+    EXPERT_SOURCES,
     ExpertModel,
     FlowletDict,
     build_experts,
@@ -68,16 +73,22 @@ except Exception:  # pragma: no cover - xgboost is optional
 
 
 OVERSEER_PREFIX = "overseer_stacked"
-META_FEATURE_NAMES: Tuple[str, ...] = (
-    "p_chatgpt",
-    "p_claude",
-    "p_gemini",
+AGGREGATE_FEATURE_NAMES: Tuple[str, ...] = (
     "max_p",
     "min_p",
     "mean_p",
     "std_p",
     "spread_p",
 )
+
+
+def meta_feature_names(expert_names: Sequence[str]) -> List[str]:
+    """Feature vector layout produced by ``build_meta_features``.
+
+    Length depends on how many experts are being stacked, so this is
+    computed from the expert list rather than fixed at import time.
+    """
+    return [f"p_{name}" for name in expert_names] + list(AGGREGATE_FEATURE_NAMES)
 
 
 def build_meta_features(expert_probs: np.ndarray) -> np.ndarray:
@@ -168,13 +179,18 @@ def build_meta_learner(kind: str, random_state: int = 42):
     raise ValueError(f"Unknown meta-learner kind: {kind}")
 
 
-def save_meta(meta: Any, kind: str, out_dir: Path) -> Path:
+def save_meta(
+    meta: Any,
+    kind: str,
+    out_dir: Path,
+    feature_names: Sequence[str],
+) -> Path:
     path = Path(out_dir) / "meta.pkl"
     joblib.dump(
         {
             "meta": meta,
             "kind": kind,
-            "feature_names": list(META_FEATURE_NAMES),
+            "feature_names": list(feature_names),
         },
         path,
     )
@@ -186,9 +202,11 @@ def load_meta(in_dir: Path) -> Tuple[Any, str, List[str]]:
     if not path.exists():
         raise FileNotFoundError(f"Missing meta-learner PKL: {path}")
     state = joblib.load(path)
-    return state["meta"], state.get("kind", "unknown"), state.get(
-        "feature_names", list(META_FEATURE_NAMES)
-    )
+    feature_names = state.get("feature_names")
+    if not feature_names:
+        # Legacy PKLs (pre-4th-expert) assumed the fixed 3-expert layout.
+        feature_names = meta_feature_names(EXPERT_PROVIDERS)
+    return state["meta"], state.get("kind", "unknown"), list(feature_names)
 
 
 def _save_experts(experts: Sequence[ExpertModel], out_dir: Path) -> List[str]:
@@ -200,9 +218,33 @@ def _save_experts(experts: Sequence[ExpertModel], out_dir: Path) -> List[str]:
     return saved
 
 
+def _discover_saved_expert_names(load_dir: Path) -> List[str]:
+    """Return the expert names stored in ``<load_dir>/experts/*.pkl``.
+
+    Order follows ``EXPERT_SOURCES`` so the column layout matches what
+    ``build_experts`` would have produced at train time.
+    """
+    experts_dir = Path(load_dir) / "experts"
+    if not experts_dir.is_dir():
+        return []
+    present = {p.stem for p in experts_dir.glob("*.pkl")}
+    ordered = [name for name in EXPERT_SOURCES if name in present]
+    # Preserve any experts that aren't in EXPERT_SOURCES (forward-compat).
+    for name in sorted(present):
+        if name not in ordered:
+            ordered.append(name)
+    return ordered
+
+
 def _load_experts(
-    load_dir: Path, providers: Sequence[str] = EXPERT_PROVIDERS
+    load_dir: Path, providers: Optional[Sequence[str]] = None
 ) -> List[ExpertModel]:
+    if providers is None:
+        providers = _discover_saved_expert_names(load_dir)
+    if not providers:
+        raise FileNotFoundError(
+            f"No expert PKLs found under {Path(load_dir) / 'experts'}"
+        )
     experts: List[ExpertModel] = []
     for name in providers:
         path = Path(load_dir) / "experts" / f"{name}.pkl"
@@ -279,6 +321,15 @@ def parse_args(argv=None) -> argparse.Namespace:
         help="Meta-learner family (default: xgboost if installed else gbm).",
     )
     p.add_argument(
+        "--with-all-llm-expert",
+        action="store_true",
+        help=(
+            "Add a 4th expert trained on every LLM provider at once "
+            "(plus non-LLM). Only applies in --mode train; on load, the "
+            "expert set is read from the saved artifacts."
+        ),
+    )
+    p.add_argument(
         "--random-state",
         type=int,
         default=42,
@@ -331,17 +382,19 @@ def _resolve_load_dir(args: argparse.Namespace) -> Path:
     return prompt_load_dir(models_root=models_root, prefix=OVERSEER_PREFIX)
 
 
-def _meta_model_info(meta: Any) -> Dict[str, Any] | None:
+def _meta_model_info(
+    meta: Any, feature_names: Sequence[str]
+) -> Optional[Dict[str, Any]]:
     if hasattr(meta, "coef_"):
         return {
             "intercept": float(np.ravel(meta.intercept_)[0]),
             "coefficients": np.ravel(meta.coef_).tolist(),
-            "feature_names": list(META_FEATURE_NAMES),
+            "feature_names": list(feature_names),
         }
     if hasattr(meta, "feature_importances_"):
         return {
             "feature_importances": np.asarray(meta.feature_importances_).tolist(),
-            "feature_names": list(META_FEATURE_NAMES),
+            "feature_names": list(feature_names),
         }
     return None
 
@@ -378,7 +431,11 @@ def main(argv=None) -> None:
         out_dir = make_timestamped_dir(Path(args.models_dir), OVERSEER_PREFIX)
         print(f"\nTraining overseer. Artifacts will be saved to: {out_dir}")
 
-        experts = build_experts()
+        expert_names: List[str] = list(EXPERT_PROVIDERS)
+        if args.with_all_llm_expert:
+            expert_names.append("all_llm")
+            print("  Including optional 'all_llm' expert (trained on every LLM).")
+        experts = build_experts(expert_names)
 
         print("\nGenerating out-of-fold expert probabilities on the train split...")
         train_expert_probs = oof_expert_probabilities(
@@ -397,19 +454,23 @@ def main(argv=None) -> None:
         for sp in saved_expert_paths:
             print(f"    {sp}")
 
+        feature_names = meta_feature_names([e.name for e in experts])
         X_meta_train = build_meta_features(train_expert_probs)
 
         print(f"\nTraining meta-learner ({args.meta})...")
         meta = build_meta_learner(args.meta, random_state=args.random_state)
         meta.fit(X_meta_train, y_train)
-        meta_path = save_meta(meta, args.meta, out_dir)
+        meta_path = save_meta(meta, args.meta, out_dir, feature_names)
         print(f"  Saved meta-learner PKL: {meta_path.relative_to(out_dir)}")
     else:
         load_dir = _resolve_load_dir(args)
         print(f"\nLoading overseer from: {load_dir}")
         experts = _load_experts(load_dir)
-        meta, meta_kind, _ = load_meta(load_dir)
-        print(f"  Loaded meta-learner kind: {meta_kind}")
+        meta, meta_kind, feature_names = load_meta(load_dir)
+        print(
+            f"  Loaded meta-learner kind: {meta_kind}; "
+            f"experts: {[e.name for e in experts]}"
+        )
 
     print("\nScoring the test split with every expert...")
     test_expert_probs = stack_expert_probabilities(experts, test_flowlets)
@@ -469,7 +530,7 @@ def main(argv=None) -> None:
             "type": f"stacked_{meta_kind}",
             "cv_folds": args.cv_folds if mode == "train" else None,
             "experts": [exp.name for exp in experts],
-            "meta_model_info": _meta_model_info(meta),
+            "meta_model_info": _meta_model_info(meta, feature_names),
             "train_metrics": overseer_metrics_train,
             "test_metrics": overseer_metrics_test,
         },
