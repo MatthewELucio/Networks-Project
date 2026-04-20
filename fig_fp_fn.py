@@ -16,15 +16,13 @@ Confusion matrix convention (from classification_report row order):
     FPR = FP / (FP + TN)   — non-LLM flowlets flagged as LLM
     FNR = FN / (FN + TP)   — LLM flowlets missed
 
-Two-panel figure:
-  Left  – FPR vs. threshold, one line per provider (best model per point,
-          bidirectional).
-  Right – FNR vs. threshold, one line per provider (best model per point,
-          bidirectional).
+SINGLE-PANEL figure:
+  FPR (solid lines, filled markers) and FNR (dashed lines, open markers)
+  plotted on the same axes, one color per provider. Best model per
+  (provider, threshold) cell, bidirectional direction.
 
-"Best model" is chosen by lowest FNR at each (provider, threshold) cell,
-since LLM detection coverage is the primary concern. The selected model
-is annotated next to each point.
+The solid-vs-dashed + filled-vs-open distinction is designed so the two
+rate types are instantly distinguishable even in grayscale printing.
 
 Usage:
     cd <repo root>
@@ -143,55 +141,153 @@ def best_model_rates(repo: str, provider: str, threshold: float,
     return min(candidates, key=lambda r: r["fnr"])
 
 
-# ── Panel A: FPR vs threshold ────────────────────────────────────────────────
+# ── Combined FPR + FNR single-panel plot ────────────────────────────────────
 
-def plot_rate_lines(ax, repo: str, metric: str, title: str):
+def plot_combined(ax, repo: str):
     """
-    metric: 'fpr' or 'fnr'
+    One axes, two line styles:
+      - FPR: SOLID line, FILLED markers, full opacity
+      - FNR: DASHED line, OPEN (white-fill) markers, with "×" overlay
+
+    Color = provider identity (consistent with other paper figures).
+    Dashed+open makes FNR read as "less reliable / worse" at a glance.
     """
     x = np.array(THRESHOLDS)
 
+    # Vertical offsets for FPR labels, staggered per provider at each
+    # threshold so the cluster near 1–3% doesn't collide.
+    fpr_label_offset = {"chatgpt": -14, "gemini": -14, "claude": -28}
+
     for provider in PROVIDERS:
-        vals, model_names = [], []
+        fpr_vals, fnr_vals, model_names = [], [], []
         for thresh in THRESHOLDS:
             row = best_model_rates(repo, provider, thresh)
             if row is None:
-                vals.append(np.nan)
+                fpr_vals.append(np.nan)
+                fnr_vals.append(np.nan)
                 model_names.append(None)
             else:
-                vals.append(row[metric] * 100)   # convert to %
+                fpr_vals.append(row["fpr"] * 100)
+                fnr_vals.append(row["fnr"] * 100)
                 model_names.append(row["model_name"])
 
+        color  = PROVIDER_COLORS[provider]
+        marker = PROVIDER_MARKERS[provider]
+        label  = PROVIDER_LABELS[provider]
+
+        # ---- FPR: solid, filled ----
         ax.plot(
-            x, vals,
-            marker=PROVIDER_MARKERS[provider],
-            color=PROVIDER_COLORS[provider],
-            linewidth=2.2,
-            markersize=9,
-            label=PROVIDER_LABELS[provider],
+            x, fpr_vals,
+            linestyle="-", linewidth=2.4,
+            marker=marker, markersize=10,
+            markerfacecolor=color, markeredgecolor=color,
+            color=color,
+            label=f"{label} — FPR",
+            zorder=3,
         )
-        # value + model annotation above each point
-        for xi, yi, mn in zip(x, vals, model_names):
+        # Labels below for low-FPR providers, above for Gemini (which sits
+        # high enough that below would collide with low-FPR labels).
+        for xi, yi in zip(x, fpr_vals):
             if np.isnan(yi):
                 continue
-            short = MODEL_SHORT.get(mn, mn)
+            if provider == "gemini":
+                dy, va = 12, "bottom"
+            else:
+                dy, va = fpr_label_offset[provider], "top"
             ax.annotate(
-                f"{yi:.1f}%\n({short})",
+                f"{yi:.1f}%",
                 xy=(xi, yi),
-                xytext=(0, 10),
+                xytext=(0, dy),
                 textcoords="offset points",
-                ha="center",
-                color=PROVIDER_COLORS[provider],
-                fontsize=8,
+                ha="center", va=va,
+                color=color, fontsize=8.5, fontweight="bold",
             )
+
+        # ---- FNR: dashed, open markers ----
+        ax.plot(
+            x, fnr_vals,
+            linestyle="--", linewidth=2.2,
+            marker=marker, markersize=11,
+            markerfacecolor="white", markeredgecolor=color,
+            markeredgewidth=2.2,
+            color=color,
+            label=f"{label} — FNR",
+            zorder=2,
+        )
+        for xi, yi in zip(x, fnr_vals):
+            if not np.isnan(yi):
+                ax.annotate(
+                    f"{yi:.1f}%",
+                    xy=(xi, yi),
+                    xytext=(0, 11),
+                    textcoords="offset points",
+                    ha="center", va="bottom",
+                    color=color, fontsize=8.5, fontweight="bold",
+                )
+
+    # Shaded backgrounds to further cue the two regimes visually
+    ax.axhspan(0, 5, facecolor="#C8E6C9", alpha=0.25, zorder=0)
+    ax.axhspan(20, 100, facecolor="#FFCDD2", alpha=0.18, zorder=0)
+
+    # Annotated band labels
+    ax.text(
+        0.012, 2.5, "low FPR zone",
+        color="#2E7D32", fontsize=8.5, style="italic",
+        transform=ax.get_yaxis_transform(), ha="left", va="center",
+    )
+    ax.text(
+        0.012, 32, "high FNR zone",
+        color="#C62828", fontsize=8.5, style="italic",
+        transform=ax.get_yaxis_transform(), ha="left", va="center",
+    )
 
     ax.set_xticks(THRESHOLDS)
     ax.set_xticklabels([f"{t:.2f} s" for t in THRESHOLDS])
     ax.set_xlabel(r"Flowlet timeout threshold  $\delta$", labelpad=6)
-    ax.set_ylabel(f"{metric.upper()} (%)")
-    ax.set_title(title, fontsize=11)
+    ax.set_ylabel("Rate (%)")
+    ax.set_title(
+        "False positive rate vs. false negative rate  "
+        "(best model per cell, bidirectional)",
+        fontsize=12, pad=10,
+    )
     ax.yaxis.set_major_formatter(mtick.FormatStrFormatter("%.0f%%"))
-    ax.legend(framealpha=0.85, loc="best")
+    ax.set_ylim(-3, 45)
+    ax.set_xlim(0.035, 0.215)
+
+    # Two-column legend:
+    #   - Column 1: the three providers (by color, shown as solid lines)
+    #   - Column 2: the two rate types (by line style)
+    from matplotlib.lines import Line2D
+    provider_handles = [
+        Line2D([0], [0], color=PROVIDER_COLORS[p], linewidth=2.5,
+               marker=PROVIDER_MARKERS[p], markersize=9,
+               markerfacecolor=PROVIDER_COLORS[p],
+               label=PROVIDER_LABELS[p])
+        for p in PROVIDERS
+    ]
+    style_handles = [
+        Line2D([0], [0], color="black", linewidth=2.5, linestyle="-",
+               marker="o", markersize=9, markerfacecolor="black",
+               label="FPR  (solid, filled)"),
+        Line2D([0], [0], color="black", linewidth=2.2, linestyle="--",
+               marker="o", markersize=10, markerfacecolor="white",
+               markeredgecolor="black", markeredgewidth=2,
+               label="FNR  (dashed, open)"),
+    ]
+
+    leg1 = ax.legend(
+        handles=provider_handles,
+        title="Provider",
+        loc="upper left", bbox_to_anchor=(1.01, 1.0),
+        framealpha=0.9, fontsize=10, title_fontsize=10,
+    )
+    ax.add_artist(leg1)
+    ax.legend(
+        handles=style_handles,
+        title="Rate type",
+        loc="upper left", bbox_to_anchor=(1.01, 0.65),
+        framealpha=0.9, fontsize=10, title_fontsize=10,
+    )
 
 
 # ── debug printout ──────────────────────────────────────────────────────────
@@ -235,18 +331,8 @@ def main():
     print(f"Reading results from: {args.repo}")
     print_summary_table(args.repo)
 
-    fig, (ax_left, ax_right) = plt.subplots(
-        1, 2, figsize=(13, 5), constrained_layout=True
-    )
-
-    plot_rate_lines(
-        ax_left, args.repo, "fpr",
-        "(a)  FPR vs. threshold  (non-LLM flagged as LLM)",
-    )
-    plot_rate_lines(
-        ax_right, args.repo, "fnr",
-        "(b)  FNR vs. threshold  (LLM flowlets missed)",
-    )
+    fig, ax = plt.subplots(figsize=(11, 5.5), constrained_layout=True)
+    plot_combined(ax, args.repo)
 
     for ext in args.formats:
         path = os.path.join(args.out, f"fig_fp_fn_rates.{ext}")
