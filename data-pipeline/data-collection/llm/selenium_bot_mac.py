@@ -13,12 +13,15 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # --- CONFIGURATION ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROFILE_PATH = os.path.join(SCRIPT_DIR, "chrome_profile")
-PROMPT_BANK_PATH = os.path.join(SCRIPT_DIR, "prompt_bank.json")
+DEFAULT_PROFILE_NAME = "chrome_profile"
+PROFILE_PATH = os.path.join(SCRIPT_DIR, DEFAULT_PROFILE_NAME)
+DEFAULT_PROMPT_BANK = os.path.join(SCRIPT_DIR, "prompt_bank.json")
 SAMPLE_PDFS_DIR = os.path.join(SCRIPT_DIR, "sample_pdfs")
+# Overridden in __main__ based on --no-wait-login flag.
+SKIP_LOGIN_WAIT = False
 
-def load_prompt_chains():
-    with open(PROMPT_BANK_PATH, "r") as f:
+def load_prompt_chains(path=DEFAULT_PROMPT_BANK):
+    with open(path, "r") as f:
         chains = json.load(f)
     # Randomize chain order to avoid deterministic runs
     random.shuffle(chains)
@@ -40,7 +43,7 @@ def launch_browser():
     print(f"   SSLKEYLOGFILE: {sslkeylog_path}")
 
     try:
-        driver = uc.Chrome(options=options, version_main=145)
+        driver = uc.Chrome(options=options, version_main=147)
         print(f"✅ Launched!")
         return driver
     except Exception as e:
@@ -73,7 +76,16 @@ def inject_spelling_mistakes(text, rate=0.07):
         i += 1
     return ''.join(chars)
 def wait_for_login(driver, site_name):
-    """Pause and let the user log in manually before proceeding."""
+    """Pause for login.
+
+    If SKIP_LOGIN_WAIT is set (via --no-wait-login), sleep briefly to let the
+    saved-cookie session restore and page scripts settle, then continue. Use
+    this only when the Chrome profile already has a persisted login.
+    """
+    if SKIP_LOGIN_WAIT:
+        print(f"   ⏭️  --no-wait-login: assuming {site_name} is already logged in. Waiting 8s for session restore...")
+        time.sleep(8)
+        return
     input(f"\n🔑 Log in to {site_name} in the browser, then press ENTER here to continue...")
     print("   ✅ Continuing!")
     time.sleep(2)
@@ -449,7 +461,7 @@ def open_new_tab(driver, url):
 
 def run_chatgpt(driver):
     print("🤖 Mode: ChatGPT")
-    chains = load_prompt_chains()
+    chains = load_prompt_chains(PROMPT_BANK)
 
     driver.get("https://chatgpt.com")
     time.sleep(5)
@@ -518,7 +530,7 @@ def run_chatgpt(driver):
 
 def run_gemini(driver):
     print("🤖 Mode: Gemini")
-    chains = load_prompt_chains()
+    chains = load_prompt_chains(PROMPT_BANK)
 
     driver.get("https://gemini.google.com/app")
     time.sleep(5)
@@ -566,7 +578,7 @@ def run_gemini(driver):
 
 def run_claude(driver):
     print("🤖 Mode: Claude")
-    chains = load_prompt_chains()
+    chains = load_prompt_chains(PROMPT_BANK)
 
     driver.get("https://claude.ai/chats")
     time.sleep(5)
@@ -633,7 +645,31 @@ def run_claude(driver):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--target", choices=["chatgpt", "gemini", "claude"], required=True)
+    parser.add_argument("--prompts", default=DEFAULT_PROMPT_BANK,
+                        help="Path to prompt bank JSON (default: prompt_bank.json)")
+    parser.add_argument("--profile", default=DEFAULT_PROFILE_NAME,
+                        help="Chrome profile directory name or absolute path. "
+                             "Use a distinct name per provider when running in parallel "
+                             "(e.g. chrome_profile_chatgpt). Default: chrome_profile")
+    parser.add_argument("--no-wait-login", action="store_true",
+                        help="Skip the interactive ENTER-to-continue login pause. "
+                             "Use only when the profile already has a saved login.")
     args = parser.parse_args()
+
+    PROMPT_BANK = args.prompts
+    if not os.path.isabs(PROMPT_BANK):
+        PROMPT_BANK = os.path.join(SCRIPT_DIR, PROMPT_BANK)
+    if not os.path.exists(PROMPT_BANK):
+        print(f"❌ Prompt bank not found: {PROMPT_BANK}")
+        sys.exit(1)
+    print(f"📖 Prompt bank: {PROMPT_BANK}")
+
+    # Resolve profile path: absolute paths pass through, bare names are placed
+    # next to the script so each provider gets its own Chrome user-data dir.
+    PROFILE_PATH = args.profile if os.path.isabs(args.profile) else os.path.join(SCRIPT_DIR, args.profile)
+    print(f"👤 Chrome profile: {PROFILE_PATH}")
+
+    SKIP_LOGIN_WAIT = args.no_wait_login
 
     # Verify Chrome exists
     if not os.path.exists("/Applications/Google Chrome.app"):
