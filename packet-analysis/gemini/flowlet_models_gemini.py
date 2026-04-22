@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """flowlet_models_gemini.py
 
-Train classification models to distinguish Gemini vs non-LLM flowlets.
-Uses MaMPF-inspired approach with Markov models and traditional ML classifiers.
-
-Usage: python3 flowlet_models_gemini.py <features.json> --output results_gemini.json
+Train classification models to distinguish Sensitive vs Non-Sensitive flowlets 
+specifically for Gemini-related traffic.
 """
 import argparse
 import json
@@ -34,465 +32,223 @@ def load_flowlet_features(filepath: str) -> List[Dict[str, Any]]:
 
 
 def filter_gemini_only(features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Filter to only Gemini (llm) vs non-LLM flowlets."""
+    """Filter to only Gemini (sensitive) vs all non-sensitive flowlets."""
     filtered = []
     for f in features:
-        source = f.get("source_file", "")
-        traffic_class = f.get("traffic_class", "")
+        source = str(f.get("source_file", "")).lower()
         
-        # Only keep Gemini and non-LLM
-        if "gemini" in source.lower() or traffic_class == "non_llm":
+        # Determine effective class using hoisted sensitivity label or filename
+        # Priority: hoisted label > traffic_class field > filename pattern
+        eff_class = f.get("sensitivity_captured") or f.get("traffic_class") or ""
+        eff_class = str(eff_class).lower()
+
+        is_non_sensitive = eff_class in ["non-sensitive", "non_sensitive", "non_llm", "benign"] or "non-sensitive" in source
+        
+        # Logic: Keep if it is Gemini-specific sensitive traffic OR if it is any non-sensitive traffic
+        if ("gemini" in source and not is_non_sensitive) or is_non_sensitive:
             filtered.append(f)
     
     return filtered
 
 
 def bucket_time_gaps(time_gaps: List[float]) -> List[str]:
-    """Bucket time gaps into discrete states.
-    
-    Buckets: GAP_0_10ms, GAP_10_100ms, GAP_100ms_1s, GAP_GT_1s
-    """
+    """Bucket time gaps into discrete states."""
     buckets = []
     for gap in time_gaps:
-        gap_ms = gap * 1000  # Convert to milliseconds
-        if gap_ms < 10:
-            buckets.append("GAP_0_10ms")
-        elif gap_ms < 100:
-            buckets.append("GAP_10_100ms")
-        elif gap_ms < 1000:
-            buckets.append("GAP_100ms_1s")
-        else:
-            buckets.append("GAP_GT_1s")
+        gap_ms = gap * 1000
+        if gap_ms < 10: buckets.append("GAP_0_10ms")
+        elif gap_ms < 100: buckets.append("GAP_10_100ms")
+        elif gap_ms < 1000: buckets.append("GAP_100ms_1s")
+        else: buckets.append("GAP_GT_1s")
     return buckets
 
 
-def build_power_law_blocks(
-    values: List[float], coverage: float = 0.9
-) -> Tuple[List[float], Dict[float, str]]:
-    """Build MaMPF-style blocks from numeric values.
-    
-    Returns:
-        blocks: List of representative block values
-        value_to_block: Mapping from value to block name
-    """
-    if not values:
-        return [], {}
-    
-    # Count frequency of each value
+def build_power_law_blocks(values: List[float], coverage: float = 0.9) -> Tuple[List[float], Dict[float, str]]:
+    if not values: return [], {}
     value_counts = Counter(values)
     total_count = len(values)
-    
-    # Sort by frequency (descending)
     sorted_values = sorted(value_counts.items(), key=lambda x: x[1], reverse=True)
     
-    # Select top values that cover the desired percentage
     cumulative = 0
     blocks = []
     for value, count in sorted_values:
         blocks.append(value)
         cumulative += count
-        if cumulative / total_count >= coverage:
-            break
+        if cumulative / total_count >= coverage: break
     
-    # Create mapping from any value to nearest block
     value_to_block = {}
     for val in set(values):
         if val in blocks:
             value_to_block[val] = f"BLOCK_{val:.2f}"
         else:
-            # Find nearest block
             nearest = min(blocks, key=lambda b: abs(b - val))
             value_to_block[val] = f"BLOCK_{nearest:.2f}"
-    
     return blocks, value_to_block
 
 
 def build_markov_model(sequences: List[List[str]]) -> Dict[str, Any]:
-    """Build first-order Markov chain from sequences.
-    
-    Returns dict with:
-        - transition_counts: state -> next_state -> count
-        - transition_probs: state -> next_state -> probability
-        - start_probs: state -> probability of being first
-        - end_probs: state -> probability of being last
-    """
-    transition_counts: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
-    start_counts: Dict[str, int] = defaultdict(int)
-    end_counts: Dict[str, int] = defaultdict(int)
+    transition_counts = defaultdict(lambda: defaultdict(int))
+    start_counts = defaultdict(int)
     total_sequences = len(sequences)
     
     for seq in sequences:
-        if not seq:
-            continue
-        
-        # Start state
+        if not seq: continue
         start_counts[seq[0]] += 1
-        
-        # Transitions
         for i in range(len(seq) - 1):
             transition_counts[seq[i]][seq[i + 1]] += 1
-        
-        # End state
-        end_counts[seq[-1]] += 1
     
-    # Convert counts to probabilities
     transition_probs = {}
     for state, next_states in transition_counts.items():
         total = sum(next_states.values())
-        transition_probs[state] = {
-            next_state: count / total for next_state, count in next_states.items()
-        }
-    
-    start_probs = {
-        state: count / total_sequences for state, count in start_counts.items()
-    }
-    end_probs = {
-        state: count / total_sequences for state, count in end_counts.items()
-    }
+        transition_probs[state] = {next_state: count / total for next_state, count in next_states.items()}
     
     return {
-        "transition_counts": dict(transition_counts),
         "transition_probs": transition_probs,
-        "start_probs": start_probs,
-        "end_probs": end_probs,
+        "start_probs": {s: c / total_sequences for s, c in start_counts.items()},
     }
 
 
-def compute_sequence_log_likelihood(
-    sequence: List[str], markov_model: Dict[str, Any]
-) -> float:
-    """Compute log-likelihood of a sequence under a Markov model."""
-    if not sequence:
-        return -np.inf
+def compute_sequence_log_likelihood(sequence: List[str], markov_model: Dict[str, Any]) -> float:
+    if not sequence: return -np.inf
+    tp = markov_model["transition_probs"]
+    sp = markov_model["start_probs"]
     
-    transition_probs = markov_model["transition_probs"]
-    start_probs = markov_model["start_probs"]
-    
-    log_prob = 0.0
-    
-    # Start probability
-    if sequence[0] in start_probs:
-        log_prob += np.log(start_probs[sequence[0]] + 1e-10)
-    else:
-        log_prob += np.log(1e-10)  # Smoothing for unseen states
-    
-    # Transition probabilities
+    log_prob = np.log(sp.get(sequence[0], 1e-10))
     for i in range(len(sequence) - 1):
-        current = sequence[i]
-        next_state = sequence[i + 1]
-        
-        if current in transition_probs and next_state in transition_probs[current]:
-            log_prob += np.log(transition_probs[current][next_state] + 1e-10)
-        else:
-            log_prob += np.log(1e-10)  # Smoothing
+        curr, nxt = sequence[i], sequence[i+1]
+        prob = tp.get(curr, {}).get(nxt, 1e-10)
+        log_prob += np.log(prob + 1e-10)
     
-    # Normalize by sequence length (n-th root trick from MaMPF)
-    normalized_log_prob = log_prob / len(sequence) if len(sequence) > 0 else log_prob
-    
-    return normalized_log_prob
+    return log_prob / len(sequence)
 
 
-def extract_ml_features(
-    flowlet: Dict[str, Any],
-    markov_models: Dict[str, Dict[str, Any]],
-    block_mappings: Dict[str, Dict[float, str]],
-) -> np.ndarray:
-    """Extract feature vector for a flowlet.
+def extract_ml_features(flowlet: Dict[str, Any], markov_models: Dict[str, Dict[str, Any]], block_mappings: Dict[str, Dict[float, str]]) -> np.ndarray:
+    features = [
+        flowlet.get("duration", 0.0),
+        flowlet.get("packet_count", 0),
+        flowlet.get("total_bytes", 0),
+        flowlet.get("inter_packet_time_mean", 0.0),
+        flowlet.get("inter_packet_time_std", 0.0),
+        flowlet.get("packet_size_mean", 0.0),
+        flowlet.get("packet_size_std", 0.0)
+    ]
     
-    Combines:
-    - Statistical features (mean, std, count, etc.)
-    - Markov model log-likelihoods (MaMPF fingerprint)
-    """
-    features = []
-    
-    # Statistical features
-    features.append(flowlet.get("duration", 0.0))
-    features.append(flowlet.get("packet_count", 0))
-    features.append(flowlet.get("total_bytes", 0))
-    features.append(flowlet.get("inter_packet_time_mean", 0.0))
-    features.append(flowlet.get("inter_packet_time_std", 0.0))
-    features.append(flowlet.get("packet_size_mean", 0.0))
-    features.append(flowlet.get("packet_size_std", 0.0))
-    
-    # Build sequences for Markov models
-    inter_packet_times = flowlet.get("inter_packet_times", [])
+    time_gap_seq = bucket_time_gaps(flowlet.get("inter_packet_times", []))
     packet_sizes = flowlet.get("packet_sizes", [])
-    
-    # Time gap sequence
-    time_gap_seq = bucket_time_gaps(inter_packet_times)
-    
-    # Packet size sequence (using blocks)
-    size_block_seq = []
-    if "llm" in block_mappings and packet_sizes:
-        for size in packet_sizes:
-            if size in block_mappings["llm"]:
-                size_block_seq.append(block_mappings["llm"][size])
-            else:
-                # Find nearest block
-                size_block_seq.append(f"BLOCK_{size:.2f}")
-    
-    # Compute log-likelihoods for each class's Markov models
-    for class_name in ["llm", "non_llm"]:
-        if class_name in markov_models:
-            # Time gap model
-            if "time_gap" in markov_models[class_name]:
-                ll_time = compute_sequence_log_likelihood(
-                    time_gap_seq, markov_models[class_name]["time_gap"]
-                )
-                # Clip to avoid infinity
-                ll_time = np.clip(ll_time, -100.0, 0.0)
-                features.append(ll_time)
-            else:
-                features.append(-100.0)
+    size_block_seq = [block_mappings["sensitive"].get(s, f"BLOCK_{s:.2f}") for s in packet_sizes] if "sensitive" in block_mappings else []
+
+    for cls in ["sensitive", "non-sensitive"]:
+        if cls in markov_models:
+            ll_time = compute_sequence_log_likelihood(time_gap_seq, markov_models[cls]["time_gap"])
+            features.append(np.clip(ll_time, -100.0, 0.0))
             
-            # Size block model
-            if "size_block" in markov_models[class_name] and size_block_seq:
-                ll_size = compute_sequence_log_likelihood(
-                    size_block_seq, markov_models[class_name]["size_block"]
-                )
-                # Clip to avoid infinity
-                ll_size = np.clip(ll_size, -100.0, 0.0)
-                features.append(ll_size)
+            if size_block_seq:
+                ll_size = compute_sequence_log_likelihood(size_block_seq, markov_models[cls]["size_block"])
+                features.append(np.clip(ll_size, -100.0, 0.0))
             else:
                 features.append(-100.0)
         else:
-            features.append(-100.0)
-            features.append(-100.0)
+            features.extend([-100.0, -100.0])
     
     return np.array(features)
 
 
-def prepare_training_data(
-    features: List[Dict[str, Any]]
-) -> Tuple[np.ndarray, np.ndarray, List[str], Dict[str, Any], Dict[str, Dict[float, str]]]:
-    """Prepare training data with Markov models and feature extraction.
-    
-    Returns:
-        X: Feature matrix
-        y: Labels (0=non_llm, 1=llm)
-        groups: Flow identifiers for group-based splitting
-        markov_models: Trained Markov models per class
-        block_mappings: Block mappings per class
-    """
-    # Separate by class
-    llm_flowlets = [f for f in features if f["traffic_class"] == "llm"]
-    non_llm_flowlets = [f for f in features if f["traffic_class"] == "non_llm"]
-    
-    print(f"LLM flowlets: {len(llm_flowlets)}")
-    print(f"Non-LLM flowlets: {len(non_llm_flowlets)}")
-    
-    # Build block mappings for packet sizes
-    block_mappings = {}
-    for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
-        all_sizes = []
-        for f in flowlets:
-            all_sizes.extend(f.get("packet_sizes", []))
-        
-        if all_sizes:
-            blocks, mapping = build_power_law_blocks(all_sizes, coverage=0.9)
-            block_mappings[class_name] = mapping
-            print(f"{class_name}: {len(blocks)} packet size blocks")
-    
-    # Build Markov models for each class
-    markov_models = {}
-    for class_name, flowlets in [("llm", llm_flowlets), ("non_llm", non_llm_flowlets)]:
-        # Time gap sequences
-        time_gap_sequences = []
-        size_block_sequences = []
-        
-        for f in flowlets:
-            inter_packet_times = f.get("inter_packet_times", [])
-            packet_sizes = f.get("packet_sizes", [])
-            
-            if inter_packet_times:
-                time_gap_seq = bucket_time_gaps(inter_packet_times)
-                time_gap_sequences.append(time_gap_seq)
-            
-            if packet_sizes and class_name in block_mappings:
-                size_seq = [block_mappings[class_name].get(s, f"BLOCK_{s:.2f}") for s in packet_sizes]
-                size_block_sequences.append(size_seq)
-        
-        markov_models[class_name] = {
-            "time_gap": build_markov_model(time_gap_sequences),
-            "size_block": build_markov_model(size_block_sequences),
-        }
-        print(f"{class_name}: Built Markov models")
-    
-    # Extract features for all flowlets
-    X_list = []
-    y_list = []
-    groups = []
-    
+def prepare_training_data(features: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray, List[str], Dict[str, Any], Dict[str, Dict[float, str]]]:
+    # Label correctly using the same logic as the filter
+    y_labels = []
     for f in features:
-        feature_vec = extract_ml_features(f, markov_models, block_mappings)
-        X_list.append(feature_vec)
-        y_list.append(1 if f["traffic_class"] == "llm" else 0)
+        source = str(f.get("source_file", "")).lower()
+        eff_class = f.get("sensitivity_captured") or f.get("traffic_class") or ""
+        eff_class = str(eff_class).lower()
         
-        # Create group identifier from flow_key
-        flow_key = f.get("flow_key", {})
-        group_id = f"{flow_key.get('src_ip', '')}_{flow_key.get('src_port', '')}_{flow_key.get('dst_ip', '')}_{flow_key.get('dst_port', '')}_{flow_key.get('protocol', '')}"
-        groups.append(group_id)
-    
-    X = np.array(X_list)
-    y = np.array(y_list)
+        if eff_class in ["non-sensitive", "non_sensitive", "non_llm", "benign"] or "non-sensitive" in source:
+            y_labels.append(0)
+        else:
+            y_labels.append(1)
+
+    y = np.array(y_labels)
+    sensitive_flowlets = [f for i, f in enumerate(features) if y[i] == 1]
+    non_sensitive_flowlets = [f for i, f in enumerate(features) if y[i] == 0]
+
+    print(f"Sensitive flowlets: {len(sensitive_flowlets)}")
+    print(f"Non-Sensitive flowlets: {len(non_sensitive_flowlets)}")
+
+    # Markov Setup
+    block_mappings = {}
+    for cls, flowlets in [("sensitive", sensitive_flowlets), ("non-sensitive", non_sensitive_flowlets)]:
+        all_sizes = [s for f in flowlets for s in f.get("packet_sizes", [])]
+        if all_sizes:
+            _, mapping = build_power_law_blocks(all_sizes)
+            block_mappings[cls] = mapping
+
+    markov_models = {}
+    for cls, flowlets in [("sensitive", sensitive_flowlets), ("non-sensitive", non_sensitive_flowlets)]:
+        time_seqs = [bucket_time_gaps(f.get("inter_packet_times", [])) for f in flowlets]
+        size_seqs = [[block_mappings[cls].get(s, f"BLOCK_{s:.2f}") for s in f.get("packet_sizes", [])] for f in flowlets] if cls in block_mappings else []
+        markov_models[cls] = {
+            "time_gap": build_markov_model(time_seqs),
+            "size_block": build_markov_model(size_seqs),
+        }
+        print(f"{cls}: Built Markov models")
+
+    X = np.array([extract_ml_features(f, markov_models, block_mappings) for f in features])
+    groups = [f"{f.get('flow_key', {}).get('src_ip')}_{f.get('flow_key', {}).get('src_port')}" for f in features]
     
     return X, y, groups, markov_models, block_mappings
 
 
-def train_and_evaluate_models(
-    X_train: np.ndarray,
-    X_test: np.ndarray,
-    y_train: np.ndarray,
-    y_test: np.ndarray,
-) -> Dict[str, Any]:
-    """Train RF, SVM, and XGBoost models and evaluate them.
-    
-    Returns dict with results for each model.
-    """
+def train_and_evaluate_models(X_train, X_test, y_train, y_test) -> Dict[str, Any]:
     results = {}
-    
-    # Scale features
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
     
-    # Random Forest
-    print("Training Random Forest...")
-    rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
-    rf.fit(X_train, y_train)
-    y_pred_rf = rf.predict(X_test)
-    
+    # RF
+    rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1).fit(X_train, y_train)
+    y_pred = rf.predict(X_test)
     results["random_forest"] = {
-        "accuracy": float(accuracy_score(y_test, y_pred_rf)),
-        "precision": float(precision_score(y_test, y_pred_rf, zero_division=0)),
-        "recall": float(recall_score(y_test, y_pred_rf, zero_division=0)),
-        "f1": float(f1_score(y_test, y_pred_rf, zero_division=0)),
-        "confusion_matrix": confusion_matrix(y_test, y_pred_rf).tolist(),
-        "classification_report": classification_report(y_test, y_pred_rf, target_names=["non_llm", "llm"], output_dict=True),
+        "accuracy": float(accuracy_score(y_test, y_pred)),
+        "precision": float(precision_score(y_test, y_pred, zero_division=0)),
+        "recall": float(recall_score(y_test, y_pred, zero_division=0)),
+        "f1": float(f1_score(y_test, y_pred, zero_division=0)),
+        "confusion_matrix": confusion_matrix(y_test, y_pred).tolist(),
+        "classification_report": classification_report(y_test, y_pred, target_names=["non-sensitive", "sensitive"], output_dict=True, zero_division=0),
     }
-    
-    # SVM
-    print("Training SVM...")
-    svm = SVC(kernel="rbf", random_state=42)
-    svm.fit(X_train_scaled, y_train)
-    y_pred_svm = svm.predict(X_test_scaled)
-    
-    results["svm"] = {
-        "accuracy": float(accuracy_score(y_test, y_pred_svm)),
-        "precision": float(precision_score(y_test, y_pred_svm, zero_division=0)),
-        "recall": float(recall_score(y_test, y_pred_svm, zero_division=0)),
-        "f1": float(f1_score(y_test, y_pred_svm, zero_division=0)),
-        "confusion_matrix": confusion_matrix(y_test, y_pred_svm).tolist(),
-        "classification_report": classification_report(y_test, y_pred_svm, target_names=["non_llm", "llm"], output_dict=True),
-    }
-    
-    # XGBoost
-    print("Training XGBoost...")
-    xgb_model = xgb.XGBClassifier(
-        n_estimators=100,
-        random_state=42,
-        eval_metric="logloss",
-        use_label_encoder=False,
-    )
-    xgb_model.fit(X_train, y_train)
+
+    # XGB
+    xgb_model = xgb.XGBClassifier(n_estimators=100, random_state=42, eval_metric="logloss").fit(X_train, y_train)
     y_pred_xgb = xgb_model.predict(X_test)
-    
     results["xgboost"] = {
         "accuracy": float(accuracy_score(y_test, y_pred_xgb)),
         "precision": float(precision_score(y_test, y_pred_xgb, zero_division=0)),
         "recall": float(recall_score(y_test, y_pred_xgb, zero_division=0)),
         "f1": float(f1_score(y_test, y_pred_xgb, zero_division=0)),
         "confusion_matrix": confusion_matrix(y_test, y_pred_xgb).tolist(),
-        "classification_report": classification_report(y_test, y_pred_xgb, target_names=["non_llm", "llm"], output_dict=True),
+        "classification_report": classification_report(y_test, y_pred_xgb, target_names=["non-sensitive", "sensitive"], output_dict=True, zero_division=0),
     }
-    
     return results
 
 
 def main(argv=None):
-    p = argparse.ArgumentParser(
-        description="Train classification models for Gemini vs non-LLM flowlets"
-    )
-    p.add_argument("input", help="JSON file with flowlet features")
-    p.add_argument(
-        "--output",
-        "-o",
-        default="model_results_gemini.json",
-        help="output JSON file for results",
-    )
-    p.add_argument(
-        "--test-size",
-        type=float,
-        default=0.2,
-        help="fraction of data for testing (default: 0.2)",
-    )
+    p = argparse.ArgumentParser()
+    p.add_argument("input")
+    p.add_argument("--output", "-o", default="results_gemini.json")
+    p.add_argument("--test-size", type=float, default=0.2)
     args = p.parse_args(argv)
     
-    # Load features
-    print(f"Loading features from {args.input}...")
-    features = load_flowlet_features(args.input)
-    print(f"Loaded {len(features)} flowlets")
+    features = filter_gemini_only(load_flowlet_features(args.input))
+    X, y, groups, m_models, b_mappings = prepare_training_data(features)
     
-    # Filter to Gemini only
-    features = filter_gemini_only(features)
-    print(f"Filtered to {len(features)} Gemini/non-LLM flowlets")
-    
-    # Prepare training data
-    print("Preparing training data...")
-    X, y, groups, markov_models, block_mappings = prepare_training_data(features)
-    print(f"Feature matrix shape: {X.shape}")
-    print(f"Class distribution: {np.bincount(y)}")
-    
-    # Split data by groups (flows stay together)
-    print("Splitting data by flows...")
     gss = GroupShuffleSplit(n_splits=1, test_size=args.test_size, random_state=42)
-    train_idx, test_idx = next(gss.split(X, y, groups))
+    tr_idx, te_idx = next(gss.split(X, y, groups))
     
-    X_train, X_test = X[train_idx], X[test_idx]
-    y_train, y_test = y[train_idx], y[test_idx]
-    
-    print(f"Train set: {len(X_train)} flowlets")
-    print(f"Test set: {len(X_test)} flowlets")
-    print(f"Train class distribution: {np.bincount(y_train)}")
-    print(f"Test class distribution: {np.bincount(y_test)}")
-    
-    # Train and evaluate models
-    print("\nTraining models...")
-    results = train_and_evaluate_models(X_train, X_test, y_train, y_test)
-    
-    # Print results
-    print("\n" + "=" * 60)
-    print("RESULTS - GEMINI vs NON-LLM")
-    print("=" * 60)
-    for model_name, metrics in results.items():
-        print(f"\n{model_name.upper()}:")
-        print(f"  Accuracy:  {metrics['accuracy']:.4f}")
-        print(f"  Precision: {metrics['precision']:.4f}")
-        print(f"  Recall:    {metrics['recall']:.4f}")
-        print(f"  F1 Score:  {metrics['f1']:.4f}")
-        print(f"  Confusion Matrix:")
-        cm = metrics['confusion_matrix']
-        print(f"    [[TN={cm[0][0]}, FP={cm[0][1]}],")
-        print(f"     [FN={cm[1][0]}, TP={cm[1][1]}]]")
-    
-    # Save results
-    output_data = {
-        "dataset_info": {
-            "total_flowlets": len(features),
-            "train_size": len(X_train),
-            "test_size": len(X_test),
-            "feature_dim": X.shape[1],
-            "train_class_distribution": np.bincount(y_train).tolist(),
-            "test_class_distribution": np.bincount(y_test).tolist(),
-        },
-        "models": results,
-    }
-    
-    with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(output_data, f, indent=2)
-    
-    print(f"\nResults saved to {args.output}")
+    results = train_and_evaluate_models(X[tr_idx], X[te_idx], y[tr_idx], y[te_idx])
+    print("\nRESULTS - GEMINI SENSITIVITY")
+    for name, m in results.items():
+        print(f"{name.upper()}: Acc={m['accuracy']:.4f}, Prec={m['precision']:.4f}, Rec={m['recall']:.4f}")
 
+    with open(args.output, "w") as f:
+        json.dump({"dataset": len(features), "models": results}, f, indent=2)
 
 if __name__ == "__main__":
     main()
