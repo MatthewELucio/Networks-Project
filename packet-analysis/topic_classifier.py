@@ -1,92 +1,74 @@
 #!/usr/bin/env python3
 """topic_classifier.py
 
-Train classification models to distinguish sensitive-topic vs non-sensitive
-LLM traffic from encrypted packet metadata. This is the core WhisperLeak
-replication: can a passive network observer tell what topic a user is
-discussing with an LLM?
+Binary sensitive-topic classifier on encrypted LLM traffic metadata
+(WhisperLeak replication on ChatGPT).
 
-Input: MongoDB export JSON (array of captures with nested flowlets).
-Labels are derived from capture names:
-  - "sensitive_test_*" → sensitive (1)
-  - "non_sensitive_test_*" → non_sensitive (0)
+Input: MongoDB export JSON — an array of capture documents whose _id follows
+the pattern ``<category>_<provider>_<threshold>``, e.g. ``drug_use_chatgpt_0.1``.
+Each capture holds a nested list of flowlets.
 
-Usage:
-    python topic_classifier.py data_privacy_project.captures.json \
-        --threshold 0.1 \
-        --output topic_results.json \
-        --model-weights topic_model_weights.pkl
+Label: ``non_sensitive`` → 0, any of the five sensitive categories → 1.
+
+Only ChatGPT traffic is used; flowlets whose ``llm_name`` is not ``CHATGPT`` are
+dropped (this removes a small amount of Claude Code noise observed in the
+``money_laundering_chatgpt_0.1`` capture).
+
+Features (12 total, always the same length):
+    8 aggregate: duration, packet_count, total_bytes,
+                 inter_packet_time_mean/std, packet_size_mean/std,
+                 direction_encoded
+    4 Markov log-likelihoods: time-gap and size-block sequences scored under
+                              sensitive and non-sensitive Markov models,
+                              floored at -100.0 when a sequence is empty.
+
+Splits train/test by flow 5-tuple via GroupShuffleSplit (no within-flow
+leakage). Trains RF, SVM, XGBoost with class-balancing and reports
+AUPRC, ROC-AUC, recall-at-FPR and per-category recall.
 """
 import argparse
 import json
 import sys
-import numpy as np
-from pathlib import Path
-from typing import Dict, List, Any, Tuple
 from collections import defaultdict
-from sklearn.model_selection import GroupShuffleSplit
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import joblib
+import numpy as np
+import xgboost as xgb
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
+    average_precision_score,
+    confusion_matrix,
+    f1_score,
+    precision_recall_curve,
     precision_score,
     recall_score,
-    f1_score,
-    confusion_matrix,
-    classification_report,
+    roc_auc_score,
+    roc_curve,
 )
+from sklearn.model_selection import GroupShuffleSplit, StratifiedShuffleSplit
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
-# Reuse core functions from the existing pipeline
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from flowlet_models import (
     bucket_time_gaps,
-    build_power_law_blocks,
     build_markov_model,
+    build_power_law_blocks,
     compute_sequence_log_likelihood,
-    train_and_evaluate_models,
 )
 
-LABEL_MAP = {1: "sensitive", 0: "non_sensitive"}
-
-
-def load_captures(filepath: str) -> List[Dict[str, Any]]:
-    """Load MongoDB export: array of capture documents with nested flowlets."""
-    with open(filepath, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def extract_flowlets(
-    captures: List[Dict[str, Any]],
-    threshold: str,
-) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Extract and label flowlets from captures.
-
-    Filters to captures matching the given threshold suffix and whose names
-    start with 'sensitive_test' or 'non_sensitive_test'.
-
-    Returns (sensitive_flowlets, non_sensitive_flowlets).
-    """
-    sensitive = []
-    non_sensitive = []
-
-    for cap in captures:
-        cap_id = cap.get("_id", "")
-
-        # Only use captures at the requested threshold
-        if not cap_id.endswith(f"_{threshold}"):
-            continue
-
-        # Determine label from capture name
-        if cap_id.startswith("sensitive_test"):
-            target = sensitive
-        elif cap_id.startswith("non_sensitive_test"):
-            target = non_sensitive
-        else:
-            continue
-
-        for flowlet in cap.get("flowlets", []):
-            target.append(flowlet)
-
-    return sensitive, non_sensitive
-
+SENSITIVE_CATEGORIES = {
+    "money_laundering",
+    "drug_use",
+    "legal_criminal",
+    "weapons_firearms",
+    "hacking_cybercrime",
+}
+NON_SENSITIVE_CATEGORY = "non_sensitive"
+ALL_CATEGORIES = SENSITIVE_CATEGORIES | {NON_SENSITIVE_CATEGORY}
 
 FEATURE_NAMES = [
     "duration",
@@ -97,357 +79,441 @@ FEATURE_NAMES = [
     "packet_size_mean",
     "packet_size_std",
     "direction_encoded",
+    "ll_time_sensitive",
+    "ll_time_nonsensitive",
+    "ll_size_sensitive",
+    "ll_size_nonsensitive",
 ]
 
+LL_FLOOR = -100.0
 
-def extract_ml_features(
-    flowlet: Dict[str, Any],
+
+def parse_capture_id(cap_id: str) -> Tuple[str, str, str]:
+    """Split ``<category>_<provider>_<threshold>`` from the tail end.
+
+    Categories may contain underscores (e.g. ``money_laundering``), so split
+    from the right.
+    """
+    parts = cap_id.rsplit("_", 2)
+    if len(parts) != 3:
+        return "", "", ""
+    return parts[0], parts[1], parts[2]
+
+
+def load_flowlets(
+    filepath: str, threshold: str, provider: str = "chatgpt"
+) -> List[Dict[str, Any]]:
+    """Load flowlets for a single provider at a single threshold.
+
+    Adds ``_category`` and ``_label`` to each flowlet. Drops flowlets whose
+    ``llm_name`` disagrees with the requested provider.
+    """
+    with open(filepath, "r", encoding="utf-8") as f:
+        captures = json.load(f)
+
+    wanted_llm = provider.upper()
+    out: List[Dict[str, Any]] = []
+    dropped_wrong_llm = 0
+
+    for cap in captures:
+        cap_id = cap.get("_id", "")
+        category, cap_provider, cap_threshold = parse_capture_id(cap_id)
+        if category not in ALL_CATEGORIES:
+            continue
+        if cap_provider != provider or cap_threshold != threshold:
+            continue
+
+        label = 0 if category == NON_SENSITIVE_CATEGORY else 1
+        for fl in cap.get("flowlets", []):
+            if fl.get("llm_name") != wanted_llm:
+                dropped_wrong_llm += 1
+                continue
+            fl = dict(fl)
+            fl["_category"] = category
+            fl["_label"] = label
+            fl["_capture_id"] = cap_id
+            out.append(fl)
+
+    if dropped_wrong_llm:
+        print(
+            f"  (dropped {dropped_wrong_llm} flowlets whose llm_name != {wanted_llm})"
+        )
+    return out
+
+
+def build_markov_assets(
+    flowlets: List[Dict[str, Any]],
+) -> Tuple[Dict[str, Dict[str, Any]], Dict[str, Dict[float, str]]]:
+    """Fit block mappings and Markov models on the training flowlets.
+
+    Separate models per class (sensitive, non_sensitive). Only flowlets that
+    actually carry raw arrays contribute.
+    """
+    by_class: Dict[str, List[Dict[str, Any]]] = {"sensitive": [], "non_sensitive": []}
+    for fl in flowlets:
+        key = "sensitive" if fl["_label"] == 1 else "non_sensitive"
+        by_class[key].append(fl)
+
+    block_mappings: Dict[str, Dict[float, str]] = {}
+    for class_name, fls in by_class.items():
+        all_sizes: List[float] = []
+        for fl in fls:
+            all_sizes.extend(fl.get("packet_sizes", []) or [])
+        if all_sizes:
+            _, mapping = build_power_law_blocks(all_sizes, coverage=0.9)
+            block_mappings[class_name] = mapping
+
+    markov_models: Dict[str, Dict[str, Any]] = {}
+    for class_name, fls in by_class.items():
+        time_seqs: List[List[str]] = []
+        size_seqs: List[List[str]] = []
+        for fl in fls:
+            ipt = fl.get("inter_packet_times", []) or []
+            if ipt:
+                time_seqs.append(bucket_time_gaps(ipt))
+            ps = fl.get("packet_sizes", []) or []
+            if ps and class_name in block_mappings:
+                mp = block_mappings[class_name]
+                size_seqs.append([mp.get(s, f"BLOCK_{s:.2f}") for s in ps])
+        markov_models[class_name] = {
+            "time_gap": build_markov_model(time_seqs) if time_seqs else {},
+            "size_block": build_markov_model(size_seqs) if size_seqs else {},
+        }
+    return markov_models, block_mappings
+
+
+def featurize(
+    fl: Dict[str, Any],
     markov_models: Dict[str, Dict[str, Any]],
     block_mappings: Dict[str, Dict[float, str]],
 ) -> np.ndarray:
-    """Extract feature vector for a flowlet.
-
-    8 features: 7 statistical + 1 direction.
-    Markov features are omitted because the MongoDB export does not include
-    raw inter_packet_times / packet_sizes arrays.
-    """
-    features = [
-        flowlet.get("duration", 0.0),
-        flowlet.get("packet_count", 0),
-        flowlet.get("total_bytes", 0),
-        flowlet.get("inter_packet_time_mean", 0.0),
-        flowlet.get("inter_packet_time_std", 0.0),
-        flowlet.get("packet_size_mean", 0.0),
-        flowlet.get("packet_size_std", 0.0),
-        flowlet.get("direction_encoded", 0),
+    """Produce a fixed 12-feature vector for a flowlet."""
+    feats: List[float] = [
+        float(fl.get("duration", 0.0) or 0.0),
+        float(fl.get("packet_count", 0) or 0),
+        float(fl.get("total_bytes", 0) or 0),
+        float(fl.get("inter_packet_time_mean", 0.0) or 0.0),
+        float(fl.get("inter_packet_time_std", 0.0) or 0.0),
+        float(fl.get("packet_size_mean", 0.0) or 0.0),
+        float(fl.get("packet_size_std", 0.0) or 0.0),
+        float(fl.get("direction_encoded", 0) or 0),
     ]
 
-    # If raw arrays are available, add Markov log-likelihoods
-    inter_packet_times = flowlet.get("inter_packet_times", [])
-    packet_sizes = flowlet.get("packet_sizes", [])
+    ipt = fl.get("inter_packet_times", []) or []
+    ps = fl.get("packet_sizes", []) or []
+    time_seq = bucket_time_gaps(ipt) if ipt else []
 
-    if inter_packet_times and packet_sizes:
-        time_gap_seq = bucket_time_gaps(inter_packet_times)
+    def _size_seq(class_name: str) -> List[str]:
+        if not ps or class_name not in block_mappings:
+            return []
+        mp = block_mappings[class_name]
+        return [mp.get(s, f"BLOCK_{s:.2f}") for s in ps]
 
-        size_block_seq = []
-        if "sensitive" in block_mappings:
-            for size in packet_sizes:
-                if size in block_mappings["sensitive"]:
-                    size_block_seq.append(block_mappings["sensitive"][size])
-                else:
-                    size_block_seq.append(f"BLOCK_{size:.2f}")
+    for class_name in ("sensitive", "non_sensitive"):
+        mm = markov_models.get(class_name, {})
+        time_mm = mm.get("time_gap") or {}
+        if time_seq and time_mm:
+            ll = compute_sequence_log_likelihood(time_seq, time_mm)
+            feats.append(float(np.clip(ll, LL_FLOOR, 0.0)))
+        else:
+            feats.append(LL_FLOOR)
 
-        for class_name in ["sensitive", "non_sensitive"]:
-            if class_name in markov_models:
-                if "time_gap" in markov_models[class_name]:
-                    ll_time = compute_sequence_log_likelihood(
-                        time_gap_seq, markov_models[class_name]["time_gap"]
-                    )
-                    features.append(np.clip(ll_time, -100.0, 0.0))
-                else:
-                    features.append(-100.0)
-                if "size_block" in markov_models[class_name] and size_block_seq:
-                    ll_size = compute_sequence_log_likelihood(
-                        size_block_seq, markov_models[class_name]["size_block"]
-                    )
-                    features.append(np.clip(ll_size, -100.0, 0.0))
-                else:
-                    features.append(-100.0)
-            else:
-                features.append(-100.0)
-                features.append(-100.0)
+    for class_name in ("sensitive", "non_sensitive"):
+        mm = markov_models.get(class_name, {})
+        size_mm = mm.get("size_block") or {}
+        sseq = _size_seq(class_name)
+        if sseq and size_mm:
+            ll = compute_sequence_log_likelihood(sseq, size_mm)
+            feats.append(float(np.clip(ll, LL_FLOOR, 0.0)))
+        else:
+            feats.append(LL_FLOOR)
 
-    return np.array(features)
+    return np.asarray(feats, dtype=np.float64)
 
 
-def prepare_training_data(
-    sensitive_flowlets: List[Dict[str, Any]],
-    non_sensitive_flowlets: List[Dict[str, Any]],
-) -> Tuple[np.ndarray, np.ndarray, List[str], List[str], Dict, Dict]:
-    """Build Markov models and extract features.
-
-    Returns (X, y, groups, provider_labels, markov_models, block_mappings).
-    """
-    print(f"Sensitive flowlets: {len(sensitive_flowlets)}")
-    print(f"Non-sensitive flowlets: {len(non_sensitive_flowlets)}")
-
-    # Build block mappings per class
-    block_mappings = {}
-    for class_name, flowlets in [
-        ("sensitive", sensitive_flowlets),
-        ("non_sensitive", non_sensitive_flowlets),
-    ]:
-        all_sizes = []
-        for f in flowlets:
-            all_sizes.extend(f.get("packet_sizes", []))
-        if all_sizes:
-            blocks, mapping = build_power_law_blocks(all_sizes, coverage=0.9)
-            block_mappings[class_name] = mapping
-            print(f"{class_name}: {len(blocks)} packet size blocks")
-
-    # Build Markov models per class
-    markov_models = {}
-    for class_name, flowlets in [
-        ("sensitive", sensitive_flowlets),
-        ("non_sensitive", non_sensitive_flowlets),
-    ]:
-        time_gap_sequences = []
-        size_block_sequences = []
-
-        for f in flowlets:
-            ipt = f.get("inter_packet_times", [])
-            ps = f.get("packet_sizes", [])
-            if ipt:
-                time_gap_sequences.append(bucket_time_gaps(ipt))
-            if ps and class_name in block_mappings:
-                size_block_sequences.append(
-                    [block_mappings[class_name].get(s, f"BLOCK_{s:.2f}") for s in ps]
-                )
-
-        markov_models[class_name] = {
-            "time_gap": build_markov_model(time_gap_sequences),
-            "size_block": build_markov_model(size_block_sequences),
-        }
-        print(f"{class_name}: Built Markov models")
-
-    # Extract features
-    X_list = []
-    y_list = []
-    groups = []
-    provider_labels = []
-
-    for label, flowlets in [(1, sensitive_flowlets), (0, non_sensitive_flowlets)]:
-        for f in flowlets:
-            feature_vec = extract_ml_features(f, markov_models, block_mappings)
-            X_list.append(feature_vec)
-            y_list.append(label)
-
-            flow_key = f.get("flow_key", {})
-            group_id = (
-                f"{flow_key.get('src_ip', '')}_{flow_key.get('src_port', '')}_"
-                f"{flow_key.get('dst_ip', '')}_{flow_key.get('dst_port', '')}_"
-                f"{flow_key.get('protocol', '')}"
-            )
-            groups.append(group_id)
-            provider_labels.append(f.get("llm_name", "UNKNOWN"))
-
-    X = np.array(X_list)
-    y = np.array(y_list)
-
-    return X, y, groups, provider_labels, markov_models, block_mappings
+def group_key(fl: Dict[str, Any]) -> str:
+    """Group flowlets by their 5-tuple so no flow straddles train/test."""
+    fk = fl.get("flow_key", {}) or {}
+    return (
+        f"{fk.get('src_ip', '')}|{fk.get('src_port', '')}|"
+        f"{fk.get('dst_ip', '')}|{fk.get('dst_port', '')}|"
+        f"{fk.get('protocol', '')}"
+    )
 
 
-def evaluate_per_provider(
+def recall_at_fpr(y_true: np.ndarray, y_score: np.ndarray, target_fpr: float) -> float:
+    """Max recall (TPR) achievable while keeping FPR ≤ target_fpr."""
+    fpr, tpr, _ = roc_curve(y_true, y_score)
+    ok = fpr <= target_fpr
+    return float(tpr[ok].max()) if ok.any() else 0.0
+
+
+def evaluate(
+    name: str,
     y_true: np.ndarray,
     y_pred: np.ndarray,
-    providers: List[str],
+    y_score: np.ndarray,
 ) -> Dict[str, Any]:
-    """Compute metrics broken down by LLM provider."""
-    results = {}
-    unique_providers = sorted(set(providers))
-    providers_arr = np.array(providers)
+    cm = confusion_matrix(y_true, y_pred).tolist()
+    return {
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "precision": float(precision_score(y_true, y_pred, zero_division=0)),
+        "recall": float(recall_score(y_true, y_pred, zero_division=0)),
+        "f1": float(f1_score(y_true, y_pred, zero_division=0)),
+        "roc_auc": float(roc_auc_score(y_true, y_score)),
+        "auprc": float(average_precision_score(y_true, y_score)),
+        "recall_at_5pct_fpr": recall_at_fpr(y_true, y_score, 0.05),
+        "recall_at_10pct_fpr": recall_at_fpr(y_true, y_score, 0.10),
+        "recall_at_20pct_fpr": recall_at_fpr(y_true, y_score, 0.20),
+        "confusion_matrix": cm,
+    }
 
-    for provider in unique_providers:
-        mask = providers_arr == provider
-        if mask.sum() == 0:
-            continue
+
+def per_category_recall(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    categories: List[str],
+) -> Dict[str, Dict[str, float]]:
+    """Recall (or specificity, for non_sensitive) per category in the test set."""
+    out: Dict[str, Dict[str, float]] = {}
+    cats_arr = np.asarray(categories)
+    for cat in sorted(set(categories)):
+        mask = cats_arr == cat
+        n = int(mask.sum())
         yt = y_true[mask]
         yp = y_pred[mask]
-
-        # Skip if only one class present in this slice
-        if len(np.unique(yt)) < 2:
-            results[provider] = {
-                "count": int(mask.sum()),
-                "sensitive_count": int((yt == 1).sum()),
-                "non_sensitive_count": int((yt == 0).sum()),
-                "note": "only one class present in test split",
+        if cat == NON_SENSITIVE_CATEGORY:
+            # specificity: fraction of non-sensitive flowlets correctly classified
+            correct = int((yp == 0).sum())
+            out[cat] = {
+                "count": n,
+                "specificity": float(correct / n) if n else 0.0,
             }
-            continue
-
-        results[provider] = {
-            "count": int(mask.sum()),
-            "sensitive_count": int((yt == 1).sum()),
-            "non_sensitive_count": int((yt == 0).sum()),
-            "accuracy": float(accuracy_score(yt, yp)),
-            "precision": float(precision_score(yt, yp, zero_division=0)),
-            "recall": float(recall_score(yt, yp, zero_division=0)),
-            "f1": float(f1_score(yt, yp, zero_division=0)),
-            "confusion_matrix": confusion_matrix(yt, yp).tolist(),
-        }
-
-    return results
+        else:
+            correct = int((yp == 1).sum())
+            out[cat] = {
+                "count": n,
+                "recall": float(correct / n) if n else 0.0,
+            }
+    return out
 
 
-def main():
+def train_models(
+    X_train: np.ndarray,
+    X_test: np.ndarray,
+    y_train: np.ndarray,
+    y_test: np.ndarray,
+) -> Tuple[Dict[str, Any], Dict[str, Any], StandardScaler]:
+    scaler = StandardScaler()
+    X_train_s = scaler.fit_transform(X_train)
+    X_test_s = scaler.transform(X_test)
+
+    n_pos = int((y_train == 1).sum())
+    n_neg = int((y_train == 0).sum())
+    scale_pos_weight = (n_neg / n_pos) if n_pos else 1.0
+
+    print(f"  class balance (train): {n_neg} neg / {n_pos} pos  "
+          f"(scale_pos_weight={scale_pos_weight:.3f})")
+
+    models: Dict[str, Any] = {}
+    results: Dict[str, Any] = {}
+
+    print("  [RF] fitting...")
+    rf = RandomForestClassifier(
+        n_estimators=500,
+        class_weight="balanced",
+        random_state=42,
+        n_jobs=-1,
+    )
+    rf.fit(X_train, y_train)
+    y_pred = rf.predict(X_test)
+    y_score = rf.predict_proba(X_test)[:, 1]
+    results["random_forest"] = evaluate("random_forest", y_test, y_pred, y_score)
+    results["random_forest"]["y_score"] = y_score.tolist()
+    results["random_forest"]["y_pred"] = y_pred.tolist()
+    models["random_forest"] = rf
+
+    print("  [SVM] fitting...")
+    svm = SVC(
+        kernel="rbf",
+        class_weight="balanced",
+        probability=True,
+        random_state=42,
+    )
+    svm.fit(X_train_s, y_train)
+    y_pred = svm.predict(X_test_s)
+    y_score = svm.predict_proba(X_test_s)[:, 1]
+    results["svm"] = evaluate("svm", y_test, y_pred, y_score)
+    results["svm"]["y_score"] = y_score.tolist()
+    results["svm"]["y_pred"] = y_pred.tolist()
+    models["svm"] = svm
+
+    print("  [XGB] fitting...")
+    xgb_model = xgb.XGBClassifier(
+        n_estimators=500,
+        max_depth=6,
+        learning_rate=0.1,
+        scale_pos_weight=scale_pos_weight,
+        random_state=42,
+        eval_metric="logloss",
+        n_jobs=-1,
+    )
+    xgb_model.fit(X_train, y_train)
+    y_pred = xgb_model.predict(X_test)
+    y_score = xgb_model.predict_proba(X_test)[:, 1]
+    results["xgboost"] = evaluate("xgboost", y_test, y_pred, y_score)
+    results["xgboost"]["y_score"] = y_score.tolist()
+    results["xgboost"]["y_pred"] = y_pred.tolist()
+    models["xgboost"] = xgb_model
+
+    return results, models, scaler
+
+
+def main() -> None:
     p = argparse.ArgumentParser(
-        description="Train sensitive-topic classifiers on LLM traffic metadata"
+        description="Binary sensitive-topic classifier on ChatGPT flowlets."
     )
-    p.add_argument("input", help="MongoDB export JSON (captures with nested flowlets)")
+    p.add_argument("input", help="MongoDB export JSON")
+    p.add_argument("--threshold", default="0.1",
+                   help="flowlet threshold (default: 0.1)")
+    p.add_argument("--provider", default="chatgpt",
+                   help="provider to filter to (default: chatgpt)")
+    p.add_argument("--output", "-o", default="topic_results.json")
+    p.add_argument("--model-weights", default="topic_model_weights.pkl")
+    p.add_argument("--test-size", type=float, default=0.3)
     p.add_argument(
-        "--threshold",
-        default="0.1",
-        help="flowlet time threshold to use (default: 0.1)",
-    )
-    p.add_argument(
-        "--output",
-        "-o",
-        default="topic_results.json",
-        help="output JSON for results",
-    )
-    p.add_argument(
-        "--model-weights",
-        default="topic_model_weights.pkl",
-        help="path to save trained model artifacts",
-    )
-    p.add_argument(
-        "--test-size",
-        type=float,
-        default=0.2,
-        help="fraction of data for testing (default: 0.2)",
+        "--group-by-flow",
+        action="store_true",
+        help="split by 5-tuple group (may be unbalanced with few groups); "
+             "default is stratified by category",
     )
     args = p.parse_args()
 
-    # Load and extract
-    print(f"Loading captures from {args.input}...")
-    captures = load_captures(args.input)
-    print(f"Loaded {len(captures)} capture documents")
-
-    sensitive, non_sensitive = extract_flowlets(captures, args.threshold)
-    if not sensitive or not non_sensitive:
-        print("ERROR: No sensitive or non-sensitive flowlets found.")
-        print(f"  Sensitive: {len(sensitive)}, Non-sensitive: {len(non_sensitive)}")
-        print("  Check that capture names match 'sensitive_test_*' / 'non_sensitive_test_*'")
+    print(f"Loading {args.input} (threshold={args.threshold}, "
+          f"provider={args.provider})...")
+    flowlets = load_flowlets(args.input, args.threshold, args.provider)
+    if not flowlets:
+        print("ERROR: no flowlets matched the filter.")
         sys.exit(1)
 
-    # Prepare data
-    print("\nPreparing training data...")
-    X, y, groups, providers, markov_models, block_mappings = prepare_training_data(
-        sensitive, non_sensitive
-    )
-    print(f"Feature matrix shape: {X.shape}")
-    print(f"Class distribution: {np.bincount(y)}  (0=non_sensitive, 1=sensitive)")
+    by_cat: Dict[str, int] = defaultdict(int)
+    for fl in flowlets:
+        by_cat[fl["_category"]] += 1
+    print("Per-category flowlet counts:")
+    for cat in sorted(by_cat):
+        print(f"  {cat:22s} {by_cat[cat]:5d}")
 
-    # Provider distribution
-    provider_counts = defaultdict(lambda: [0, 0])
-    for prov, label in zip(providers, y):
-        provider_counts[prov][label] += 1
-    print("\nPer-provider distribution:")
-    for prov, counts in sorted(provider_counts.items()):
-        print(f"  {prov}: {counts[0]} non_sensitive, {counts[1]} sensitive")
+    categories = np.asarray([fl["_category"] for fl in flowlets])
+    y_all = np.asarray([fl["_label"] for fl in flowlets])
+    idx = np.arange(len(flowlets))
 
-    # Split
-    print("\nSplitting data by flows...")
-    gss = GroupShuffleSplit(n_splits=1, test_size=args.test_size, random_state=42)
-    train_idx, test_idx = next(gss.split(X, y, groups))
-
-    X_train, X_test = X[train_idx], X[test_idx]
-    y_train, y_test = y[train_idx], y[test_idx]
-    providers_test = [providers[i] for i in test_idx]
-
-    print(f"Train set: {len(X_train)} flowlets")
-    print(f"Test set: {len(X_test)} flowlets")
-    print(f"Train class distribution: {np.bincount(y_train)}")
-    print(f"Test class distribution: {np.bincount(y_test)}")
-
-    # Train
-    print("\nTraining models...")
-    results, trained_models, scaler = train_and_evaluate_models(
-        X_train, X_test, y_train, y_test
-    )
-
-    # Fix class names in results (train_and_evaluate_models uses "non_llm"/"llm")
-    for model_name in results:
-        report = results[model_name].get("classification_report", {})
-        if "non_llm" in report:
-            report["non_sensitive"] = report.pop("non_llm")
-        if "llm" in report:
-            report["sensitive"] = report.pop("llm")
-
-    # Per-provider breakdown (using best model's predictions)
-    print("\nComputing per-provider metrics...")
-    provider_results = {}
-    for model_name, model in trained_models.items():
-        if model_name == "svm":
-            X_test_input = scaler.transform(X_test)
-        else:
-            X_test_input = X_test
-        y_pred = model.predict(X_test_input)
-        provider_results[model_name] = evaluate_per_provider(
-            y_test, y_pred, providers_test
+    if args.group_by_flow:
+        groups = np.asarray([group_key(fl) for fl in flowlets])
+        splitter = GroupShuffleSplit(
+            n_splits=1, test_size=args.test_size, random_state=42
         )
+        train_i, test_i = next(splitter.split(idx, y_all, groups))
+        split_desc = "grouped by 5-tuple"
+    else:
+        # Stratify by fine-grained category so each class is represented
+        # proportionally in train and test.
+        splitter = StratifiedShuffleSplit(
+            n_splits=1, test_size=args.test_size, random_state=42
+        )
+        train_i, test_i = next(splitter.split(idx, categories))
+        split_desc = "stratified by category"
 
-    # Print results
-    print("\n" + "=" * 60)
-    print("RESULTS: Sensitive Topic Classification")
-    print("=" * 60)
-    for model_name, metrics in results.items():
-        print(f"\n{model_name.upper()}:")
-        print(f"  Accuracy:  {metrics['accuracy']:.4f}")
-        print(f"  Precision: {metrics['precision']:.4f}")
-        print(f"  Recall:    {metrics['recall']:.4f}")
-        print(f"  F1 Score:  {metrics['f1']:.4f}")
-        cm = metrics["confusion_matrix"]
-        print(f"  Confusion Matrix:")
-        print(f"    [[TN={cm[0][0]}, FP={cm[0][1]}],")
-        print(f"     [FN={cm[1][0]}, TP={cm[1][1]}]]")
+    train_flowlets = [flowlets[i] for i in train_i]
+    test_flowlets = [flowlets[i] for i in test_i]
 
-        if model_name in provider_results:
-            print(f"  Per-provider:")
-            for prov, pmetrics in sorted(provider_results[model_name].items()):
-                if "accuracy" in pmetrics:
-                    print(
-                        f"    {prov}: acc={pmetrics['accuracy']:.3f} "
-                        f"prec={pmetrics['precision']:.3f} "
-                        f"rec={pmetrics['recall']:.3f} "
-                        f"f1={pmetrics['f1']:.3f} "
-                        f"(n={pmetrics['count']})"
-                    )
-                else:
-                    print(
-                        f"    {prov}: {pmetrics.get('note', 'n/a')} "
-                        f"(n={pmetrics['count']})"
-                    )
+    print(f"\nSplit: {len(train_flowlets)} train / {len(test_flowlets)} test "
+          f"({split_desc})")
 
-    # Save results
-    output_data = {
+    print("\nBuilding Markov models on training set only...")
+    markov_models, block_mappings = build_markov_assets(train_flowlets)
+    for cls, mm in markov_models.items():
+        print(f"  {cls}: time_gap states={len(mm.get('time_gap', {}))}, "
+              f"size_block states={len(mm.get('size_block', {}))}, "
+              f"size-blocks={len(block_mappings.get(cls, {}))}")
+
+    print("\nExtracting features...")
+    X_train = np.vstack([featurize(fl, markov_models, block_mappings)
+                         for fl in train_flowlets])
+    X_test = np.vstack([featurize(fl, markov_models, block_mappings)
+                        for fl in test_flowlets])
+    y_train = np.asarray([fl["_label"] for fl in train_flowlets])
+    y_test = np.asarray([fl["_label"] for fl in test_flowlets])
+    cats_test = [fl["_category"] for fl in test_flowlets]
+
+    print(f"  X_train shape: {X_train.shape}")
+    print(f"  train pos/neg: {int((y_train==1).sum())} / {int((y_train==0).sum())}")
+    print(f"  test  pos/neg: {int((y_test==1).sum())} / {int((y_test==0).sum())}")
+
+    print("\nTraining models...")
+    results, trained_models, scaler = train_models(X_train, X_test, y_train, y_test)
+
+    print("\n" + "=" * 64)
+    print(f"BINARY RESULTS  (threshold={args.threshold}, provider={args.provider})")
+    print("=" * 64)
+    for name, m in results.items():
+        print(f"\n{name.upper()}")
+        print(f"  AUPRC         : {m['auprc']:.4f}")
+        print(f"  ROC-AUC       : {m['roc_auc']:.4f}")
+        print(f"  Accuracy      : {m['accuracy']:.4f}")
+        print(f"  Precision     : {m['precision']:.4f}")
+        print(f"  Recall        : {m['recall']:.4f}")
+        print(f"  F1            : {m['f1']:.4f}")
+        print(f"  R@5%FPR       : {m['recall_at_5pct_fpr']:.4f}")
+        print(f"  R@10%FPR      : {m['recall_at_10pct_fpr']:.4f}")
+        print(f"  R@20%FPR      : {m['recall_at_20pct_fpr']:.4f}")
+        cm = m["confusion_matrix"]
+        print(f"  Confusion     : TN={cm[0][0]} FP={cm[0][1]} "
+              f"FN={cm[1][0]} TP={cm[1][1]}")
+
+    print("\nPer-category breakdown (using XGBoost):")
+    xgb_pred = np.asarray(results["xgboost"]["y_pred"])
+    per_cat = per_category_recall(y_test, xgb_pred, cats_test)
+    for cat, d in per_cat.items():
+        metric = "specificity" if cat == NON_SENSITIVE_CATEGORY else "recall"
+        print(f"  {cat:22s} n={d['count']:4d}  {metric}={d[metric]:.4f}")
+
+    out = {
         "dataset_info": {
-            "total_flowlets": len(sensitive) + len(non_sensitive),
-            "sensitive_count": len(sensitive),
-            "non_sensitive_count": len(non_sensitive),
             "threshold": args.threshold,
-            "train_size": len(X_train),
-            "test_size": len(X_test),
-            "feature_dim": X.shape[1],
-            "train_class_distribution": np.bincount(y_train).tolist(),
-            "test_class_distribution": np.bincount(y_test).tolist(),
+            "provider": args.provider,
+            "total_flowlets": len(flowlets),
+            "per_category_counts": dict(sorted(by_cat.items())),
+            "train_size": int(len(train_flowlets)),
+            "test_size": int(len(test_flowlets)),
+            "train_pos_neg": [int((y_train == 1).sum()), int((y_train == 0).sum())],
+            "test_pos_neg": [int((y_test == 1).sum()), int((y_test == 0).sum())],
+            "feature_names": FEATURE_NAMES,
+            "feature_dim": int(X_train.shape[1]),
         },
         "models": results,
-        "per_provider": provider_results,
+        "per_category_xgb": per_cat,
+        "y_test": y_test.tolist(),
+        "categories_test": cats_test,
     }
-
     with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(output_data, f, indent=2)
+        json.dump(out, f, indent=2)
     print(f"\nResults saved to {args.output}")
 
-    # Save model artifacts
-    import joblib
-
-    model_artifacts = {
+    artifacts = {
         "models": trained_models,
         "scaler": scaler,
         "markov_models": markov_models,
         "block_mappings": block_mappings,
-        "feature_dim": int(X.shape[1]),
+        "feature_names": FEATURE_NAMES,
         "labels": {"non_sensitive": 0, "sensitive": 1},
         "training_metadata": {
             "input_file": str(args.input),
             "threshold": args.threshold,
+            "provider": args.provider,
             "test_size": args.test_size,
-            "train_size": len(X_train),
-            "test_size_count": len(X_test),
         },
     }
-    joblib.dump(model_artifacts, args.model_weights)
+    joblib.dump(artifacts, args.model_weights)
     print(f"Model artifacts saved to {args.model_weights}")
 
 
