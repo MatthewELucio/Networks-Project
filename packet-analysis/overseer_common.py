@@ -73,10 +73,28 @@ def _load_module(module_name: str, file_path: Path):
     return mod
 
 
-EXPERT_SOURCES: Dict[str, Tuple[Path, str]] = {
+def _filter_all_llm(features: List[FlowletDict]) -> List[FlowletDict]:
+    """Identity filter used by the optional 4th expert.
+
+    The three provider-specific filters each keep only one provider's LLM
+    flowlets plus all non-LLM flowlets. The ``all_llm`` expert should
+    instead train on *every* LLM flowlet (ChatGPT, Claude, Gemini) plus
+    non-LLM, so its filter simply returns the input unchanged.
+    """
+    return list(features)
+
+
+# Each entry is ``(module_path, filter_spec)`` where ``filter_spec`` is
+# either the name of a filter function defined on that module, or a
+# callable that filters a list of flowlets directly.
+EXPERT_SOURCES: Dict[str, Tuple[Path, Any]] = {
     "chatgpt": (BASE_DIR / "chatgpt" / "flowlet_models.py", "filter_chatgpt_only"),
     "claude": (BASE_DIR / "claude" / "flowlet_models_claude.py", "filter_claude_only"),
     "gemini": (BASE_DIR / "gemini" / "flowlet_models_gemini.py", "filter_gemini_only"),
+    # "all_llm" reuses Gemini's feature-extraction module (identical to
+    # the other two) but trains on every LLM flowlet instead of just one
+    # provider's. Use it as an optional 4th expert in the stacked overseer.
+    "all_llm": (BASE_DIR / "gemini" / "flowlet_models_gemini.py", _filter_all_llm),
 }
 
 EXPERT_PROVIDERS: Tuple[str, ...] = ("chatgpt", "claude", "gemini")
@@ -104,9 +122,12 @@ class ExpertModel:
     def for_provider(cls, name: str) -> "ExpertModel":
         if name not in EXPERT_SOURCES:
             raise ValueError(f"Unknown expert provider: {name}")
-        path, filter_name = EXPERT_SOURCES[name]
+        path, filter_spec = EXPERT_SOURCES[name]
         module = _load_module(f"overseer_expert_{name}", path)
-        filter_fn = getattr(module, filter_name)
+        if callable(filter_spec):
+            filter_fn = filter_spec
+        else:
+            filter_fn = getattr(module, filter_spec)
         return cls(name=name, module=module, filter_fn=filter_fn)
 
     def _extract_matrix(self, flowlets: Sequence[FlowletDict]) -> np.ndarray:
