@@ -99,7 +99,7 @@ def update_direction_flags(target_ids=None):
                 continue
 
             # Only add the flag; never overwrite it
-            if "outgoing" in f:
+            if f.get("outgoing"):
                 continue
 
             fk = f.get("flow_key", {}) or {}
