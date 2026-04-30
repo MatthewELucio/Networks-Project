@@ -108,6 +108,7 @@ def _build_query(
     end_date: Optional[str],
     threshold_min: Optional[float],
     threshold_max: Optional[float],
+    require_update_direction_by_script: bool,
 ) -> Dict[str, Any]:
     query: Dict[str, Any] = {}
 
@@ -144,6 +145,9 @@ def _build_query(
         if threshold_exprs:
             query["$expr"] = {"$and": threshold_exprs}
 
+    if require_update_direction_by_script:
+        query["updated_direction_by_script"] = True
+
     return query
 
 
@@ -161,6 +165,9 @@ def _interactive_inputs() -> argparse.Namespace:
     flowlet_packets_lte_raw = input(
         f"Exclude flowlets with {FLOWLET_PACKET_COUNT_FIELD_NAME} <= N (optional): "
     ).strip() or None
+    require_update_direction_by_script_raw = (
+        input('Only captures where "update_direction_by_script" is true? [y/N]: ').strip().lower()
+    )
 
     db_name = input(f"Mongo DB name [{DEFAULT_DB_NAME}]: ").strip() or DEFAULT_DB_NAME
     collection = input(f"Collection name [{DEFAULT_COLLECTION}]: ").strip() or DEFAULT_COLLECTION
@@ -172,6 +179,7 @@ def _interactive_inputs() -> argparse.Namespace:
         threshold_min=thr_min_raw,
         threshold_max=thr_max_raw,
         flowlet_packets_lte=flowlet_packets_lte_raw,
+        require_update_direction_by_script=require_update_direction_by_script_raw in {"y", "yes"},
         db_name=db_name,
         collection=collection,
         uri=None,
@@ -245,6 +253,7 @@ def create_snapshot(args: argparse.Namespace) -> None:
         end_date=args.end_date,
         threshold_min=args.threshold_min,
         threshold_max=args.threshold_max,
+        require_update_direction_by_script=args.require_update_direction_by_script,
     )
 
     if not _confirm_plan(args, query):
@@ -280,6 +289,7 @@ def create_snapshot(args: argparse.Namespace) -> None:
             "db_name": args.db_name,
             "collection": args.collection,
             "query": query,
+            "require_update_direction_by_script": args.require_update_direction_by_script,
             "flowlet_filter": {
                 "exclude_packet_count_lte": args.flowlet_packets_lte,
                 "field": FLOWLET_PACKET_COUNT_FIELD_NAME,
@@ -316,6 +326,11 @@ def _build_parser() -> argparse.ArgumentParser:
         "--flowlet-packets-lte",
         help=f"Exclude flowlets where {FLOWLET_PACKET_COUNT_FIELD_NAME} <= this integer (applied before writing JSON).",
     )
+    p.add_argument(
+        "--require-update-direction-by-script",
+        action="store_true",
+        help='Only export captures where "update_direction_by_script" is true.',
+    )
     p.add_argument("--db-name", default=DEFAULT_DB_NAME, help=f"Mongo database name (default: {DEFAULT_DB_NAME}).")
     p.add_argument(
         "--collection",
@@ -324,6 +339,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--uri", help="MongoDB URI override (otherwise uses MONGODB_URI).")
     p.add_argument("--yes", "-y", action="store_true", help="Skip confirmation prompt.")
+    p.set_defaults(require_update_direction_by_script=False)
     return p
 
 
