@@ -1,6 +1,6 @@
 # Networks-Project
 
-CS 7457 research project authored by Gavin Crigger, Tao Groves, Matthew Lucio, and Sebastian Wiktorowicz
+Packet analysis research project authored by Gavin Crigger, Tao Groves, Matthew Lucio, and Sebastian Wiktorowicz. Submitted to IMC 2026.
 
 ## File Structure
 
